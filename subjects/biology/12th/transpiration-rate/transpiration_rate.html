@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botany Lab: Transpiration Virtual Experience</title>
+    <style>
+        :root {
+            --primary: #1e3799;
+            --secondary: #009432;
+            --success: #0652DD;
+            --table-top: #cfd8dc;
+            --wood-trim: #4e342e;
+            --water-color: rgba(52, 152, 219, 0.4);
+            --leaf-green: #2ecc71;
+            --bubble-color: rgba(255, 255, 255, 0.9);
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #2c3e50; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 280px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .plant-icon { background: var(--secondary); color: white; padding: 5px 10px; border-radius: 50%; font-size: 1.2rem; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #e8f8f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace / Lab Table */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: linear-gradient(0deg, rgba(255,255,255,0.2) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; }
+
+        /* Main Lab Station - Potometer Setup */
+        .lab-station {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        #potometer-rig { position: relative; width: 600px; height: 300px; }
+
+        /* Capillary Tube & Reservoir */
+        .glass-tube { position: absolute; background: rgba(255,255,255,0.3); border: 2px solid rgba(255,255,255,0.8); border-radius: 10px; box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1); }
+        #flask { top: 100px; left: 50px; width: 60px; height: 120px; }
+        #horizontal-tube { top: 200px; left: 100px; width: 400px; height: 15px; }
+        #water-fill { position: absolute; bottom: 0; width: 100%; height: 100%; background: var(--water-color); transition: 1s; }
+        
+        .ruler { position: absolute; top: 220px; left: 120px; width: 360px; height: 10px; border-top: 2px solid #333; display: flex; justify-content: space-between; }
+        .tick { width: 2px; height: 10px; background: #333; }
+
+        /* The Bubble */
+        #air-bubble {
+            position: absolute; top: 201px; left: 450px; width: 10px; height: 13px;
+            background: var(--bubble-color); border: 1px solid #999; border-radius: 5px;
+            opacity: 0; transition: opacity 0.5s;
+        }
+
+        /* Plant Specimen */
+        #plant-cutting { position: absolute; top: 0px; left: 45px; width: 70px; height: 120px; opacity: 0; transition: 0.5s; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3)); }
+        
+        /* Modifiers */
+        #vaseline-seal { position: absolute; top: 90px; left: 45px; width: 70px; height: 20px; background: rgba(241, 196, 15, 0.6); border-radius: 50%; opacity: 0; filter: blur(2px); transition: 0.5s; }
+        
+        #fan-tool { position: absolute; top: 20px; left: 200px; width: 80px; height: 100px; opacity: 0; transition: 0.5s; transform: translateX(50px); }
+        .fan-blade { transform-origin: 50px 50px; animation: spin 0.2s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #lamp-tool { position: absolute; top: 20px; left: -50px; width: 80px; height: 120px; opacity: 0; transition: 0.5s; transform: translateX(-50px); }
+        .heat-waves { stroke: #e74c3c; stroke-width: 2; fill: none; opacity: 0; animation: radiate 1s infinite alternate; }
+        @keyframes radiate { 0% { opacity: 0.2; transform: translateX(0); } 100% { opacity: 0.8; transform: translateX(10px); } }
+
+        /* Tools Tray */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 30px; background: #fff; padding: 15px 30px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 75px; }
+        .tool:hover { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 50px; height: 50px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; line-height: 1.1; }
+        .tool.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+        /* UI Buttons */
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: white; color: #333; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-ui:hover { transform: scale(1.05); }
+        .btn-ui.primary { background: var(--secondary); color: white; }
+        
+        #btn-analyze { position: absolute; top: 120px; right: 40px; display: none; animation: pulse-btn 2s infinite; z-index: 100; }
+        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(0, 148, 50, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 148, 50, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 148, 50, 0); } }
+
+        /* Molecular Animation Viewer (Stomata) */
+        #molecular-viewer { position: fixed; inset: 0; background: #1a252f; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        
+        #molecular-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        
+        /* Stoma Structure */
+        .leaf-surface { position: absolute; width: 100%; height: 100%; background: #27ae60; opacity: 0.2; }
+        .stoma-container { position: relative; width: 400px; height: 400px; display: flex; justify-content: center; align-items: center; }
+        
+        .guard-cell {
+            position: absolute; width: 100px; height: 350px; background: #2ecc71; border: 8px solid #27ae60;
+            border-radius: 50% / 50%; box-shadow: inset -10px 0 20px rgba(0,0,0,0.2); transition: all 2s ease-in-out;
+        }
+        .gc-left { left: 90px; transform: scaleX(1); }
+        .gc-right { right: 90px; transform: scaleX(-1); }
+
+        .stoma-pore {
+            position: absolute; width: 10px; height: 250px; background: #111; border-radius: 50%;
+            transition: all 2s ease-in-out; opacity: 0.8; z-index: -1;
+        }
+
+        /* Water Molecules */
+        .h2o-mol {
+            position: absolute; width: 15px; height: 15px; background: #3498db; border-radius: 50%;
+            box-shadow: 0 0 10px #3498db; opacity: 0; z-index: 10;
+        }
+
+        /* Viewer UI */
+        .phase-footer { background: rgba(0,0,0,0.85); padding: 30px; border-top: 2px solid var(--secondary); text-align: center; z-index: 30; position: relative; }
+        #v-title { color: #fff; margin: 0 0 10px 0; font-size: 2rem; letter-spacing: 3px; text-transform: uppercase; }
+        #v-desc { color: #dfe6e9; max-width: 900px; margin: 0 auto 20px auto; font-size: 1.1rem; min-height: 3.3em; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="plant-icon">🌱</span> Botany Lab</div>
+        <h2>Experiment Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Lab Initialization</h2>
+            <p id="task-desc">Loading physiological setup...</p>
+        </header>
+
+        <button id="btn-analyze" class="btn-ui primary" onclick="lab.startMolecularAnalysis()">View Leaf Anatomy</button>
+
+        <div class="lab-station" id="station-dropzone">
+            <div id="potometer-rig">
+                <div class="glass-tube" id="horizontal-tube"><div id="water-fill"></div></div>
+                <div class="glass-tube" id="flask"><div id="water-fill"></div></div>
+                
+                <div class="ruler">
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                    <div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div>
+                </div>
+
+                <div id="air-bubble"></div>
+                <div id="vaseline-seal"></div>
+                
+                <svg id="plant-cutting" viewBox="0 0 100 200">
+                    <path d="M50 200 L50 20" stroke="#27ae60" stroke-width="8" fill="none"/>
+                    <path d="M50 150 Q20 130 40 100 Z" fill="var(--leaf-green)"/>
+                    <path d="M50 120 Q80 100 60 70 Z" fill="var(--leaf-green)"/>
+                    <path d="M50 80 Q10 60 40 30 Z" fill="var(--leaf-green)"/>
+                    <path d="M50 40 Q90 20 50 0 Z" fill="var(--leaf-green)"/>
+                </svg>
+
+                <div id="fan-tool">
+                    <svg viewBox="0 0 100 100">
+                        <rect x="45" y="50" width="10" height="50" fill="#7f8c8d"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#bdc3c7" stroke-width="4"/>
+                        <g class="fan-blade">
+                            <path d="M50 50 L50 15 Q70 15 50 50 Z" fill="#95a5a6"/>
+                            <path d="M50 50 L85 50 Q85 70 50 50 Z" fill="#95a5a6"/>
+                            <path d="M50 50 L50 85 Q30 85 50 50 Z" fill="#95a5a6"/>
+                            <path d="M50 50 L15 50 Q15 30 50 50 Z" fill="#95a5a6"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div id="lamp-tool">
+                    <svg viewBox="0 0 100 100">
+                        <rect x="40" y="50" width="20" height="50" fill="#2c3e50"/>
+                        <path d="M20 50 L80 50 L70 10 L30 10 Z" fill="#7f8c8d"/>
+                        <circle cx="50" cy="50" r="15" fill="#f1c40f"/>
+                        <path class="heat-waves" d="M80 30 Q90 20 100 30" />
+                        <path class="heat-waves" d="M85 50 Q95 40 105 50" style="animation-delay: 0.3s"/>
+                    </svg>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-cutting">
+                <svg viewBox="0 0 100 100"><path d="M50 90 L50 20" stroke="#27ae60" stroke-width="4" fill="none"/><path d="M50 70 Q30 60 50 50 Z" fill="#2ecc71"/><path d="M50 50 Q70 40 50 30 Z" fill="#2ecc71"/></svg>
+                <span>Plant Cutting</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-jelly">
+                <svg viewBox="0 0 100 100"><rect x="30" y="40" width="40" height="40" rx="5" fill="#bdc3c7"/><ellipse cx="50" cy="40" rx="20" ry="10" fill="#f1c40f" opacity="0.8"/></svg>
+                <span>Petroleum Jelly</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-fan">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#7f8c8d" stroke-width="4"/><path d="M50 50 L50 25 M50 50 L75 50 M50 50 L50 75 M50 50 L25 50" stroke="#95a5a6" stroke-width="6"/></svg>
+                <span>Wind (Fan)</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-lamp">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="40" r="20" fill="#e74c3c" opacity="0.8"/><path d="M40 60 L60 60 L60 90 L40 90 Z" fill="#34495e"/></svg>
+                <span>Heat Lamp</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<div id="molecular-viewer">
+    <div class="viewer-layout">
+        <div id="molecular-stage">
+            <div class="leaf-surface"></div>
+            <div class="stoma-container">
+                <div class="stoma-pore" id="s-pore"></div>
+                <div class="guard-cell gc-left" id="gc-left"></div>
+                <div class="guard-cell gc-right" id="gc-right"></div>
+            </div>
+        </div>
+        
+        <div class="phase-footer">
+            <h1 id="v-title">MICROSCOPIC VIEW</h1>
+            <p id="v-desc">Initial state...</p>
+            <div id="controls-row">
+                <button class="btn-ui primary" id="btn-next-phase" onclick="lab.advanceMolecularPhase()">NEXT PHASE</button>
+                <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, tool: 'tool-cutting', title: "Set Potometer", instruction: "Insert the plant cutting into the potometer flask.", narration: "Place the leafy shoot into the potometer. A potometer measures the rate of water uptake, which is almost exactly equal to the rate of transpiration." },
+        { id: 1, tool: 'tool-jelly', title: "Create Airtight Seal", instruction: "Apply petroleum jelly around the stem.", narration: "Seal the connection with petroleum jelly. This ensures water only leaves the system by evaporating through the plant leaves, not gaps in the setup. Notice the air bubble injected." },
+        { id: 2, tool: 'tool-fan', title: "Introduce Wind", instruction: "Turn on the fan to simulate wind.", narration: "Watch the air bubble in the capillary tube. As we turn on the fan, wind blows away humid air around the leaves, increasing the concentration gradient. The bubble moves faster!" },
+        { id: 3, tool: 'tool-lamp', title: "Introduce Heat", instruction: "Turn on the heat lamp.", narration: "Now we apply heat. Higher temperatures increase the kinetic energy of water molecules, increasing evaporation. The bubble moves even faster." }
+    ]
+};
+
+class TranspirationLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.molecularPhase = 0;
+        this.synth = window.speechSynthesis;
+        this.bubblePos = 450;
+        this.transpirationRate = 0; 
+        this.animInterval = null;
+        this.lastTime = performance.now();
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+        
+        requestAnimationFrame((t) => this.updateBubble(t));
+    }
+
+    playSound(freq, type = 'sine', duration = 0.15) {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+    }
+
+    renderStepList() {
+        const container = document.getElementById('step-list');
+        container.innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        if(this.stepIdx >= LAB_DATA.steps.length) return;
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        document.querySelectorAll('.tool').forEach(t => t.classList.add('disabled'));
+        document.getElementById(step.tool).classList.remove('disabled');
+        this.speak(step.narration);
+    }
+
+    speak(text, callback) {
+        this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.onend = () => { if(callback) callback(); };
+        this.synth.speak(utterance);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.querySelectorAll('.tool').forEach(tool => {
+            tool.addEventListener('dragstart', e => {
+                if(!tool.classList.contains('disabled')) e.dataTransfer.setData('text', e.target.id);
+            });
+        });
+
+        const dropzone = document.getElementById('station-dropzone');
+        dropzone.addEventListener('dragover', e => e.preventDefault());
+        dropzone.addEventListener('drop', e => {
+            e.preventDefault();
+            const toolId = e.dataTransfer.getData('text');
+            if (toolId === LAB_DATA.steps[this.stepIdx]?.tool) this.handleAction(toolId);
+        });
+    }
+
+    updateBubble(time) {
+        const deltaTime = time - this.lastTime;
+        this.lastTime = time;
+
+        if(this.transpirationRate > 0 && document.getElementById('air-bubble').style.opacity == 1) {
+            // Pixels per second calculation
+            this.bubblePos -= (this.transpirationRate * deltaTime * 0.06); 
+            if(this.bubblePos < 120) this.bubblePos = 450; // reset to right side
+            document.getElementById('air-bubble').style.left = this.bubblePos + 'px';
+        }
+        requestAnimationFrame((t) => this.updateBubble(t));
+    }
+
+    handleAction(toolId) {
+        this.playSound(400, 'triangle');
+        
+        if (this.stepIdx === 0) {
+            document.getElementById('plant-cutting').style.opacity = '1';
+            this.log("Plant inserted into potometer.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 1) {
+            document.getElementById('vaseline-seal').style.opacity = '1';
+            document.getElementById('air-bubble').style.opacity = '1';
+            this.transpirationRate = 0.5; // Baseline
+            this.log("Apparatus sealed. Base baseline transpiration rate started.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 2) {
+            document.getElementById('fan-tool').style.opacity = '1';
+            document.getElementById('fan-tool').style.transform = 'translateX(0)';
+            this.transpirationRate = 2.0; // Faster
+            this.log("Wind applied. Transpiration rate increased significantly.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 3) {
+            document.getElementById('lamp-tool').style.opacity = '1';
+            document.getElementById('lamp-tool').style.transform = 'translateX(0)';
+            this.transpirationRate = 4.0; // Very fast
+            this.log("Heat applied. Transpiration rate at maximum.");
+            
+            this.stepIdx++;
+            document.getElementById('task-title').textContent = "Experiment Complete";
+            document.getElementById('task-desc').textContent = "Environmental factors significantly increased water uptake. Click below to explore the leaves microscopically.";
+            document.getElementById('btn-analyze').style.display = 'block';
+            this.playSound(800, 'sine', 0.5);
+            this.speak("Experiment concluded. We observed that wind and heat dramatically increase the rate of transpiration. Let's zoom into the underside of a leaf to see the stomata.");
+        }
+    }
+
+    advanceStep() {
+        this.stepIdx++;
+        setTimeout(() => this.updateStepUI(), 500);
+    }
+
+    /* --- Molecular Animation Sequence --- */
+
+    async startMolecularAnalysis() {
+        document.getElementById('btn-analyze').style.display = 'none';
+        document.getElementById('molecular-viewer').style.display = 'block';
+        
+        this.molecularPhase = 0;
+        this.advanceMolecularPhase();
+    }
+
+    spawnWaterMolecule(speedMs) {
+        const stage = document.getElementById('molecular-stage');
+        const mol = document.createElement('div');
+        mol.className = 'h2o-mol';
+        mol.style.left = '50%';
+        mol.style.top = '50%';
+        stage.appendChild(mol);
+
+        // Animate out through pore
+        setTimeout(() => {
+            mol.style.opacity = '1';
+            mol.style.transition = `all ${speedMs}ms ease-out`;
+            mol.style.transform = `translate(${(Math.random()-0.5)*300}px, -${200 + Math.random()*100}px) scale(1.5)`;
+        }, 50);
+
+        setTimeout(() => mol.remove(), speedMs);
+    }
+
+    async advanceMolecularPhase() {
+        const title = document.getElementById('v-title');
+        const desc = document.getElementById('v-desc');
+        const btn = document.getElementById('btn-next-phase');
+
+        if(this.molecularPhase === 0) {
+            title.textContent = "Closed Stoma (Night/Dry)";
+            desc.textContent = "On the underside of leaves are pores called stomata, flanked by two guard cells. When water is scarce or it's dark, they stay closed to conserve water.";
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        } 
+        else if (this.molecularPhase === 1) {
+            title.textContent = "Open Stoma (Daytime/Active)";
+            desc.textContent = "When the plant has plenty of water, the guard cells become turgid (swollen) and curve outward. This opens the stoma pore, allowing CO2 in and Water vapor out.";
+            
+            document.getElementById('gc-left').style.transform = "scaleX(1) translateX(-30px) rotate(-10deg)";
+            document.getElementById('gc-right').style.transform = "scaleX(-1) translateX(-30px) rotate(-10deg)";
+            document.getElementById('s-pore').style.width = "80px";
+
+            // Start baseline transpiration
+            this.animInterval = setInterval(() => this.spawnWaterMolecule(2500), 800);
+
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        }
+        else if (this.molecularPhase === 2) {
+            title.textContent = "Wind & Heat Effect";
+            desc.textContent = "Environmental factors like wind blow away humid air, and heat provides energy for evaporation. This creates a steep concentration gradient, pulling water molecules out rapidly.";
+            
+            btn.textContent = "FINISH LAB";
+            
+            // Speed up transpiration
+            clearInterval(this.animInterval);
+            this.animInterval = setInterval(() => this.spawnWaterMolecule(1000), 150);
+
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        }
+        else {
+            clearInterval(this.animInterval);
+            alert("Botany Lab Complete: You have mastered Transpiration mechanisms!");
+            location.reload();
+        }
+    }
+
+    waitSpeak(text) {
+        return new Promise(resolve => {
+            this.speak(text, resolve);
+        });
+    }
+}
+
+// Initialize Lab
+const lab = new TranspirationLab();
+</script>
+</body>
+</html>

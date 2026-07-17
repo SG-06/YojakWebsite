@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seed Germination Lab | Virtual Investigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --lab-bg: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--lab-bg); 
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar Styling */
+        .panel {
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .journal-panel {
+            border-right: none;
+            border-left: 1px solid var(--border);
+        }
+
+        .step-node {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            transition: 0.3s;
+        }
+
+        .step-node.active {
+            background: #eff6ff;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .step-node.completed {
+            color: var(--success);
+        }
+
+        /* Tool Tray */
+        .tool-tray {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .tool {
+            text-align: center;
+            cursor: grab;
+            transition: transform 0.2s;
+        }
+
+        .tool:hover { transform: translateY(-5px); }
+        .tool img { width: 50px; height: 50px; object-fit: contain; }
+        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; color: #475569; }
+
+        /* Setups */
+        .setup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .petri-dish {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 50%;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .petri-dish.drop-hover {
+            border-color: var(--accent);
+            background: #f0f7ff;
+        }
+
+        .dish-label {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #334155;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        /* Biology Engine */
+        .seed-element {
+            position: absolute;
+            transition: all 1s ease-in-out;
+        }
+
+        .root-path {
+            fill: none;
+            stroke: #fef3c7;
+            stroke-width: 3;
+            stroke-linecap: round;
+            transition: 1s;
+        }
+
+        .plumule-path {
+            fill: none;
+            stroke: #4ade80;
+            stroke-width: 3;
+            stroke-linecap: round;
+            transition: 1s;
+        }
+
+        /* Overlays */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        #log-container {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 6px;
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        .timeline-ctrl {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        input[type=range] { flex-grow: 1; cursor: pointer; }
+
+        .ruler {
+            position: absolute;
+            width: 200px;
+            height: 30px;
+            background: rgba(255, 255, 0, 0.3);
+            border-left: 2px solid red;
+            cursor: move;
+            z-index: 50;
+            display: none;
+            align-items: center;
+            padding-left: 5px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header class="h-[60px] bg-white border-b flex items-center justify-between px-6">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">G</div>
+        <h1 class="text-xl font-bold tracking-tight text-slate-800">Seed Germination <span class="text-blue-600">Virtual Lab</span></h1>
+    </div>
+    <div id="day-badge" class="bg-slate-100 px-4 py-1 rounded-full font-bold text-slate-600 border">DAY 0</div>
+</header>
+
+<div class="workspace-grid">
+    <!-- LEFT PANEL -->
+    <aside class="panel">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Progress Tracker</h3>
+        <div id="progress-list">
+            <div class="step-node active" id="step-0">1. Material Selection</div>
+            <div class="step-node" id="step-1">2. Experimental Setup</div>
+            <div class="step-node" id="step-2">3. Time Progression</div>
+            <div class="step-node" id="step-3">4. Microscopic Analysis</div>
+            <div class="step-node" id="step-4">5. Final Quiz</div>
+        </div>
+        <div class="mt-auto p-4 bg-blue-50 border border-blue-100 rounded-xl">
+            <p class="text-xs font-bold text-blue-600 mb-1">CURRENT TASK</p>
+            <p id="instruction-text" class="text-sm text-blue-900 leading-tight">Drag Cotton Wool to all petri dishes.</p>
+        </div>
+    </aside>
+
+    <!-- CENTER WORKSPACE -->
+    <main class="relative flex flex-col overflow-hidden bg-[#fdfdfd]">
+        <div id="lab-table" class="flex-grow relative">
+            
+            <div id="ruler-tool" class="ruler">📏 RULER (mm)</div>
+
+            <div class="setup-grid" id="setup-area">
+                <div class="setup-box text-center">
+                    <div class="petri-dish" data-id="A">
+                        <div class="dish-label">A: Control (Warm/Wet)</div>
+                    </div>
+                </div>
+                <div class="setup-box text-center">
+                    <div class="petri-dish" data-id="B">
+                        <div class="dish-label">B: No Water (Dry)</div>
+                    </div>
+                </div>
+                <div class="setup-box text-center">
+                    <div class="petri-dish" data-id="C">
+                        <div class="dish-label">C: No Oxygen (Submerged)</div>
+                    </div>
+                </div>
+                <div class="setup-box text-center">
+                    <div class="petri-dish" data-id="D">
+                        <div class="dish-label">D: Cold (4°C Fridge)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOOL TRAY -->
+        <div class="p-6" id="tray-container">
+            <div class="tool-tray">
+                <!-- Petri Dish tool removed as dishes are already present -->
+                <div class="tool" draggable="true" id="tool-cotton">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2800/2800143.png" alt="Cotton">
+                    <span>Cotton Wool</span>
+                </div>
+                <div class="tool" draggable="true" id="tool-seed">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1141/1141771.png" alt="Seed">
+                    <span>Bean Seeds</span>
+                </div>
+                <div class="tool" draggable="true" id="tool-water">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1048/1048966.png" alt="Water">
+                    <span>Water Dropper</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline-ctrl hidden" id="timeline-area">
+            <button id="play-btn" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center">▶</button>
+            <input type="range" id="time-slider" min="0" max="7" value="0">
+            <div class="flex gap-2">
+                <button onclick="lab.openView('internal')" class="px-4 py-2 border rounded-lg text-xs font-bold hover:bg-slate-50">VIEW INSIDE</button>
+                <button onclick="lab.openView('micro')" class="px-4 py-2 border rounded-lg text-xs font-bold hover:bg-slate-50">MICROSCOPE</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <aside class="panel journal-panel">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Laboratory Journal</h3>
+        <div id="log-container">
+            <div class="text-slate-400 italic mb-2">Lab initialized...</div>
+        </div>
+        <div class="mt-4 pt-4 border-t">
+            <h4 class="text-xs font-bold mb-2">OBSERVATION TABLE</h4>
+            <table class="w-full text-[10px] border-collapse border border-slate-200">
+                <thead>
+                    <tr class="bg-slate-50">
+                        <th class="border border-slate-200 p-1">Setup</th>
+                        <th class="border border-slate-200 p-1">Day 3</th>
+                        <th class="border border-slate-200 p-1">Day 7</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table">
+                    <tr><td class="border border-slate-200 p-1">A</td><td class="p-1">-</td><td class="p-1">-</td></tr>
+                    <tr><td class="border border-slate-200 p-1">B</td><td class="p-1">-</td><td class="p-1">-</td></tr>
+                    <tr><td class="border border-slate-200 p-1">C</td><td class="p-1">-</td><td class="p-1">-</td></tr>
+                    <tr><td class="border border-slate-200 p-1">D</td><td class="p-1">-</td><td class="p-1">-</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>
+
+<!-- MODALS -->
+<div id="overlay-internal" class="overlay" onclick="lab.closeModals()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h2 class="text-xl font-bold mb-4">Seed Internal Investigation</h2>
+        <div class="grid grid-cols-2 gap-8 items-center">
+            <div id="internal-viz" class="h-64 bg-blue-50 rounded-xl flex items-center justify-center">
+                <!-- SVG internal animation -->
+                <svg viewBox="0 0 200 200" width="200">
+                    <path d="M100,50 Q150,50 150,100 Q150,150 100,150 Q50,150 50,100 Q50,50 100,50" fill="#78350f"/>
+                    <circle cx="100" cy="100" r="10" fill="#fde047" id="internal-embryo">
+                        <animate attributeName="r" values="10;15;10" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+            </div>
+            <div>
+                <ul class="space-y-4 text-sm">
+                    <li class="p-3 bg-slate-50 rounded border-l-4 border-blue-500"><strong>Enzyme Activation:</strong> Gibberellic acid triggers amylase.</li>
+                    <li class="p-3 bg-slate-50 rounded border-l-4 border-green-500"><strong>Metabolism:</strong> Starch is converted to glucose for embryo growth.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="overlay-quiz" class="overlay">
+    <div class="modal-content">
+        <h2 class="text-xl font-bold mb-4">Final Analysis Quiz</h2>
+        <div id="quiz-body" class="space-y-4">
+            <p>Why did the seeds in Setup C (Submerged) fail to thrive despite having water?</p>
+            <button class="w-full text-left p-3 border rounded hover:bg-blue-50" onclick="lab.complete(true)">Lack of oxygen prevented aerobic respiration.</button>
+            <button class="w-full text-left p-3 border rounded hover:bg-blue-50" onclick="lab.complete(false)">The water was too cold.</button>
+        </div>
+    </div>
+</div>
+
+<script>
+class GerminationLab {
+    constructor() {
+        this.step = 0;
+        this.day = 0;
+        this.synth = window.speechSynthesis;
+        this.setupData = {
+            A: { cotton: false, water: false, seed: false, type: 'control' },
+            B: { cotton: false, water: false, seed: false, type: 'dry' },
+            C: { cotton: false, water: false, seed: false, type: 'submerged' },
+            D: { cotton: false, water: false, seed: false, type: 'cold' }
+        };
+        this.init();
+    }
+
+    init() {
+        this.setupDraggables();
+        this.setupDropZones();
+        this.speak("Welcome to the laboratory. Please start by adding cotton wool to your petri dishes.");
+        
+        document.getElementById('time-slider').addEventListener('input', (e) => {
+            this.updateDay(parseInt(e.target.value));
+        });
+
+        // Ruler movement
+        const ruler = document.getElementById('ruler-tool');
+        ruler.onmousedown = (e) => {
+            let shiftX = e.clientX - ruler.getBoundingClientRect().left;
+            let shiftY = e.clientY - ruler.getBoundingClientRect().top;
+            document.onmousemove = (ev) => {
+                ruler.style.left = ev.clientX - shiftX + 'px';
+                ruler.style.top = ev.clientY - shiftY + 'px';
+            };
+            document.onmouseup = () => document.onmousemove = null;
+        };
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.rate = 1.1;
+        this.synth.speak(utt);
+    }
+
+    log(msg, success = false) {
+        const container = document.getElementById('log-container');
+        const div = document.createElement('div');
+        div.className = `mb-1 ${success ? 'text-green-600 font-bold' : 'text-slate-700'}`;
+        div.innerHTML = `> ${msg}`;
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    setupDraggables() {
+        document.querySelectorAll('.tool').forEach(t => {
+            t.addEventListener('dragstart', (e) => e.dataTransfer.setData('toolId', t.id));
+        });
+    }
+
+    setupDropZones() {
+        document.querySelectorAll('.petri-dish').forEach(dish => {
+            dish.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dish.classList.add('drop-hover');
+            });
+            dish.addEventListener('dragleave', () => dish.classList.remove('drop-hover'));
+            dish.addEventListener('drop', (e) => {
+                dish.classList.remove('drop-hover');
+                const toolId = e.dataTransfer.getData('toolId');
+                this.handleDrop(dish, toolId);
+            });
+        });
+    }
+
+    handleDrop(dish, toolId) {
+        const id = dish.dataset.id;
+        const state = this.setupData[id];
+
+        if (toolId === 'tool-cotton') {
+            if (!dish.querySelector('.cotton-layer')) {
+                const cotton = document.createElement('div');
+                cotton.className = "cotton-layer absolute inset-4 rounded-full bg-slate-100 opacity-80 border border-slate-200";
+                dish.appendChild(cotton);
+                state.cotton = true;
+                this.log(`Placed cotton in Dish ${id}`);
+                this.speak("Good. Now add seeds to the cotton.");
+                document.getElementById('instruction-text').innerText = "Drag seeds onto the cotton wool.";
+            }
+        } 
+        else if (toolId === 'tool-seed') {
+            if (!state.cotton) return this.speak("Place cotton wool first.");
+            if (!dish.querySelector('.seed-group')) {
+                const group = document.createElement('div');
+                group.className = "seed-group relative z-10 w-full h-full flex items-center justify-center";
+                group.innerHTML = this.getSeedSVG(id);
+                dish.appendChild(group);
+                state.seed = true;
+                this.log(`Placed seeds in Dish ${id}`);
+                this.speak("Now use the water dropper, but remember Dish B must stay dry.");
+                document.getElementById('instruction-text').innerText = "Add water to all dishes EXCEPT Dish B.";
+            }
+        } 
+        else if (toolId === 'tool-water') {
+            if (id === 'B') {
+                this.speak("Dish B must remain dry for the investigation.");
+                this.log("Dish B must be dry.", true);
+                return;
+            }
+            if (!state.cotton) return this.speak("Place cotton wool first.");
+            dish.querySelector('.cotton-layer').style.backgroundColor = '#e0f2fe';
+            state.water = true;
+            this.log(`Added water to Dish ${id}`);
+            if (id === 'C') {
+                const waterTop = document.createElement('div');
+                waterTop.className = "absolute inset-0 bg-blue-400 opacity-30 rounded-full";
+                dish.appendChild(waterTop);
+            }
+        }
+
+        this.checkSetupProgress();
+    }
+
+    getSeedSVG(id) {
+        return `
+            <svg viewBox="0 0 100 100" class="w-16 h-16">
+                <path id="root-${id}" class="root-path" d="M50,50 Q50,50 50,50" />
+                <path id="plumule-${id}" class="plumule-path" d="M50,50 Q50,50 50,50" />
+                <ellipse cx="50" cy="50" rx="12" ry="8" fill="#78350f" id="body-${id}"/>
+            </svg>
+        `;
+    }
+
+    checkSetupProgress() {
+        const allSet = Object.values(this.setupData).every(s => s.seed && (s.type === 'dry' ? true : s.water));
+        if (allSet && this.step === 0) {
+            this.step = 1;
+            this.updateStepUI();
+            this.log("All setups ready. Beginning time progression.", true);
+            this.speak("Setups complete. You can now advance the timeline to Day 7.");
+            document.getElementById('tray-container').classList.add('hidden');
+            document.getElementById('timeline-area').classList.remove('hidden');
+            document.getElementById('instruction-text').innerText = "Advance the slider to observe biological changes.";
+        }
+    }
+
+    updateStepUI() {
+        document.querySelectorAll('.step-node').forEach((node, i) => {
+            node.className = 'step-node' + (i === this.step ? ' active' : i < this.step ? ' completed' : '');
+        });
+    }
+
+    updateDay(d) {
+        this.day = d;
+        document.getElementById('day-badge').innerText = `DAY ${d}`;
+        document.getElementById('ruler-tool').style.display = (d >= 3) ? 'flex' : 'none';
+        
+        this.animateGrowth('A', d, 1, 1);     // Control: Fast
+        this.animateGrowth('B', d, 0, 0);     // Dry: No growth
+        this.animateGrowth('C', d, 0.2, 0);   // Submerged: Swell then rot
+        this.animateGrowth('D', d, 0.4, 0.2); // Cold: Slow
+        
+        if (d === 7) {
+            this.step = 3;
+            this.updateStepUI();
+            this.log("Investigation complete. Perform final analysis.", true);
+            setTimeout(() => { document.getElementById('overlay-quiz').style.display = 'flex'; }, 3000);
+        }
+    }
+
+    animateGrowth(id, day, rSpeed, pSpeed) {
+        const root = document.getElementById(`root-${id}`);
+        const plum = document.getElementById(`plumule-${id}`);
+        const body = document.getElementById(`body-${id}`);
+
+        if (!root) return;
+
+        // Swelling
+        const swell = 1 + (day * 0.05);
+        body.style.transform = `scale(${swell})`;
+
+        if (id === 'C' && day > 3) {
+            body.style.fill = '#451a03'; // Rotting color
+        }
+
+        // Root Growth (Day 3+)
+        if (day >= 3 && rSpeed > 0) {
+            const rLen = (day - 2) * 15 * rSpeed;
+            root.setAttribute('d', `M50,50 Q${50+Math.sin(day)*10},${50+rLen/2} 50,${50+rLen}`);
+        } else {
+            root.setAttribute('d', 'M50,50 Q50,50 50,50');
+        }
+
+        // Plumule Growth (Day 5+)
+        if (day >= 5 && pSpeed > 0) {
+            const pLen = (day - 4) * 12 * pSpeed;
+            plum.setAttribute('d', `M50,50 Q${50-Math.cos(day)*5},${50-pLen/2} 50,${50-pLen}`);
+        } else {
+            plum.setAttribute('d', 'M50,50 Q50,50 50,50');
+        }
+    }
+
+    openView(type) {
+        document.getElementById(`overlay-${type === 'internal' ? 'internal' : 'internal'}`).style.display = 'flex';
+        this.log(`Opening ${type} investigation.`);
+    }
+
+    closeModals() {
+        document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+    }
+
+    complete(correct) {
+        if (correct) {
+            alert("Correct! Investigation Successful. You have demonstrated the requirements for germination: Water, Oxygen, and Warmth.");
+            location.reload();
+        } else {
+            this.speak("Incorrect. Remember that seeds are living organisms that need to breathe oxygen to release energy.");
+        }
+    }
+}
+
+const lab = new GerminationLab();
+</script>
+</body>
+</html>

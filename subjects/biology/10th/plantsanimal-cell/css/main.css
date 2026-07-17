@@ -1,0 +1,266 @@
+/* --- UNIVERSAL THEME VARIABLES & FALLBACKS --- */
+:root {
+    --medical-blue: #007070;
+    --studio-bg: #f0f4f8;
+    --panel-bg: rgba(255, 255, 255, 0.7);
+    --text-main: #2c3e50;
+    --text-light: #5f7d95;
+    --border-color: #d1d9e6;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --accent: #007070;
+}
+
+/* --- THEME OVERRIDES --- */
+body[data-theme="pink"] {
+    --medical-blue: #d63384;
+    --studio-bg: #fce4ec;
+    --panel-bg: rgba(255, 255, 255, 0.8);
+    --text-main: #880e4f;
+    --accent: #ff4081;
+}
+
+body[data-theme="dark"] {
+    --medical-blue: #00d1ff;
+    --studio-bg: #1a1a1a;
+    --panel-bg: rgba(40, 40, 40, 0.8);
+    --text-main: #e0e0e0;
+    --accent: #00d1ff;
+    --border-color: #333;
+}
+
+body[data-theme="night"] {
+    --medical-blue: #7000ff;
+    --studio-bg: #050505;
+    --panel-bg: rgba(10, 10, 20, 0.9);
+    --text-main: #ffffff;
+    --accent: #7000ff;
+    --border-color: #222;
+}
+
+/* --- BASE STYLES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+body, html {
+    height: 100%; width: 100%;
+    background-color: var(--studio-bg);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* --- SCREEN MANAGEMENT --- */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    background: var(--studio-bg);
+    animation: fadeIn 0.6s ease-out;
+}
+.screen.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* --- BOOT SCREEN --- */
+.boot-screen {
+    position: fixed; inset: 0; background: #ffffff; z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease;
+}
+.logo-text { font-weight: 800; font-size: 1.8rem; letter-spacing: 4px; color: #007070; }
+.loader-track { width: 250px; height: 4px; background: #eef2f7; margin: 20px 0; border-radius: 10px; overflow: hidden; }
+.boot-bar { width: 0%; height: 100%; background: #007070; transition: width 0.4s; }
+
+/* --- SELECTION CARDS --- */
+.selection-overlay {
+    height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.card-container { display: flex; gap: 30px; margin-top: 40px; }
+.mode-card {
+    width: 260px; padding: 40px 20px; background: white;
+    border: 1px solid var(--border-color); border-radius: 15px;
+    text-align: center; cursor: pointer; transition: 0.3s;
+    box-shadow: var(--shadow);
+}
+.mode-card:hover { transform: translateY(-10px); border-color: var(--medical-blue); }
+
+/* --- LAB WORKSPACE --- */
+.slide-zone {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; /* Changed from 45% to 50% */
+    transform: translate(-50%, -50%);
+    width: 450px; 
+    height: 180px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border: 2px dashed var(--border-color); 
+    border-radius: 20px;
+}
+
+.glass-slide {
+    position: relative; /* Added to act as an anchor */
+    width: 280px; 
+    height: 80px; 
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.8); 
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+.blob, .stain, .coverslip { 
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering math */
+    display: none; 
+}
+
+.blob { 
+    width: 45px; 
+    height: 35px; 
+    border-radius: 50%; 
+    filter: blur(3px); 
+    z-index: 1; 
+}
+
+.stain { 
+    width: 50px; 
+    height: 40px; 
+    border-radius: 50%; 
+    opacity: 0.6; 
+    z-index: 2; 
+}
+
+.coverslip { 
+    width: 60px; 
+    height: 60px; 
+    background: rgba(255,255,255,0.3); 
+    border: 1px solid rgba(255,255,255,0.8); 
+    z-index: 3; 
+}
+
+.micro-stage-target {
+    position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+    width: 200px; text-align: center; opacity: 0.3; transition: 0.5s;
+}
+.stage-ring {
+    width: 150px; height: 150px; border: 4px dashed var(--medical-blue);
+    border-radius: 50%; margin: 0 auto 15px; animation: rotate 15s linear infinite;
+}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* --- MICROSCOPE FOCUS --- */
+#focus-screen.active { display: flex; align-items: center; justify-content: center; }
+.eyepiece {
+    width: 500px; height: 500px; border: 15px solid #ffffff; border-radius: 50%;
+    overflow: hidden; position: relative; box-shadow: inset 0 0 100px rgba(0,0,0,0.5), var(--shadow);
+    background: #000; transition: transform 1.2s ease-in-out, opacity 1s;
+}
+#micro-view-img { width: 130%; height: 130%; background-size: cover; position: absolute; top: -15%; left: -15%; filter: blur(25px); }
+
+.focus-controls { margin-left: 80px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.knob { width: 120px; height: 120px; background: white; border: 5px solid var(--medical-blue); border-radius: 50%; position: relative; box-shadow: var(--shadow); }
+.knob::after { content: ''; position: absolute; top: 10px; left: 50%; width: 5px; height: 20px; background: var(--medical-blue); transform: translateX(-50%); }
+
+/* --- 3D ANALYSIS HUD --- */
+.hud-nav {
+    position: absolute; top: 30px; left: 30px; right: 30px;
+    display: flex; justify-content: space-between; z-index: 1000;
+}
+.hud-btn {
+    background: var(--panel-bg); border: 1px solid var(--border-color);
+    color: var(--text-main); padding: 10px 25px; border-radius: 5px;
+    cursor: pointer; font-weight: bold; letter-spacing: 1px; transition: 0.3s;
+    backdrop-filter: blur(10px);
+}
+.hud-btn.active { background: var(--medical-blue); color: white; border-color: var(--medical-blue); box-shadow: 0 0 15px var(--medical-blue); }
+.hud-btn.exit { border-color: #e74c3c; color: #e74c3c; }
+
+.info-hud, .specs-hud {
+    position: absolute; background: var(--panel-bg);
+    backdrop-filter: blur(15px); border-radius: 8px;
+    border-left: 6px solid var(--medical-blue) !important;
+    padding: 25px; box-shadow: var(--shadow); z-index: 1000;
+    transition: transform 0.4s ease, opacity 0.4s;
+}
+.info-hud { top: 120px; left: 30px; width: 350px; }
+.specs-hud { bottom: 40px; left: 30px; width: 280px; }
+
+/* --- THEME SWITCHER --- */
+.theme-switcher {
+    position: absolute; bottom: 40px; right: 40px;
+    display: flex; gap: 15px; z-index: 2000;
+    background: var(--panel-bg); padding: 12px; border-radius: 40px;
+    backdrop-filter: blur(10px); box-shadow: var(--shadow);
+}
+.theme-circle { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid white; transition: 0.2s; }
+.theme-circle:hover { transform: scale(1.2); }
+.theme-circle.default { background: #007070; }
+.theme-circle.pink { background: #d63384; }
+.theme-circle.dark { background: #00d1ff; }
+.theme-circle.night { background: #7000ff; }
+
+/* --- MODEL LOADING SCREEN --- */
+.model-loader {
+    position: absolute; inset: 0; background: var(--studio-bg);
+    z-index: 2500; display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.5s ease;
+}
+.model-loader.hidden { opacity: 0; pointer-events: none; }
+.loader-text {
+    font-weight: bold; letter-spacing: 2px; color: var(--medical-blue);
+    margin-top: 25px; font-size: 0.9rem; text-align: center;
+}
+.scanner-line {
+    width: 200px; height: 2px; background: var(--medical-blue);
+    margin: 0 auto; position: relative; box-shadow: 0 0 15px var(--medical-blue);
+    animation: scan 2s ease-in-out infinite;
+}
+@keyframes scan { 
+    0%, 100% { transform: translateY(-20px); opacity: 0.2; } 
+    50% { transform: translateY(20px); opacity: 1; } 
+}
+
+/* --- FLOATING CREDITS --- */
+.model-credits {
+    position: absolute; bottom: 10px; width: 100%;
+    text-align: center; z-index: 2000; pointer-events: none;
+}
+.model-credits p {
+    display: inline-block; background: rgba(0,0,0,0.1); padding: 5px 15px;
+    border-radius: 20px; backdrop-filter: blur(5px); font-size: 0.65rem; color: var(--text-light);
+    pointer-events: auto;
+}
+.model-credits a { color: var(--medical-blue); text-decoration: none; font-weight: bold; }
+.model-credits .hidden { display: none; }
+
+/* --- 3D HOTSPOTS --- */
+.Hotspot {
+    background: var(--medical-blue); border-radius: 50%; width: 22px; height: 22px;
+    border: 3px solid #fff; box-shadow: 0 0 15px rgba(0,0,0,0.3); cursor: pointer;
+    transition: transform 0.3s ease; position: relative;
+}
+.HotspotAnnotation {
+    background: var(--panel-bg); color: var(--text-main);
+    padding: 8px 16px; border-radius: 6px; border-left: 4px solid var(--medical-blue);
+    font-weight: bold; backdrop-filter: blur(15px); pointer-events: none;
+    position: absolute; left: 28px; top: 50%; transform: translateY(-50%);
+    white-space: nowrap; width: max-content; box-shadow: var(--shadow);
+}
+
+/* --- VIEWER & TOOLS --- */
+model-viewer { width: 100%; height: 100vh; display: block; }
+.tool-tray {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 30px; padding: 15px 40px; background: white;
+    border-radius: 50px; box-shadow: var(--shadow);
+}
+.tool { text-align: center; cursor: grab; }
+.tool-icon { font-size: 2rem; }
+.btn-primary { background: var(--medical-blue); color: white; padding: 15px 30px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; }
+.hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+.zooming-in { transform: scale(8); opacity: 0; pointer-events: none; }

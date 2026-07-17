@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOJAK Virtual Lab | Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 3D Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+</head>
+<body>
+    <!-- Vanta Layer -->
+    <div id="vanta-canvas"></div>
+
+    <!-- UI Sounds -->
+    <audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="successSound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+
+    <header class="fixed-header">
+        <div class="container-width">
+            <span class="brand">YOJAK <b>Portal</b></span>
+            <button id="themeBtn" class="circle-btn"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </header>
+
+    <main class="scroll-wrapper">
+        <div class="glass-card">
+            <!-- Left Side: Static Hero -->
+            <div class="hero-box">
+                <div class="static-logo-container">
+                    <img src="login.png" alt="YOJAK Logo" class="main-logo">
+                </div>
+                <h1>Virtual Lab</h1>
+                <p>Interactive simulations for next-gen learning. Access your research dashboard below.</p>
+            </div>
+
+            <!-- Right Side: Form -->
+            <div class="form-box">
+                <h2>Welcome</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <span id="togglePassword"><i class="fa-solid fa-eye"></i></span>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <label class="custom-check">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember Me
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="loginBtn">
+                        <span class="btn-text">Login</span>
+                    </button>
+
+                    <div id="loader"></div>
+                    <p id="error-message"></p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed-footer">
+        <div class="container-width footer-grid">
+            <div class="footer-col">
+                <h4>About Us</h4>
+                <p>YOJAK Virtual Lab is a non-profit educational portal providing students with high-fidelity simulations. We bridge the gap between theory and practical discovery.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Licensing</h4>
+                <p>All elements are open source. Credit attributed to rightful owners. Non-profit educational portal. For inquiries, please contact our administrative desk.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="logindata.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

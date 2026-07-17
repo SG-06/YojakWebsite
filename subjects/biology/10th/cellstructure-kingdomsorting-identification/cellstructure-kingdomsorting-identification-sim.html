@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioClassify: Taxonomy Virtual Lab</title>
+    <style>
+        :root {
+            --primary: #2e7d32; /* Forest Green */
+            --secondary: #ef6c00; /* Orange */
+            --success: #27ae60;
+            --table-top: #f5f5dc; /* Beige */
+            --wood-trim: #5d4037;
+            --dna-purple: #8e44ad;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #1b5e20; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 280px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .lab-icon { background: var(--primary); color: white; padding: 5px 12px; border-radius: 8px; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff3e0; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; }
+
+        /* Sorting Bins */
+        .sorting-area {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .bin {
+            width: 200px;
+            height: 250px;
+            border: 3px dashed #7f8c8d;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: rgba(255,255,255,0.5);
+            padding-top: 10px;
+        }
+        .bin h3 { margin: 5px 0; font-size: 0.9rem; color: #444; }
+
+        /* Tools / Specimens */
+        .tool-tray { 
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            display: flex; gap: 20px; background: #fff; padding: 15px 30px; 
+            border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            border: 2px solid var(--primary); 
+        }
+
+        .specimen { 
+            width: 70px; height: 70px; background: #eee; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; 
+            flex-direction: column; cursor: grab; font-size: 2rem; 
+            border: 1px solid #ddd; transition: 0.2s;
+        }
+        .specimen:hover { transform: scale(1.1); background: #fff; }
+        .specimen span { font-size: 0.6rem; font-weight: bold; text-transform: uppercase; margin-top: 5px; }
+
+        /* Final View Overlay */
+        #id-view { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; 
+            display: none; flex-direction: column; align-items: center; justify-content: center; color: white;
+        }
+        .id-card {
+            background: white; color: #333; padding: 30px; border-radius: 15px; width: 400px; text-align: center;
+        }
+        .id-card img { width: 150px; }
+
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; background: var(--primary); color: white; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="lab-icon">B</span> BioClassify</div>
+        <h2>Lab Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Lab Initialization</h2>
+            <p id="task-desc">Loading specimens...</p>
+        </header>
+
+        <div class="sorting-area">
+            <div class="bin" id="bin-prokaryote" data-type="prokaryote">
+                <h3>PROKARYOTES</h3>
+                <p style="font-size: 0.7rem;">(No Nucleus)</p>
+            </div>
+            <div class="bin" id="bin-eukaryote" data-type="eukaryote">
+                <h3>EUKARYOTES</h3>
+                <p style="font-size: 0.7rem;">(Has Nucleus)</p>
+            </div>
+        </div>
+
+        <div class="tool-tray" id="tray">
+            <div class="specimen" draggable="true" id="spec-bacteria" data-type="prokaryote">🦠<span>Bacteria</span></div>
+            <div class="specimen" draggable="true" id="spec-mushroom" data-type="eukaryote">🍄<span>Fungi</span></div>
+            <div class="specimen" draggable="true" id="spec-tiger" data-type="eukaryote">🐅<span>Animal</span></div>
+            <div class="specimen" draggable="true" id="spec-tree" data-type="eukaryote">🌳<span>Plant</span></div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<!-- Final Classification View -->
+<div id="id-view">
+    <div class="id-card">
+        <h2 style="color: var(--primary)">Specimen Identified!</h2>
+        <div id="result-emoji" style="font-size: 5rem;">🐅</div>
+        <div id="tax-details" style="text-align: left; margin: 20px 0; line-height: 1.6;">
+            <strong>Domain:</strong> Eukarya<br>
+            <strong>Kingdom:</strong> Animalia<br>
+            <strong>Phylum:</strong> Chordata<br>
+            <strong>Class:</strong> Mammalia
+        </div>
+        <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
+    </div>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, title: "Cellular Structure", instruction: "Sort specimens based on the presence of a nucleus.", narration: "First, let's distinguish between Prokaryotes and Eukaryotes." },
+        { id: 1, title: "Kingdom Sorting", instruction: "Drag the Eukaryotes to the Analysis Zone.", narration: "Excellent. Now we must classify the multi-cellular organisms." },
+        { id: 2, title: "Identification", instruction: "Click the Animal specimen for deep analysis.", narration: "Let's look at the taxonomic hierarchy of the Bengal Tiger." }
+    ]
+};
+
+class ClassificationLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.sortedCount = 0;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+    }
+
+    renderStepList() {
+        const container = document.getElementById('step-list');
+        container.innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        this.speak(step.narration);
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        this.synth.speak(utterance);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.addEventListener('dragstart', e => {
+            if (e.target.classList.contains('specimen')) {
+                e.dataTransfer.setData('text', e.target.id);
+            }
+        });
+
+        const bins = document.querySelectorAll('.bin');
+        bins.forEach(bin => {
+            bin.addEventListener('dragover', e => e.preventDefault());
+            bin.addEventListener('drop', e => {
+                e.preventDefault();
+                const specId = e.dataTransfer.getData('text');
+                this.handleDrop(specId, bin.id);
+            });
+        });
+    }
+
+    handleDrop(specId, binId) {
+        const specimen = document.getElementById(specId);
+        const bin = document.getElementById(binId);
+        
+        if (specimen.dataset.type === bin.dataset.type) {
+            bin.appendChild(specimen);
+            this.log(`Correct: ${specimen.innerText} is a ${bin.dataset.type}.`);
+            this.sortedCount++;
+            
+            if (this.sortedCount === 4) {
+                this.advanceStep();
+            }
+        } else {
+            this.log(`Incorrect: Check the cellular structure of ${specimen.innerText} again.`);
+        }
+    }
+
+    advanceStep() {
+        this.stepIdx++;
+        if (this.stepIdx < LAB_DATA.steps.length) {
+            this.updateStepUI();
+            if (this.stepIdx === 1) {
+                this.prepAnalysis();
+            }
+        }
+    }
+
+    prepAnalysis() {
+        this.log("All specimens sorted. Ready for Deep Identification.");
+        const tiger = document.getElementById('spec-tiger');
+        tiger.style.border = "3px solid var(--secondary)";
+        tiger.style.cursor = "pointer";
+        tiger.onclick = () => {
+            document.getElementById('id-view').style.display = 'flex';
+            this.speak("The Bengal Tiger belongs to Domain Eukarya, Kingdom Animalia, and Class Mammalia.");
+        };
+    }
+}
+
+const lab = new ClassificationLab();
+</script>
+</body>
+</html>

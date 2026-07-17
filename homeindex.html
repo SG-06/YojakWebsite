@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOJAK Virtual Lab</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Container -->
+    <div id="vanta-bg"></div>
+
+  <!-- Background Switcher UI -->
+
+        <div class="bg-menu" id="bgMenu">
+            <div class="menu-header">Select Theme</div>
+            <button onclick="changeBg('net')">🌐 Network (Default)</button>
+            <button onclick="changeBg('cells')">🧬 Organic Cells</button>
+            <button onclick="changeBg('waves')">🌊 Physics Waves</button>
+            <button onclick="changeBg('halo')">✨ Sci-Fi Halo</button>
+            <button onclick="changeBg('dots')">⚛️ Atomic Dots</button>
+        </div>
+    </div>
+
+    <header class="hero">
+        <a href="./SWARUP-Website/files/index.html" class="back-btn"> E-Resources</a>
+        <img src="assets/login.png" alt="YOJAK Logo" class="logo">
+        <h1>YOJAK Virtual Lab</h1>
+        <p>Explore Interactive Simulations, Experiments and Learning Resources</p>
+    </header>
+
+    <section class="dashboard">
+
+        <!-- Main Subject Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="physics">Physics</button>
+            <button class="tab-btn" data-tab="chemistry">Chemistry</button>
+            <button class="tab-btn" data-tab="biology">Biology</button>
+            <button class="tab-btn" data-tab="english">English</button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search experiments and activities...">
+        </div>
+
+        <!-- PHYSICS SECTION -->
+        <div class="tab-content active" id="physics">
+            <div class="class-selector" data-subject="physics">
+                
+                <button class="class-btn active" data-class="10th">10th</button>
+                <button class="class-btn" data-class="12th">12th</button>
+            </div>
+            <div class="experiment-list" id="physics-list">
+                <!-- Cards injected here -->
+            </div>
+        </div>
+
+        <!-- CHEMISTRY SECTION -->
+        <div class="tab-content" id="chemistry">
+            <div class="class-selector" data-subject="chemistry">
+                
+                <button class="class-btn active" data-class="10th">10th</button>
+                <button class="class-btn" data-class="12th">12th</button>
+            </div>
+            <div class="experiment-list" id="chemistry-list">
+                <!-- Cards injected here -->
+            </div>
+        </div>
+
+        <!-- BIOLOGY SECTION -->
+        <div class="tab-content" id="biology">
+            <div class="class-selector" data-subject="biology">
+
+                <button class="class-btn active" data-class="10th">10th</button>
+                <button class="class-btn" data-class="12th">12th</button>
+            </div>
+            <div class="experiment-list" id="biology-list">
+                <!-- Cards injected here -->
+            </div>
+        </div>
+
+        <!-- ENGLISH SECTION -->
+          <div class="tab-content" id="english">
+    <div class="experiment-card special-card">
+        <div>
+            <h3>English Language Lab</h3>
+            <p>Interactive modules for grammar, comprehension, and literary analysis common for all classes.</p>
+        </div>
+        <a href="./subjects/english/index.html" class="start-btn">Go to English Lab →</a>
+    </div>
+</div>
+
+    </section>
+
+    <footer>
+        <h3>YOJAK Virtual Lab</h3>
+        <p>Empowering Communities Through Interactive Learning</p>
+        <p>© 2025 YOJAK Virtual Lab. All Rights Reserved.</p>
+    </footer>
+
+  <!-- 1. Three.js Core -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<!-- 2. Vanta Effects (Added Clouds and Fog) -->
+
+    <!-- 3. App Logic -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

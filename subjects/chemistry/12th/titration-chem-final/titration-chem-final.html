@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TitrationLab · KMnO₄ Volumetric Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="titration-chem-final.css">
+</head>
+<body data-theme="dark">
+
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="../../../../homeindex.html" class="back-btn">← Back to Dashboard</a>
+  </div>
+  <div class="topbar-center">
+    <span class="experiment-chip">EXPERIMENT <strong>KMnO₄ Volumetric Analysis · Titration</strong></span>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" id="theme-toggle" title="Toggle theme">☀</button>
+    <button class="pill-btn" id="reset-lab">↺ Reset Lab</button>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ===== EQUIPMENT SHELF ===== -->
+  <aside class="shelf">
+    <h2>Equipment Shelf</h2>
+    <p class="shelf-sub">Select analyte, set up apparatus, run the titration</p>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">1. LAB MODE</span></div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="teach">
+          <span class="mode-icon">🎓</span>
+          <span class="mode-text"><strong>Teaching Mode</strong><small>Set & verify concentration</small></span>
+        </button>
+        <button class="mode-btn" data-mode="test">
+          <span class="mode-icon">🔍</span>
+          <span class="mode-text"><strong>Test Mode</strong><small>Find unknown concentration</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">2. ANALYTE SELECTION</span></div>
+      <div class="analyte-toggle" id="analyte-toggle">
+        <button class="analyte-btn active" data-analyte="oxalic">
+          <strong>Oxalic Acid</strong>
+          <small>H₂C₂O₄ · reducing agent</small>
+        </button>
+        <button class="analyte-btn" data-analyte="mohrs">
+          <strong>Mohr's Salt</strong>
+          <small>FeSO₄·(NH₄)₂SO₄·6H₂O</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="shelf-section" id="teach-conc-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">3. ANALYTE CONCENTRATION</span>
+        <span class="shelf-hint" id="conc-hint">set value</span>
+      </div>
+      <div class="conc-slider-wrap">
+        <input type="range" class="conc-slider" id="conc-slider" min="0.02" max="0.08" step="0.01" value="0.05">
+        <div class="conc-display"><span id="conc-value">0.05</span> M</div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label" id="step-label">4. APPARATUS</span></div>
+      <div class="reagent-card" draggable="true" data-item="burette" id="burette-card">
+        <div class="reagent-icon burette-icon"></div>
+        <div class="reagent-text">
+          <strong>Burette + Stand</strong>
+          <small>25 mL, filled with KMnO₄</small>
+        </div>
+      </div>
+      <div class="reagent-card disabled" draggable="true" data-item="flask" id="flask-card">
+        <div class="reagent-icon flask-icon"></div>
+        <div class="reagent-text">
+          <strong>Conical Flask</strong>
+          <small>250 mL Erlenmeyer</small>
+        </div>
+      </div>
+      <div class="reagent-card disabled" draggable="true" data-item="pipette" id="pipette-card">
+        <div class="reagent-icon dropper-icon acid"></div>
+        <div class="reagent-text">
+          <strong>Pipette (10 mL)</strong>
+          <small>transfer analyte to flask</small>
+        </div>
+      </div>
+      <div class="reagent-card disabled" draggable="true" data-item="indicator" id="indicator-card">
+        <div class="reagent-icon dropper-icon silver"></div>
+        <div class="reagent-text">
+          <strong>Dilute H₂SO₄</strong>
+          <small>acidify the analyte</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">5. TITRATION READINGS</span></div>
+      <div class="equation-panel">
+        <div class="equation-row" id="balanced-eq">— select analyte to see equation —</div>
+        <div class="equation-divider"></div>
+        <div class="readout-row"><span>Analyte</span><strong id="ro-analyte">—</strong></div>
+        <div class="readout-row"><span>Volume dispensed</span><strong id="ro-volume">0.00 mL</strong></div>
+        <div class="readout-row"><span>Endpoint</span><strong id="ro-endpoint">—</strong></div>
+        <div class="readout-row"><span>Calculated M</span><strong id="ro-molarity">—</strong></div>
+        <div class="equation-divider"></div>
+        <div class="equation-calc" id="equation-calc">Set KMnO₄ = 0.10 M · select analyte to see substitution</div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">6. EXPLANATION VIDEO</span></div>
+      <a class="video-link-card" href="https://youtu.be/-MhCWZDzlwY?si=nFdEqj_htx0znxDC" target="_blank" rel="noopener noreferrer">
+        <div class="video-link-icon">▶</div>
+        <div class="video-link-text">
+          <strong>Watch on YouTube</strong>
+          <small>KMnO₄ titration — full procedure explained</small>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== ACTIVE WORKBENCH ===== -->
+  <section class="workbench">
+    <div class="workbench-head">
+      <h2>Active Workbench</h2>
+      <p class="shelf-sub">Follow Iris-sensei's instructions below</p>
+    </div>
+
+    <div class="step-tracker" id="step-tracker">
+      <div class="step active" data-step="1"><span class="step-num">1</span><span class="step-name">Set Up</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2"><span class="step-num">2</span><span class="step-name">Burette</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3"><span class="step-num">3</span><span class="step-name">Flask</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="4"><span class="step-num">4</span><span class="step-name">Pipette</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="5"><span class="step-num">5</span><span class="step-name">Acidify</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="6"><span class="step-num">6</span><span class="step-name">Titrate</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="7"><span class="step-num">7</span><span class="step-name">Conclude</span></div>
+    </div>
+
+    <!-- Iris card — clickable -->
+    <div class="iris-card" id="iris-card-trigger">
+      <div class="iris-avatar">🧪</div>
+      <div class="iris-text">
+        <span class="iris-label">IRIS · YOUR LAB GUIDE <span class="iris-expand-hint">· tap to learn more ▾</span></span>
+        <p id="iris-message">Select your analyte and lab mode, then drag the <strong>Burette</strong> onto the bench to begin.</p>
+      </div>
+    </div>
+
+    <!-- Iris knowledge panel -->
+    <div class="iris-panel" id="iris-panel" hidden>
+      <div class="iris-panel-tabs">
+        <button class="iris-tab active" data-tab="theory">📖 Theory</button>
+        <button class="iris-tab" data-tab="materials">🧪 Materials</button>
+        <button class="iris-tab" data-tab="procedure">📋 Procedure</button>
+      </div>
+      <div class="iris-tab-content" id="iris-tab-content"></div>
+    </div>
+
+    <div class="instruction-card">
+      <span class="instruction-icon">→</span>
+      <div>
+        <strong id="instruction-title">Step 1: Choose analyte and drag the Burette</strong>
+        <p id="instruction-body">Select Oxalic Acid or Mohr's Salt above, then drag the Burette + Stand card onto the bench to set up the apparatus.</p>
+      </div>
+    </div>
+
+    <!-- Main sim area: two columns -->
+    <div class="sim-stage">
+
+      <div class="sim-left">
+        <!-- Observation log -->
+        <div class="result-card">
+          <h3>Observation Log</h3>
+          <div class="log-row"><span>Analyte used</span><strong id="log-analyte">—</strong></div>
+          <div class="log-row"><span>Volume of analyte</span><strong id="log-vol-analyte">—</strong></div>
+          <div class="log-row"><span>KMnO₄ titre (mL)</span><strong id="log-titre">—</strong></div>
+          <div class="log-row"><span>Endpoint colour</span><strong id="log-colour">—</strong></div>
+        </div>
+
+        <!-- Levers — only shown when titrating -->
+        <div class="lever-panel" id="lever-panel" hidden>
+          <div class="lever-group">
+            <label class="lever-label">
+              <span>💧 Flow Rate</span>
+              <span class="lever-value" id="flow-value">Closed</span>
+            </label>
+            <input type="range" class="lever-slider" id="flow-lever" min="0" max="3" step="1" value="0">
+            <div class="lever-ticks">
+              <span>Off</span><span>Slow</span><span>Medium</span><span>Fast</span>
+            </div>
+          </div>
+          <div class="lever-group">
+            <label class="lever-label">
+              <span>🌀 Shaking</span>
+              <span class="lever-value" id="shake-value">Still</span>
+            </label>
+            <input type="range" class="lever-slider" id="shake-lever" min="0" max="2" step="1" value="1">
+            <div class="lever-ticks">
+              <span>Still</span><span>Gentle</span><span>Vigorous</span>
+            </div>
+          </div>
+          <button class="stop-btn" id="stop-titration-btn">⏹ Stop — Record Endpoint</button>
+        </div>
+
+        <!-- Test mode calculation panel -->
+        <div class="test-mode-panel" id="test-mode-panel" hidden>
+          <h3>Calculate the Concentration</h3>
+          <p id="test-mode-hint">Use the titre volume you recorded and the equation below to calculate the molarity of the analyte.</p>
+          <div class="calc-formula" id="calc-formula"></div>
+          <div class="calc-inputs">
+            <label class="calc-label">Your answer (M):
+              <input type="number" class="calc-input" id="student-answer" step="0.01" min="0" max="1" placeholder="e.g. 0.10">
+            </label>
+            <button class="answer-btn" id="submit-calc-btn">Check</button>
+          </div>
+          <div class="verdict-banner" id="verdict-banner" hidden></div>
+        </div>
+
+        <div class="eval-card">
+          <div class="eval-card-head" id="eval-toggle">
+            <span>📝 Evaluation Questions</span>
+            <span class="eval-chevron" id="eval-chevron">▾</span>
+          </div>
+          <div class="eval-body" id="eval-body"></div>
+        </div>
+      </div>
+
+      <!-- Canvas simulation -->
+      <div class="sim-right">
+        <div class="bench-surface tit-bench" id="bench-surface">
+          <canvas id="tit-canvas"></canvas>
+          <div class="drop-hint" id="bench-hint">Drag apparatus here to set up</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="verdict-banner-main" id="verdict-banner-main" hidden></div>
+  </section>
+</main>
+
+<script src="titration-chem-final.js"></script>
+</body>
+</html>

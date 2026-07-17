@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetics Lab: Mendel's Monohybrid Cross</title>
+    <style>
+        :root {
+            --primary: #27ae60; /* Green for pea plants */
+            --secondary: #f39c12; /* Orange for highlights */
+            --success: #2ecc71;
+            --table-top: #eceff1;
+            --wood-trim: #5d4037;
+            --allele-dom: #e91e63;
+            --allele-rec: #2196f3;
+            --bg-dark: #121212;
+            --ui-panel: #ffffff;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: var(--bg-dark); 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 300px; 
+            background: var(--ui-panel); 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .lab-icon { background: var(--primary); color: white; padding: 5px 12px; border-radius: 8px; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff5f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: radial-gradient(circle, #cfd8dc 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; }
+
+        /* Plant Zones */
+        .breeding-zone {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 60px;
+        }
+
+        .pot {
+            width: 180px;
+            height: 220px;
+            border: 3px dashed #7f8c8d;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            background: rgba(255,255,255,0.3);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .pot::after { content: "PARENT ZONE"; position: absolute; bottom: -25px; font-weight: bold; font-size: 0.7rem; color: #7f8c8d; }
+
+        .pea-plant { width: 120px; transition: transform 0.3s; cursor: grab; }
+        .pea-plant svg { width: 100%; height: auto; }
+
+        /* Tool Tray */
+        .tool-tray { 
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            display: flex; gap: 20px; background: #fff; padding: 15px 30px; 
+            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); 
+        }
+        .tool { text-align: center; cursor: grab; padding: 10px; border-radius: 10px; border: 1px solid #eee; transition: 0.2s; }
+        .tool:hover { background: #f0fdf4; transform: translateY(-5px); }
+        .tool span { display: block; font-size: 0.7rem; font-weight: 800; margin-top: 5px; }
+
+        /* Fullscreen Analysis View */
+        #analysis-view { 
+            position: fixed; inset: 0; background: #0b1014; z-index: 2000; display: none; 
+            flex-direction: column; color: white;
+        }
+
+        .analysis-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: space-around; padding: 40px; }
+
+        /* Punnett Square */
+        .punnett-container {
+            display: grid;
+            grid-template-columns: 60px 120px 120px;
+            grid-template-rows: 60px 120px 120px;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .p-cell {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .p-header { background: none; color: var(--secondary); }
+        .p-result { background: rgba(39, 174, 96, 0.1); border: 1px solid var(--primary); flex-direction: column; }
+        .p-result .genotype { font-size: 2.5rem; letter-spacing: 5px; }
+        .p-result .phenotype-label { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
+
+        .allele-token {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: white; font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .dom { background: var(--allele-dom); }
+        .rec { background: var(--allele-rec); }
+
+        /* Animation Classes */
+        .gamete-flow { animation: flow 1.5s ease-in-out forwards; }
+        @keyframes flow {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.5); opacity: 0.5; }
+        }
+
+        .footer-controls { background: #05080a; padding: 20px; border-top: 2px solid var(--primary); text-align: center; }
+        .btn-ui { 
+            padding: 12px 25px; border-radius: 5px; border: none; font-weight: 800; cursor: pointer; 
+            text-transform: uppercase; transition: 0.3s; background: var(--primary); color: white; 
+        }
+        .btn-ui:disabled { background: #444; cursor: not-allowed; }
+
+        /* Final Result Card */
+        #completion-card {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; color: #333; padding: 40px; border-radius: 20px;
+            width: 500px; text-align: center; display: none; z-index: 3000;
+        }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; text-align: left; }
+        .stat-box { background: #f1f2f6; padding: 15px; border-radius: 10px; }
+        .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="lab-icon">G</span> Genetics Lab</div>
+        <h2>Course Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Lab Initialization</h2>
+            <p id="task-desc">Loading inheritance modules...</p>
+        </header>
+
+        <div class="breeding-zone">
+            <div class="pot" id="pot-1" ondragover="event.preventDefault()" ondrop="lab.handleDrop(event, 1)"></div>
+            <div class="pot" id="pot-2" ondragover="event.preventDefault()" ondrop="lab.handleDrop(event, 2)"></div>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="plant-TT" ondragstart="lab.handleDrag(event)">
+                <div class="pea-plant"><svg viewBox="0 0 100 120"><path d="M50 120 V40 M50 80 L30 60 M50 70 L70 50" stroke="#27ae60" stroke-width="4" fill="none"/><circle cx="50" cy="30" r="15" fill="#2ecc71"/></svg></div>
+                <span>Tall (TT)</span>
+            </div>
+            <div class="tool" draggable="true" id="plant-tt" ondragstart="lab.handleDrag(event)">
+                <div class="pea-plant" style="transform: scale(0.7);"><svg viewBox="0 0 100 120"><path d="M50 120 V60 M50 90 L40 80 M50 100 L60 90" stroke="#27ae60" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="15" fill="#81c784"/></svg></div>
+                <span>Dwarf (tt)</span>
+            </div>
+            <div class="tool" draggable="true" id="plant-Tt" ondragstart="lab.handleDrag(event)">
+                <div class="pea-plant"><svg viewBox="0 0 100 120"><path d="M50 120 V40 M50 80 L30 60 M50 70 L70 50" stroke="#27ae60" stroke-width="4" fill="none"/><circle cx="50" cy="30" r="15" fill="#2ecc71"/></svg></div>
+                <span>Hybrid (Tt)</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Experimental Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<!-- Analysis Overlay -->
+<div id="analysis-view">
+    <div class="analysis-stage">
+        <div id="parent-a-display"></div>
+        
+        <div class="punnett-container" id="punnett-square">
+            <div class="p-cell p-header"></div>
+            <div class="p-cell p-header" id="g-top-1">?</div>
+            <div class="p-cell p-header" id="g-top-2">?</div>
+            
+            <div class="p-cell p-header" id="g-left-1">?</div>
+            <div class="p-cell p-result" id="cell-0-0"></div>
+            <div class="p-cell p-result" id="cell-0-1"></div>
+            
+            <div class="p-cell p-header" id="g-left-2">?</div>
+            <div class="p-cell p-result" id="cell-1-0"></div>
+            <div class="p-cell p-result" id="cell-1-1"></div>
+        </div>
+
+        <div id="parent-b-display"></div>
+    </div>
+    
+    <div class="footer-controls">
+        <h1 id="v-title">PHASE</h1>
+        <p id="v-desc">Transitioning to molecular analysis...</p>
+        <button class="btn-ui" id="btn-next-phase" onclick="lab.nextPhase()">Start Gamete Formation</button>
+    </div>
+</div>
+
+<div id="completion-card">
+    <h2>Experiment Concluded</h2>
+    <p>Summary of F1 Generation inheritance patterns.</p>
+    <div class="stat-grid">
+        <div class="stat-box">
+            <div class="stat-val" id="res-pheno">3:1</div>
+            <div>Phenotype Ratio</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-val" id="res-geno">1:2:1</div>
+            <div>Genotype Ratio</div>
+        </div>
+    </div>
+    <button class="btn-ui" onclick="location.reload()">New Experiment</button>
+</div>
+
+<script>
+const LAB_STEPS = [
+    { title: "Parent Selection", instruction: "Select two parent plants for crossing.", narration: "Choose two pea plants from the tray and place them into the breeding pots to begin your study of inheritance." },
+    { title: "Trait Analysis", instruction: "Analyze parental genotypes.", narration: "Observe the physical traits, or phenotypes, of your selected parents. One represents the dominant line, the other recessive or hybrid." },
+    { title: "Gamete Formation", instruction: "Simulate Law of Segregation.", narration: "During meiosis, the two alleles for the height trait segregate. Each gamete will carry only one allele for the gene." },
+    { title: "Cross Setup", instruction: "Position gametes on Punnett Square.", narration: "We will now align the gametes along the axes of a Punnett Square to predict the potential offspring." },
+    { title: "Fertilization", instruction: "Combine alleles to form zygotes.", narration: "Watch as the gametes fuse. The resulting combinations represent the genetic possibilities of the F1 generation." },
+    { title: "Result Analysis", instruction: "Calculate inheritance ratios.", narration: "Finally, let's analyze the data. Calculate the phenotypic and genotypic ratios based on the four possible outcomes." }
+];
+
+class GeneticsLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.parents = [null, null];
+        this.phase = 0;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        this.renderSteps();
+        this.updateUI();
+        this.log("Laboratory initialized. Waiting for parent selection...");
+    }
+
+    renderSteps() {
+        const list = document.getElementById('step-list');
+        list.innerHTML = LAB_STEPS.map((s, i) => `<div class="step-item" id="step-${i}">${s.title}</div>`).join('');
+    }
+
+    updateUI() {
+        const step = LAB_STEPS[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        this.speak(step.narration);
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.rate = 1.0;
+        this.synth.speak(msg);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    handleDrag(e) {
+        e.dataTransfer.setData("text", e.target.id);
+    }
+
+    handleDrop(e, potNum) {
+        e.preventDefault();
+        const id = e.dataTransfer.getData("text");
+        const genotype = id.split('-')[1];
+        this.parents[potNum-1] = genotype;
+        
+        const pot = document.getElementById(`pot-${potNum}`);
+        pot.innerHTML = document.getElementById(id).querySelector('.pea-plant').innerHTML;
+        pot.style.borderColor = "var(--primary)";
+        
+        this.log(`Parent ${potNum} selected: ${genotype}`);
+
+        if (this.parents[0] && this.parents[1]) {
+            this.stepIdx = 1;
+            this.updateUI();
+            setTimeout(() => this.startAnalysis(), 2000);
+        }
+    }
+
+    startAnalysis() {
+        document.getElementById('analysis-view').style.display = 'flex';
+        document.getElementById('v-title').textContent = "Molecular Analysis Mode";
+        document.getElementById('v-desc').textContent = `Crossing ${this.parents[0]} x ${this.parents[1]}`;
+    }
+
+    async nextPhase() {
+        const btn = document.getElementById('btn-next-phase');
+        btn.disabled = true;
+
+        if (this.phase === 0) {
+            // PHASE: Gamete Formation (Segregation)
+            this.stepIdx = 2;
+            this.updateUI();
+            document.getElementById('v-title').textContent = "Law of Segregation";
+            
+            // Show parent alleles splitting
+            const a1 = this.parents[0][0];
+            const a2 = this.parents[0][1];
+            const b1 = this.parents[1][0];
+            const b2 = this.parents[1][1];
+
+            this.animateAlleleFlow('top', a1, a2);
+            this.animateAlleleFlow('left', b1, b2);
+
+            await new Promise(r => setTimeout(r, 2000));
+            btn.textContent = "Perform Fertilization";
+            btn.disabled = false;
+            this.phase = 1;
+
+        } else if (this.phase === 1) {
+            // PHASE: Fertilization
+            this.stepIdx = 4;
+            this.updateUI();
+            document.getElementById('v-title').textContent = "Fertilization Simulation";
+            
+            await this.runPunnettAnimation();
+            
+            btn.textContent = "Final Analysis";
+            btn.disabled = false;
+            this.phase = 2;
+        } else {
+            this.showFinalResults();
+        }
+    }
+
+    animateAlleleFlow(pos, al1, al2) {
+        const t1 = document.getElementById(`g-${pos}-1`);
+        const t2 = document.getElementById(`g-${pos}-2`);
+        
+        t1.innerHTML = `<div class="allele-token ${al1 === al1.toUpperCase() ? 'dom' : 'rec'}">${al1}</div>`;
+        t2.innerHTML = `<div class="allele-token ${al2 === al2.toUpperCase() ? 'dom' : 'rec'}">${al2}</div>`;
+        
+        this.playSound(400);
+    }
+
+    async runPunnettAnimation() {
+        const p1 = [this.parents[0][0], this.parents[0][1]];
+        const p2 = [this.parents[1][0], this.parents[1][1]];
+
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                const cell = document.getElementById(`cell-${j}-${i}`);
+                const alleles = [p1[i], p2[j]].sort().join(''); // Sort so T always before t
+                
+                cell.innerHTML = `
+                    <div class="genotype">${alleles}</div>
+                    <div class="phenotype-label">${alleles.includes('T') ? 'TALL' : 'DWARF'}</div>
+                `;
+                cell.style.background = "rgba(39, 174, 96, 0.3)";
+                this.playSound(500 + (i * 100));
+                await new Promise(r => setTimeout(r, 600));
+            }
+        }
+    }
+
+    showFinalResults() {
+        this.stepIdx = 5;
+        this.updateUI();
+        
+        // Calculate Ratios
+        const p1 = [this.parents[0][0], this.parents[0][1]];
+        const p2 = [this.parents[1][0], this.parents[1][1]];
+        let outcomes = [];
+        p1.forEach(a => p2.forEach(b => outcomes.push([a, b].sort().join(''))));
+
+        const counts = outcomes.reduce((acc, curr) => {
+            acc[curr] = (acc[curr] || 0) + 1;
+            return acc;
+        }, {});
+
+        const tall = outcomes.filter(o => o.includes('T')).length;
+        const dwarf = outcomes.filter(o => !o.includes('T')).length;
+
+        document.getElementById('res-pheno').textContent = `${tall}:${dwarf}`;
+        document.getElementById('res-geno').textContent = Object.values(counts).join(':');
+        
+        document.getElementById('completion-card').style.display = 'block';
+        this.playSound(800, 'sine', 0.5);
+    }
+
+    playSound(freq, type = 'sine', duration = 0.1) {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(); osc.stop(ctx.currentTime + duration);
+        } catch(e) {}
+    }
+}
+
+const lab = new GeneticsLab();
+</script>
+</body>
+</html>

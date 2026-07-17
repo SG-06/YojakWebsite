@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO-CORE | Human Skeletal System</title>
+    <!-- Model Viewer Library -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <!-- 1. Clinical Loading Screen -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-content">
+            <div class="logo-text">BIO-CORE <span class="v-line">|</span> OSTEOLOGY</div>
+            <div class="loader-track"><div id="boot-bar" class="boot-bar"></div></div>
+            <div class="boot-status">CALIBRATING BIOMETRIC SCANNER...</div>
+        </div>
+    </div>
+
+    <!-- 2. Main Lab Interface -->
+    <div id="vlab-main" class="theme-default">
+        
+        <!-- Left Sidebar: Command & Info -->
+        <aside class="hud-sidebar left">
+            <nav class="nav-group">
+                <div class="nav-brand"><span class="pulse-icon"></span>SKELETAL SCANNER v5.0</div>
+                <button id="btn-freeview" class="hud-btn active">1. ARCHITECTURE</button>
+                <button id="btn-identify" class="hud-btn">2. BONE IDENTIFICATION</button>
+                <button id="btn-overview" class="hud-btn highlight">3. SYSTEM TOUR</button>
+                <button id="btn-female-ref" class="hud-btn ref-btn">4. FEMALE REFERENCE</button>
+            </nav>
+
+            <div id="info-hud" class="info-panel hidden">
+                <label class="scan-tag">OSSEOUS ANALYSIS</label>
+                <h1 id="part-name">READY</h1>
+                <p id="part-description">Interact with the model to begin identification.</p>
+                <div class="stats-row">
+                    <div class="stat"><label>DENSITY</label><span id="density-val">---</span></div>
+                    <div class="stat"><label>CALCIUM</label><span id="calcium-val">---</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Sidebar: Visual Controls -->
+        <aside class="hud-sidebar right">
+            <div class="control-group">
+                <label>ENVIRONMENT THEME</label>
+                <div class="theme-selector">
+                    <button class="theme-circle default active" data-theme="default" title="Laboratory"></button>
+                    <button class="theme-circle xray" data-theme="grey" title="X-Ray View"></button>
+                    <button class="theme-circle anatomy" data-theme="pink" title="Warm Scan"></button>
+                    <button class="theme-circle deep" data-theme="space" title="Deep Space"></button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>SCAN EXPOSURE</label>
+                <input type="range" id="range-exposure" min="0.1" max="1.2" step="0.01" value="0.4">
+            </div>
+
+            <button id="btn-labels" class="toggle-btn active">ANNOTATIONS: ON</button>
+        </aside>
+
+        <!-- Main 3D Workspace -->
+        <model-viewer 
+    id="main-viewer" 
+    src="human_skeleton.glb" 
+    camera-controls 
+    auto-rotate 
+    shadow-intensity="1" 
+    exposure="0.5" 
+    camera-orbit="0deg 75deg 100%" 
+    camera-target="auto auto auto"
+    min-camera-orbit="auto auto 5%"
+    max-camera-orbit="auto auto 200%"
+    style="width: 100%; height: 100vh;">
+    
+
+                <!-- ALL 39 HOTSPOTS FROM REFERENCE -->
+                <button class="Hotspot" slot="hotspot-2" data-position="0.0099m 0.2526m -0.0014m" data-normal="1m 0.05m 0.01m" data-name="CRANIUM"><div class="HotspotAnnotation">Cranium</div></button>
+                <button class="Hotspot" slot="hotspot-3" data-position="0.0063m 0.2339m 0.0051m" data-normal="0.98m -0.15m 0.14m" data-name="MANDIBLE"><div class="HotspotAnnotation">Mandible</div></button>
+                <button class="Hotspot" slot="hotspot-5" data-position="-0.0039m 0.2391m 0.0129m" data-normal="-0.83m 0.28m 0.48m" data-name="MAXILLA"><div class="HotspotAnnotation">Maxilla</div></button>
+                <button class="Hotspot" slot="hotspot-6" data-position="0.0079m 0.2427m 0.0101m" data-normal="0.15m 0.19m 0.97m" data-name="ZYGOMATIC"><div class="HotspotAnnotation">Zygomatic</div></button>
+                <button class="Hotspot" slot="hotspot-7" data-position="0.0002m 0.2536m 0.0125m" data-normal="0m 0.35m 0.94m" data-name="FRONTAL BONE"><div class="HotspotAnnotation">Frontal Bone</div></button>
+                <button class="Hotspot" slot="hotspot-8" data-position="-0.0152m 0.2176m 0.0018m" data-normal="-0.74m 0.46m 0.49m" data-name="CLAVICLE"><div class="HotspotAnnotation">Clavicle</div></button>
+                <button class="Hotspot" slot="hotspot-9" data-position="-0.0181m 0.2108m -0.0111m" data-normal="-0.71m -0.17m -0.69m" data-name="SCAPULA"><div class="HotspotAnnotation">Scapula</div></button>
+                <button class="Hotspot" slot="hotspot-10" data-position="0.0001m 0.2098m 0.0132m" data-normal="0.15m 0.42m 0.9m" data-name="STERNUM"><div class="HotspotAnnotation">Sternum</div></button>
+                <button class="Hotspot" slot="hotspot-11" data-position="-0.0186m 0.1964m 0.0082m" data-normal="-0.87m 0.26m 0.42m" data-name="TRUE RIBS"><div class="HotspotAnnotation">True Ribs</div></button>
+                <button class="Hotspot" slot="hotspot-12" data-position="-0.0179m 0.1745m 0.0084m" data-normal="-0.92m -0.25m 0.3m" data-name="FALSE RIBS"><div class="HotspotAnnotation">False Ribs</div></button>
+                <button class="Hotspot" slot="hotspot-13" data-position="0.0163m 0.1719m 0.0033m" data-normal="0.97m 0.17m -0.15m" data-name="FLOATING RIBS"><div class="HotspotAnnotation">Floating Ribs</div></button>
+                <button class="Hotspot" slot="hotspot-14" data-position="-0.0312m 0.1799m -0.0085m" data-normal="-0.99m 0.13m 0.06m" data-name="HUMERUS"><div class="HotspotAnnotation">Humerus</div></button>
+                <button class="Hotspot" slot="hotspot-15" data-position="0.0326m 0.1697m -0.0116m" data-normal="0.89m 0.11m -0.43m" data-name="ELBOW"><div class="HotspotAnnotation">Elbow</div></button>
+                <button class="Hotspot" slot="hotspot-16" data-position="-0.0322m 0.1559m -0.0026m" data-normal="-0.98m 0.13m 0.12m" data-name="RADIUS"><div class="HotspotAnnotation">Radius</div></button>
+                <button class="Hotspot" slot="hotspot-17" data-position="-0.0315m 0.1483m -0.0045m" data-normal="-1m -0.05m 0m" data-name="ULNA"><div class="HotspotAnnotation">Ulna</div></button>
+                <button class="Hotspot" slot="hotspot-18" data-position="-0.0330m 0.1320m -0.0004m" data-normal="-0.92m 0.14m -0.37m" data-name="CARPALS"><div class="HotspotAnnotation">Carpals</div></button>
+                <button class="Hotspot" slot="hotspot-19" data-position="-0.0322m 0.1252m -0.0024m" data-normal="-0.84m -0.07m 0.54m" data-name="METACARPALS"><div class="HotspotAnnotation">Metacarpals</div></button>
+                <button class="Hotspot" slot="hotspot-20" data-position="-0.0300m 0.1163m -0.0027m" data-normal="-0.83m -0.37m -0.43m" data-name="PHALANGES (HAND)"><div class="HotspotAnnotation">Phalanges</div></button>
+                <button class="Hotspot" slot="hotspot-21" data-position="-0.0149m 0.0996m 0.0068m" data-normal="-0.17m -0.05m 0.98m" data-name="FEMUR"><div class="HotspotAnnotation">Femur</div></button>
+                <button class="Hotspot" slot="hotspot-22" data-position="-0.0119m 0.0686m 0.0034m" data-normal="-0.1m 0.24m 0.96m" data-name="PATELLA"><div class="HotspotAnnotation">Patella</div></button>
+                <button class="Hotspot" slot="hotspot-23" data-position="-0.0119m 0.0403m 0.0011m" data-normal="0.1m -0.11m 0.99m" data-name="TIBIA"><div class="HotspotAnnotation">Tibia</div></button>
+                <button class="Hotspot" slot="hotspot-24" data-position="-0.0142m 0.0297m -0.0017m" data-normal="0.63m -0.03m 0.78m" data-name="FIBULA"><div class="HotspotAnnotation">Fibula</div></button>
+                <button class="Hotspot" slot="hotspot-25" data-position="-0.0018m 0.2282m -0.0040m" data-normal="-0.16m -0.59m -0.79m" data-name="CERVICAL VERTEBRAE"><div class="HotspotAnnotation">Cervical Spine</div></button>
+                <button class="Hotspot" slot="hotspot-26" data-position="0.0004m 0.1981m -0.0115m" data-normal="0.55m 0.18m -0.82m" data-name="THORACIC VERTEBRAE"><div class="HotspotAnnotation">Thoracic Spine</div></button>
+                <button class="Hotspot" slot="hotspot-27" data-position="-0.0018m 0.1622m -0.0022m" data-normal="0.26m -0.11m -0.96m" data-name="LUMBAR VERTEBRAE"><div class="HotspotAnnotation">Lumbar Spine</div></button>
+                <button class="Hotspot" slot="hotspot-29" data-position="0.0143m 0.1557m 0.0002m" data-normal="-0.8m 0.2m 0.57m" data-name="ILIUM"><div class="HotspotAnnotation">Ilium</div></button>
+                <button class="Hotspot" slot="hotspot-30" data-position="0.0149m 0.1446m 0.0095m" data-normal="-0.56m -0.12m 0.82m" data-name="ACETABULUM"><div class="HotspotAnnotation">Acetabulum</div></button>
+                <button class="Hotspot" slot="hotspot-31" data-position="-0.0003m 0.1429m -0.0095m" data-normal="-0.09m -0.55m 0.83m" data-name="SACRUM"><div class="HotspotAnnotation">Sacrum</div></button>
+                <button class="Hotspot" slot="hotspot-32" data-position="-0.0002m 0.1387m -0.0110m" data-normal="0.16m 0.44m 0.88m" data-name="COCCYX"><div class="HotspotAnnotation">Coccyx</div></button>
+                <button class="Hotspot" slot="hotspot-33" data-position="0.0054m 0.1367m 0.0110m" data-normal="0.27m 0.08m 0.96m" data-name="PUBIS"><div class="HotspotAnnotation">Pubis</div></button>
+                <button class="Hotspot" slot="hotspot-34" data-position="0.0075m 0.1288m 0.0031m" data-normal="0.52m -0.15m 0.84m" data-name="ISCHIUM"><div class="HotspotAnnotation">Ischium</div></button>
+                <button class="Hotspot" slot="hotspot-35" data-position="0.0169m 0.0721m -0.0009m" data-normal="0.98m 0.17m 0.11m" data-name="KNEE JOINT"><div class="HotspotAnnotation">Knee Joint</div></button>
+                <button class="Hotspot" slot="hotspot-36" data-position="0.0105m 0.0100m 0.0030m" data-normal="-0.29m 0.88m 0.38m" data-name="CALCANEUS"><div class="HotspotAnnotation">Calcaneus</div></button>
+                <button class="Hotspot" slot="hotspot-37" data-position="0.0146m 0.0058m 0.0041m" data-normal="0.93m 0.36m -0.1m" data-name="TALUS"><div class="HotspotAnnotation">Talus</div></button>
+                <button class="Hotspot" slot="hotspot-38" data-position="0.0161m 0.0034m 0.0109m" data-normal="0.77m 0.61m 0.18m" data-name="METATARSALS"><div class="HotspotAnnotation">Metatarsals</div></button>
+                <button class="Hotspot" slot="hotspot-39" data-position="0.0168m 0.0011m 0.0175m" data-normal="0.33m 0.88m 0.34m" data-name="PHALANGES (FOOT)"><div class="HotspotAnnotation">Phalanges</div></button>
+
+            </model-viewer>
+        </main>
+
+        <!-- Female Reference Overlay (Full Screen) -->
+        <section id="female-overlay" class="overlay-container hidden">
+    <div class="overlay-header">
+        <div class="nav-brand"><span class="pulse-icon pink"></span>REF MODE: FEMALE SPECIMEN</div>
+        <button id="close-female-ref" class="exit-btn">EXIT TO MAIN LAB</button>
+    </div>
+
+    <!-- LEFT SIDE: DIMORPHISM CARD -->
+    <div class="comparison-card">
+        <label class="scan-tag">DIMORPHISM ANALYSIS</label>
+        <h2>COMPARATIVE DATA</h2>
+        <div class="comp-scroll-area">
+            <div class="comp-group">
+                <label>PELVIC STRUCTURE</label>
+                <p>Wide, circular inlet with a U-shaped sub-pubic angle (>90°) for parturition support. Ilium flares laterally.</p>
+            </div>
+            <div class="comp-group">
+                <label>CRANIAL MORPHOLOGY</label>
+                <p>Gracile architecture. Vertical forehead (frontal bone), reduced supraorbital ridges, and rounded mandible.</p>
+            </div>
+            <div class="comp-group">
+                <label>Q-ANGLE BIOMECHANICS</label>
+                <p>Increased angle between femur and tibia due to wider pelvic base, affecting weight distribution.</p>
+            </div>
+            <div class="comp-group">
+                <label>GENERAL PHYSIOLOGY</label>
+                <p>Lower overall bone mineral density (BMD) and smoother surfaces at muscle attachment points (linea aspera).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE: FUN FACTS CARD (NEW) -->
+    <div class="facts-card">
+        <label class="scan-tag pink-alt">ARCHIVAL TRIVIA</label>
+        <h2>OSTEOLOGICAL TRIVIA</h2>
+        <div class="comp-scroll-area">
+            <div class="comp-group">
+                <label>BONE STRENGTH</label>
+                <p>Cubic inch for cubic inch, human bone is stronger than solid concrete. A block of bone that size can support up to 19,000 lbs.</p>
+            </div>
+            <div class="comp-group">
+                <label>THE HYOID BONE</label>
+                <p>The only bone in the human body not articulated to any other bone. It anchors the tongue and aids in swallowing and speech.</p>
+            </div>
+            <div class="comp-group">
+                <label>BABY BONES</label>
+                <p>Humans are born with approximately 270 soft bones. Over time, many fuse together, resulting in 206 hard bones in adulthood.</p>
+            </div>
+            <div class="comp-group">
+                <label>AUTO-REGENERATION</label>
+                <p>The human skeletal system is constantly recycling itself. Your body creates an entirely new skeleton roughly every 7 to 10 years.</p>
+            </div>
+        </div>
+    </div>
+
+    <model-viewer 
+        id="female-viewer" 
+        src="female_human_skeleton_-_zbrush_-_anatomy_study.glb" 
+        camera-controls 
+        auto-rotate 
+        exposure="0.4"
+        camera-orbit="0deg 75deg 110%" 
+        camera-target="auto auto auto"
+        style="width: 100%; height: 100%;">
+    </model-viewer>
+</section>
+
+        <!-- Footer Status & Credits -->
+        <footer class="hud-status">
+            <div class="status-item">BIO-SYNC: <span class="online">ACTIVE</span></div>
+            
+            <div class="credits-wrap">
+                MALE: <a href="https://skfb.ly/oLNMN" target="_blank">Wunna Ko Ko</a> | 
+                FEMALE: <a href="https://skfb.ly/LXzD" target="_blank">Ruslan Gadzhiev</a> 
+                (CC BY 4.0)
+            </div>
+            
+            <div class="status-item timer" id="clock">00:00:00</div>
+        </footer>
+    </div>
+
+    <script src="js/app.js" type="module"></script>
+</body>
+</html>

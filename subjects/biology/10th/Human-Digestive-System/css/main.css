@@ -1,0 +1,378 @@
+:root {
+    --medical-blue: #0066cc;
+    --accent-light: #e6f0ff;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 102, 204, 0.2);
+    --text-main: #2c3e50;
+    --text-dim: #7f8c8d;
+    --status-green: #27ae60;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f0f2f5;
+    color: var(--text-main);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* --- Clinical Boot Screen --- */
+.boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    color: var(--medical-blue);
+    text-align: center;
+}
+
+.v-line {
+    font-weight: 200;
+    color: #ccc;
+}
+
+.loader-track {
+    width: 280px;
+    height: 4px;
+    background: #eee;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.boot-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--medical-blue);
+    transition: width 0.3s;
+}
+
+.boot-status {
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+}
+
+/* --- Main Layout --- */
+#vlab-main {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+model-viewer {
+    width: 100%;
+    height: 100%; /* Ensure this is not 0 */
+    background-color: #f0f2f5; /* This helps see if the viewer is actually there */
+    display: block;
+}
+
+/* Theme Circles Styling */
+.theme-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.theme-circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.theme-circle:hover { transform: scale(1.2); }
+.theme-circle.active { border-color: var(--medical-blue); transform: scale(1.1); }
+
+/* Circle Colors */
+.theme-circle.default { background: linear-gradient(135deg, #ffffff, #dbe2e9); }
+.theme-circle.grey { background: #444444; }
+.theme-circle.pink { background: #ffd1dc; }
+.theme-circle.space { background: #0a0b1e; }
+
+/* Themes for the main container */
+#vlab-main.theme-default { background: radial-gradient(circle, #ffffff 0%, #dbe2e9 100%); }
+#vlab-main.theme-grey { background: #2c3e50; }
+#vlab-main.theme-pink { background: #fff0f5; }
+#vlab-main.theme-space { background: radial-gradient(circle, #1a1a2e 0%, #000000 100%); }
+
+/* Ensure model viewer is transparent so the theme shows through */
+model-viewer {
+    width: 100%;
+    height: 100%;
+    background-color: transparent; 
+}
+
+/* --- HUD Navigation --- */
+.hud-nav {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: var(--medical-blue);
+    display: flex;
+    align-items: center;
+}
+
+.hud-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 14px 20px;
+    color: var(--text-main);
+    cursor: pointer;
+    width: 220px;
+    text-align: left;
+    margin-bottom: 8px;
+    backdrop-filter: blur(15px);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.hud-btn:hover {
+    background: #fff;
+    transform: translateX(5px);
+}
+
+.hud-btn.active {
+    background: var(--medical-blue);
+    color: #fff;
+    border-left: 5px solid #004488;
+}
+
+.hud-btn.highlight {
+    border: 1px solid var(--medical-blue);
+    background: var(--accent-light);
+}
+
+/* --- Info & Specs HUD Panels --- */
+.info-hud, .specs-hud {
+    position: absolute;
+    left: 30px;
+    width: 320px;
+    padding: 25px;
+    background: var(--glass-bg);
+    border-left: 4px solid var(--medical-blue);
+    backdrop-filter: blur(15px);
+    z-index: 50;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.info-hud { top: 240px; }
+.specs-hud { bottom: 100px; }
+
+.hidden {
+    opacity: 0;
+    transform: translateX(-40px);
+    pointer-events: none;
+}
+
+.scan-text {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--medical-blue);
+    font-weight: 800;
+    display: block;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
+}
+
+.spec-group {
+    margin-bottom: 15px;
+}
+
+.spec-group label {
+    font-size: 9px;
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.spec-value {
+    font-weight: bold;
+    color: var(--medical-blue);
+    font-family: monospace;
+}
+
+/* --- Control HUD (Right Side) --- */
+.control-hud {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    z-index: 100;
+}
+
+.control-group {
+    background: var(--glass-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.control-group label {
+    font-size: 10px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: var(--medical-blue);
+}
+
+.toggle-btn {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.toggle-btn.active {
+    background: var(--accent-light);
+    color: var(--medical-blue);
+    border-color: var(--medical-blue);
+}
+
+/* --- 3D Hotspots --- */
+.Hotspot {
+    width: 18px;
+    height: 18px;
+    background: var(--medical-blue);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.5);
+    transition: transform 0.3s;
+}
+
+.Hotspot:hover {
+    transform: scale(1.3);
+}
+
+.HotspotAnnotation {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: var(--text-main);
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 3px solid var(--medical-blue);
+}
+
+.Hotspot:hover .HotspotAnnotation {
+    opacity: 1;
+}
+
+/* --- Status Bar --- */
+.hud-status {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px; /* Slightly smaller for attribution */
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding-top: 15px;
+    z-index: 100;
+}
+.pulse-icon {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--status-green);
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: pulse 2s infinite;
+}
+
+.online {
+    color: var(--status-green);
+    font-weight: bold;
+}
+
+.credits a {
+    color: var(--medical-blue);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.credits a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+.boot-screen {
+    /* ... existing code ... */
+    pointer-events: none; /* Add this */
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+}

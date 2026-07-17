@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioTech Lab: DNA Fingerprinting & Gel Electrophoresis</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #2980b9;
+            --success: #27ae60;
+            --dna-blue: #3498db;
+            --danger: #e74c3c;
+            --gel-color: rgba(173, 216, 230, 0.5);
+            --table-top: #ecf0f1;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #1a1a1a; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 300px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.2rem; color: var(--secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .dna-icon { background: var(--secondary); color: white; padding: 5px 10px; border-radius: 4px; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #ebf5fb; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #222; color: #00d4ff; padding: 10px; border-radius: 5px; border: 2px solid #333; }
+
+        /* Lab Workspace */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .lab-header { padding: 15px 25px; background: white; border-bottom: 2px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        /* Tools and Equipment */
+        .equipment-setup {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 50px;
+            align-items: flex-end;
+        }
+
+        /* Electrophoresis Tank */
+        .gel-tank {
+            width: 350px;
+            height: 220px;
+            background: #bdc3c7;
+            border: 4px solid #7f8c8d;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            padding: 20px;
+        }
+
+        .gel-slab {
+            width: 100%;
+            height: 100%;
+            background: var(--gel-color);
+            border: 2px solid rgba(255,255,255,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .well-row {
+            display: flex;
+            justify-content: space-around;
+            width: 90%;
+            margin-top: 10px;
+        }
+
+        .well {
+            width: 40px;
+            height: 15px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.3);
+            border-top: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .well.highlight { background: rgba(255, 255, 0, 0.4); box-shadow: 0 0 10px yellow; }
+        .well.filled { background: #34495e; }
+
+        /* Power Supply */
+        .power-supply {
+            width: 150px;
+            height: 180px;
+            background: #2c3e50;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border: 3px solid #34495e;
+        }
+        .voltage-display { font-family: 'Courier New', monospace; background: #000; color: #0f0; padding: 5px; font-size: 1.2rem; margin: 10px 0; border: 1px solid #444; }
+        
+        /* Interactive Pipette Tool */
+        #pipette {
+            position: absolute;
+            width: 20px;
+            height: 150px;
+            background: #95a5a6;
+            border-radius: 10px 10px 2px 2px;
+            z-index: 100;
+            pointer-events: none;
+            display: none;
+            transform: translate(-50%, -90%);
+        }
+        #pipette::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 5px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 30px solid #eee;
+        }
+        .pipette-liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: #34495e;
+            transition: height 0.5s;
+        }
+
+        /* Sample Rack */
+        .sample-rack {
+            display: flex;
+            gap: 15px;
+            background: #dcdde1;
+            padding: 15px;
+            border-radius: 5px;
+            border-bottom: 5px solid #7f8c8d;
+        }
+        .tube {
+            width: 30px;
+            height: 60px;
+            background: rgba(255,255,255,0.7);
+            border: 2px solid #999;
+            border-radius: 0 0 15px 15px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tube:hover { transform: translateY(-5px); }
+        .tube::before { content: ''; position: absolute; top: -5px; left: -5px; width: 40px; height: 8px; background: #7f8c8d; border-radius: 5px; }
+        .tube .liquid { position: absolute; bottom: 5px; width: 80%; left: 10%; height: 40%; background: var(--dna-blue); border-radius: 0 0 10px 10px; opacity: 0.8; }
+        .tube span { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; font-weight: bold; white-space: nowrap; }
+
+        /* DNA Bands */
+        .lane { position: absolute; top: 25px; width: 40px; height: 160px; display: flex; flex-direction: column; align-items: center; }
+        .dna-band {
+            width: 35px;
+            height: 4px;
+            background: rgba(52, 73, 94, 0);
+            margin-bottom: 2px;
+            position: absolute;
+            transition: top 5s linear, background 1s;
+        }
+
+        /* Overlays */
+        #uv-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 0, 30, 0.95);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .uv-gel {
+            width: 400px;
+            height: 500px;
+            background: #1a0033;
+            border: 5px solid #4834d4;
+            box-shadow: 0 0 50px #686de0;
+            position: relative;
+            padding: 20px;
+        }
+        .uv-band {
+            width: 40px;
+            height: 6px;
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .btn-ui { padding: 12px 25px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; background: var(--secondary); color: white; margin-top: 20px; }
+        .btn-ui:disabled { background: #95a5a6; cursor: not-allowed; }
+
+        /* Animation for bubbles */
+        .bubbles { position: absolute; width: 100%; height: 10px; bottom: 0; overflow: hidden; opacity: 0; }
+        .bubble { position: absolute; bottom: 0; width: 5px; height: 5px; background: rgba(255,255,255,0.5); border-radius: 50%; animation: rise 1s infinite; }
+        @keyframes rise { 
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-150px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="pipette"><div class="pipette-liquid"></div></div>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="dna-icon">DNA</span> Nucleus Lab</div>
+        <h2>Experiment Progress</h2>
+        <div id="step-list"></div>
+        <div id="log"></div>
+    </aside>
+
+    <main class="workspace">
+        <!-- Fullscreen Option Integration -->
+        <button class="btn-ui" id="btn-fullscreen" onclick="lab.toggleFullscreen()" style="position: absolute; top: 15px; right: 25px; z-index: 1000; margin-top: 0; padding: 8px 15px; font-size: 0.8rem; background: #7f8c8d;">FULLSCREEN</button>
+
+        <header class="lab-header">
+            <h2 id="task-title">Lab Setup</h2>
+            <p id="task-desc">Initialize electrophoresis equipment.</p>
+        </header>
+
+        <div class="equipment-setup">
+            <div class="sample-rack">
+                <div class="tube" onclick="lab.pickUpSample('CS', '#2ecc71', 0)">
+                    <div class="liquid" style="background: #2ecc71"></div>
+                    <span>Crime Scene</span>
+                </div>
+                <div class="tube" onclick="lab.pickUpSample('S1', '#e74c3c', 1)">
+                    <div class="liquid" style="background: #e74c3c"></div>
+                    <span>Suspect 1</span>
+                </div>
+                <div class="tube" onclick="lab.pickUpSample('S2', '#f1c40f', 2)">
+                    <div class="liquid" style="background: #f1c40f"></div>
+                    <span>Suspect 2</span>
+                </div>
+                <div class="tube" onclick="lab.pickUpSample('S3', '#9b59b6', 3)">
+                    <div class="liquid" style="background: #9b59b6"></div>
+                    <span>Suspect 3</span>
+                </div>
+            </div>
+
+            <div class="gel-tank">
+                <div class="gel-slab" id="main-gel">
+                    <div class="well-row">
+                        <div class="well" id="well-0" onclick="lab.injectSample(0)"></div>
+                        <div class="well" id="well-1" onclick="lab.injectSample(1)"></div>
+                        <div class="well" id="well-2" onclick="lab.injectSample(2)"></div>
+                        <div class="well" id="well-3" onclick="lab.injectSample(3)"></div>
+                    </div>
+                    <div id="lane-container"></div>
+                    <div class="bubbles" id="tank-bubbles"></div>
+                </div>
+            </div>
+
+            <div class="power-supply">
+                <label>Power Supply</label>
+                <div class="voltage-display" id="voltage">000 V</div>
+                <button class="btn-ui" id="btn-run" onclick="lab.runElectrophoresis()" disabled>START RUN</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="uv-viewer">
+    <h1 style="color: #00ff00; text-shadow: 0 0 10px #00ff00;">UV Transillumination Results</h1>
+    <div class="uv-gel" id="uv-gel-content">
+        <div style="display: flex; justify-content: space-around; color: white; font-size: 0.7rem; margin-bottom: 10px;">
+            <span>CS</span><span>S1</span><span>S2</span><span>S3</span>
+        </div>
+    </div>
+    <div style="color: white; margin-top: 20px; text-align: center; max-width: 500px;">
+        <p id="analysis-text">Compare the Crime Scene (CS) bands with the suspects.</p>
+        <button class="btn-ui" onclick="location.reload()">RESET LAB</button>
+    </div>
+</div>
+
+<script>
+const LAB_STEPS = [
+    { title: "Sample Collection", instruction: "Pick up the Crime Scene DNA (CS) with the pipette.", narration: "First, we must load our DNA samples. Start by picking up the Crime Scene DNA from the rack." },
+    { title: "Loading Gel", instruction: "Inject the DNA into the first well.", narration: "Carefully move the pipette over the first well and click to inject the sample." },
+    { title: "Preparing Suspects", instruction: "Load Suspect 1, 2, and 3 into the remaining wells.", narration: "Repeat the process for all three suspects. Be careful not to cross-contaminate." },
+    { title: "Run Electrophoresis", instruction: "Switch on the power supply.", narration: "The DNA is negatively charged. Turning on the power will pull the fragments through the agarose gel." },
+    { title: "DNA Migration", instruction: "Wait for fragments to separate.", narration: "Smaller DNA fragments move faster through the gel's microscopic pores, creating a unique pattern." },
+    { title: "Analysis", instruction: "View under UV light and identify the match.", narration: "Now we use UV light to visualize the bands. Which suspect matches the crime scene?" }
+];
+
+const DNA_PATTERNS = {
+    CS: [40, 80, 150, 220],
+    S1: [30, 90, 140, 250],
+    S2: [40, 80, 150, 220], // Match
+    S3: [60, 110, 190, 280]
+};
+
+class DNAGelLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.currentSample = null;
+        this.loadedCount = 0;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        this.renderSteps();
+        this.updateUI();
+        this.createBubbles();
+        
+        document.addEventListener('mousemove', (e) => {
+            if (this.currentSample) {
+                const p = document.getElementById('pipette');
+                p.style.display = 'block';
+                p.style.left = e.pageX + 'px';
+                p.style.top = e.pageY + 'px';
+            }
+        });
+    }
+
+    renderSteps() {
+        const list = document.getElementById('step-list');
+        list.innerHTML = LAB_STEPS.map((s, i) => `<div class="step-item" id="step-${i}">${s.title}</div>`).join('');
+    }
+
+    updateUI() {
+        const s = LAB_STEPS[this.stepIdx];
+        document.getElementById('task-title').textContent = s.title;
+        document.getElementById('task-desc').textContent = s.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        this.speak(s.narration);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 1.0;
+        this.synth.speak(u);
+    }
+
+    pickUpSample(id, color, index) {
+        if (this.stepIdx > 2) return;
+        this.currentSample = { id, color, index };
+        document.querySelector('.pipette-liquid').style.height = '60%';
+        document.querySelector('.pipette-liquid').style.background = color;
+        document.getElementById('pipette').style.display = 'block';
+        this.log(`Sample ${id} drawn into pipette.`);
+        
+        if(this.stepIdx === 0 && id === 'CS') {
+            this.stepIdx = 1;
+            this.updateUI();
+        }
+    }
+
+    injectSample(wellIdx) {
+        if (!this.currentSample) return;
+        if (wellIdx !== this.currentSample.index) {
+            this.log("Error: Use the correct lane for this sample!");
+            return;
+        }
+
+        const well = document.getElementById(`well-${wellIdx}`);
+        if (well.classList.contains('filled')) return;
+
+        well.classList.add('filled');
+        well.style.background = this.currentSample.color;
+        
+        this.log(`Injected ${this.currentSample.id} into well ${wellIdx + 1}.`);
+        
+        this.currentSample = null;
+        document.getElementById('pipette').style.display = 'none';
+        document.querySelector('.pipette-liquid').style.height = '0%';
+        
+        this.loadedCount++;
+        if (this.loadedCount === 4) {
+            this.stepIdx = 3;
+            this.updateUI();
+            document.getElementById('btn-run').disabled = false;
+        } else if (this.stepIdx === 1) {
+            this.stepIdx = 2;
+            this.updateUI();
+        }
+    }
+
+    createBubbles() {
+        const container = document.getElementById('tank-bubbles');
+        for(let i=0; i<20; i++) {
+            const b = document.createElement('div');
+            b.className = 'bubble';
+            b.style.left = Math.random() * 100 + '%';
+            b.style.animationDelay = Math.random() * 2 + 's';
+            container.appendChild(b);
+        }
+    }
+
+    runElectrophoresis() {
+        document.getElementById('btn-run').disabled = true;
+        document.getElementById('voltage').textContent = "120 V";
+        document.getElementById('tank-bubbles').style.opacity = "1";
+        this.stepIdx = 4;
+        this.updateUI();
+        this.log("Current applied. DNA migration in progress...");
+
+        // Start Band Animation
+        Object.keys(DNA_PATTERNS).forEach((key, laneIdx) => {
+            const pattern = DNA_PATTERNS[key];
+            pattern.forEach((pos) => {
+                const band = document.createElement('div');
+                band.className = 'dna-band';
+                band.style.left = (laneIdx * 25 + 5) + '%';
+                band.style.top = '20px';
+                band.style.background = 'rgba(52, 73, 94, 0.4)';
+                document.getElementById('main-gel').appendChild(band);
+                
+                setTimeout(() => {
+                    band.style.top = (pos / 2) + 'px';
+                }, 100);
+            });
+        });
+
+        setTimeout(() => {
+            this.stepIdx = 5;
+            this.updateUI();
+            this.showResults();
+        }, 6000);
+    }
+
+    showResults() {
+        const uv = document.getElementById('uv-viewer');
+        const content = document.getElementById('uv-gel-content');
+        uv.style.display = 'flex';
+
+        Object.keys(DNA_PATTERNS).forEach((key, laneIdx) => {
+            const pattern = DNA_PATTERNS[key];
+            pattern.forEach((pos, i) => {
+                const band = document.createElement('div');
+                band.className = 'uv-band';
+                band.style.left = (laneIdx * 100 + 30) + 'px';
+                band.style.top = (pos + 50) + 'px';
+                content.appendChild(band);
+                
+                setTimeout(() => {
+                    band.style.opacity = "1";
+                }, i * 200 + (laneIdx * 500));
+            });
+        });
+
+        setTimeout(() => {
+            this.speak("Analysis complete. Look at Suspect 2. The banding pattern is an identical match to the DNA found at the crime scene.");
+            document.getElementById('analysis-text').innerHTML = "<b style='color:#00ff00'>MATCH FOUND: Suspect 2 is the contributor of the DNA sample.</b>";
+        }, 4000);
+    }
+}
+
+const lab = new DNAGelLab();
+
+
+// Fullscreen Extension Method
+DNAGelLab.prototype.toggleFullscreen = function() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+        document.getElementById('btn-fullscreen').textContent = "EXIT FULLSCREEN";
+    } else {
+        document.exitFullscreen();
+        document.getElementById('btn-fullscreen').textContent = "FULLSCREEN";
+    }
+};
+</script>
+</body>
+</html>

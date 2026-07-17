@@ -1,0 +1,362 @@
+/* BIO-CORE SKELETAL v5.0 - CLINICAL DESIGN SYSTEM */
+
+:root {
+    --medical-cyan: #00d4ff;
+    --medical-blue: #0066cc;
+    --deep-bg: #05080a;
+    --panel-bg: rgba(10, 20, 30, 0.85);
+    --glass-border: rgba(0, 212, 255, 0.2);
+    --text-main: #e0e6ed;
+    --text-dim: #94a3b8;
+    --status-green: #00e676;
+    --female-accent: #ff4081;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--deep-bg);
+    color: var(--text-main);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* --- 1. Clinical Boot Screen --- */
+.boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #020406;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: 8px;
+    color: var(--medical-cyan);
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.loader-track {
+    width: 350px;
+    height: 2px;
+    background: #101820;
+    margin: 30px 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.boot-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--medical-cyan);
+    box-shadow: 0 0 15px var(--medical-cyan);
+    transition: width 0.4s ease;
+}
+
+.boot-status {
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+/* --- 2. Main Layout (Vertical Sidebars) --- */
+#vlab-main {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    transition: background 0.8s ease;
+}
+
+/* Background Gradients for Themes */
+.theme-default { background: radial-gradient(circle at 70% 50%, #16202a 0%, #05080a 100%); }
+.theme-grey { background: radial-gradient(circle at 70% 50%, #2c3e50 0%, #000000 100%); }
+.theme-pink { background: radial-gradient(circle at 70% 50%, #2a1b22 0%, #0a0507 100%); }
+.theme-space { background: #000000; }
+
+.viewer-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Forces the 3D space to stay centered */
+    z-index: 1;
+}
+
+
+model-viewer {
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+}
+
+#female-viewer {
+    margin-top: 100px; /* Pushes the model down so the head doesn't hit the buttons */
+    height: calc(100% - 100px); /* Adjusts height to compensate for the margin */
+}
+
+
+/* --- THE "TOO WHITE" FIX --- 
+   This filter makes the skeleton yellowish/ivory during the warm scan.
+*/
+.theme-pink model-viewer {
+    filter: sepia(0.25) saturate(1.3) brightness(1.05) contrast(1.1);
+}
+
+/* --- 3. HUD Command Deck --- */
+.hud-sidebar {
+    position: absolute;
+    top: 40px;
+    bottom: 80px;
+    width: 300px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.hud-sidebar > * { pointer-events: auto; }
+
+.left { left: 40px; gap: 20px; }
+.right { right: 40px; gap: 20px; text-align: right; }
+
+.nav-group { display: flex; flex-direction: column; gap: 10px; }
+
+.nav-brand {
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--medical-cyan);
+    margin-bottom: 10px;
+}
+
+.hud-btn {
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    padding: 16px 20px;
+    color: var(--text-main);
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+}
+
+.hud-btn:hover {
+    background: rgba(0, 212, 255, 0.15);
+    transform: translateX(10px);
+    border-color: var(--medical-cyan);
+}
+
+.hud-btn.active {
+    background: var(--medical-blue);
+    border-left: 6px solid var(--medical-cyan);
+    box-shadow: 0 10px 30px rgba(0, 102, 204, 0.4);
+}
+
+.ref-btn { border-color: var(--female-accent); color: var(--female-accent); }
+.ref-btn:hover { background: rgba(255, 64, 129, 0.15); transform: translateX(10px); }
+
+/* Info Panel Styling */
+.info-panel {
+    background: var(--panel-bg);
+    padding: 30px;
+    border-left: 5px solid var(--medical-cyan);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-panel.hidden { opacity: 0; transform: translateX(-50px); }
+
+.scan-tag { font-size: 10px; font-weight: 900; color: var(--medical-cyan); letter-spacing: 4px; }
+h1 { font-size: 2rem; margin: 12px 0; letter-spacing: -1px; text-transform: uppercase; }
+p { font-size: 14px; line-height: 1.7; color: var(--text-dim); }
+
+.stats-row {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat label { display: block; font-size: 9px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
+.stat span { font-family: 'Courier New', Courier, monospace; font-weight: 800; color: var(--medical-cyan); font-size: 1.1rem; }
+
+/* --- 4. Controls (Right Sidebar) --- */
+.control-group {
+    background: var(--panel-bg);
+    padding: 25px;
+    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+.control-group label { font-size: 10px; font-weight: 800; display: block; margin-bottom: 20px; color: var(--text-dim); letter-spacing: 1px; }
+
+.theme-selector { display: flex; gap: 15px; justify-content: flex-end; }
+.theme-circle {
+    width: 30px; height: 30px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: 0.3s;
+}
+.theme-circle.default { background: linear-gradient(135deg, #16202a, #05080a); }
+.theme-circle.xray { background: #37474f; }
+.theme-circle.anatomy { background: #ff80ab; }
+.theme-circle.deep { background: #000; }
+.theme-circle.active { border-color: var(--medical-cyan); transform: scale(1.2); }
+
+input[type=range] { width: 100%; accent-color: var(--medical-cyan); cursor: ew-resize; }
+
+.toggle-btn {
+    width: 100%;
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 15px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.toggle-btn.active { color: var(--medical-cyan); border-color: var(--medical-cyan); background: rgba(0, 212, 255, 0.05); }
+
+/* --- 5. 3D Hotspots --- */
+.Hotspot {
+    /* Smaller and Translucent Grey */
+    background: rgba(200, 200, 200, 0.3); 
+    backdrop-filter: blur(4px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    
+    /* Size reduced from 20px to 12px */
+    width: 12px;
+    height: 12px;
+    
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.Hotspot:hover { transform: scale(1.6); background: #fff; z-index: 999; }
+
+.HotspotAnnotation {
+    background: #fff;
+    color: #00121a;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 900;
+    border-radius: 4px;
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-left: 5px solid var(--medical-cyan);
+}
+
+.Hotspot:hover {
+    background: var(--medical-cyan);
+    transform: scale(1.5);
+    box-shadow: 0 0 15px var(--medical-cyan);
+    border-color: #fff;
+    z-index: 999;
+}
+
+
+
+
+/* --- THE ANNOTATION TOGGLE FIX --- */
+.annotations-off .Hotspot { opacity: 0 !important; pointer-events: none !important; }
+.annotations-off .HotspotAnnotation { display: none !important; }
+
+/* --- 6. Female Reference Overlay --- */
+.overlay-container {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #1a0b12 0%, #050203 100%);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.6s ease;
+}
+
+.overlay-container.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
+
+.overlay-header {
+    padding: 25px 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2200; /* Ensure it stays above everything */
+}
+.exit-btn {
+    background: var(--female-accent);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-weight: 900;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+.exit-btn:hover { background: #fff; color: var(--female-accent); }
+
+
+
+.pulse-icon.pink { background: var(--female-accent); box-shadow: 0 0 15px var(--female-accent); }
+
+/* --- 7. Status Bar & Credits --- */
+.hud-status {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 70px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    z-index: 100;
+}
+
+.online { color: var(--status-green); font-weight: 900; }
+
+.credits-wrap { text-align: center; line-height: 1.6; max-width: 40%; }
+.credits-wrap a { color: var(--medical-cyan); text-decoration: none; font-weight: 800; transition: 0.3s; }
+.credits-wrap a:hover { color: #fff; text-decoration: underline; }
+
+.pulse-icon {
+    width: 10px; height: 10px; background: var(--status-green); border-radius: 50%;
+    display: inline-block; margin-right: 12px; animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.hidden { display: none !important; }

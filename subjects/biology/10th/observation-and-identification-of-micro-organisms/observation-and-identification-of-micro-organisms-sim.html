@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microbiology Discovery Lab</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --success: #27ae60;
+            --bg: #ecf0f1;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #95a5a6; overflow: hidden; }
+        .app-container { display: flex; height: 100vh; }
+
+        /* UI Panels */
+        .sidebar, .journal { 
+            width: 320px; background: white; padding: 20px; 
+            display: flex; flex-direction: column; box-shadow: 0 0 15px rgba(0,0,0,0.2); z-index: 5;
+        }
+
+        .workspace { flex: 1; position: relative; background: var(--bg); border: 10px solid #7f8c8d; }
+
+        /* Slide Box */
+        .slide-box {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            background: #fff; padding: 15px; border-radius: 8px; border: 2px solid #bdc3c7;
+        }
+        .slide {
+            padding: 15px; background: #34495e; color: white; border-radius: 4px;
+            cursor: grab; text-align: center; font-size: 0.9rem; font-weight: bold;
+            transition: 0.2s;
+        }
+        .slide:hover { background: var(--accent); }
+
+        /* Microscope */
+        .microscope-area {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            text-align: center;
+        }
+        #stage {
+            width: 180px; height: 120px; background: #222; border-radius: 10px;
+            margin: 0 auto; border: 5px solid #444; position: relative;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .placeholder-text { color: #666; font-size: 0.7rem; }
+        .mounted-slide { width: 140px; height: 30px; background: rgba(255,255,255,0.8); border: 1px solid #fff; }
+
+        /* Microscope View (The Lens) */
+        #lens-view {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+            z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .eyepiece {
+            width: 450px; height: 450px; background: white; border-radius: 50%;
+            border: 15px solid #333; overflow: hidden; position: relative;
+            box-shadow: inset 0 0 100px #000; display: flex; align-items: center; justify-content: center;
+        }
+        .microbe-graphic { width: 300px; height: 300px; transition: transform 0.3s, filter 0.1s; }
+
+        /* Lens Controls */
+        .controls { color: white; margin-top: 20px; text-align: center; width: 400px; }
+        .slider { width: 100%; margin: 15px 0; }
+        .btn { padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-check { background: var(--success); color: white; width: 100%; font-size: 1.1rem; }
+        .btn-exit { background: #e74c3c; color: white; }
+
+        #log { flex: 1; background: #000; color: #0f0; padding: 15px; font-family: monospace; border-radius: 5px; overflow-y: auto; margin-top: 10px; }
+
+        .step { padding: 10px; border-left: 4px solid #ddd; margin-bottom: 10px; background: #f9f9f9; }
+        .step.active { border-left-color: var(--accent); background: #ebf5fb; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <h2>Lab Procedure</h2>
+        <div id="steps">
+            <div class="step active" id="s1">1. Choose a Slide from the box.</div>
+            <div class="step" id="s2">2. Drag it to the Microscope Stage.</div>
+            <div class="step" id="s3">3. Use the knobs to Focus and Identify.</div>
+        </div>
+        
+        <h3>Slide Storage</h3>
+        <div class="slide-box">
+            <div class="slide" draggable="true" id="Bacteria">Sample 1</div>
+            <div class="slide" draggable="true" id="Fungi">Sample 2</div>
+            <div class="slide" draggable="true" id="Algae">Sample 3</div>
+            <div class="slide" draggable="true" id="Protozoa">Sample 4</div>
+            <div class="slide" draggable="true" id="Virus">Sample 5</div>
+        </div>
+        <button class="btn" style="background:#7f8c8d; color:white; margin-top:20px" onclick="location.reload()">Reset Experiment</button>
+    </aside>
+
+    <main class="workspace">
+        <h1 style="text-align:center; color:#2c3e50">Virtual Microbiology Bench</h1>
+        <div class="microscope-area">
+            <div id="stage">
+                <span class="placeholder-text">PLACE SLIDE HERE</span>
+            </div>
+            <img src="https://cdn-icons-png.flaticon.com/512/3022/3022580.png" width="180">
+        </div>
+    </main>
+
+    <aside class="journal">
+        <h3>Lab Journal</h3>
+        <div id="log">System: Ready for observation.</div>
+        <div id="details" style="margin-top:20px; font-size: 0.9rem; display:none">
+            <strong>Microbe Data:</strong>
+            <p id="morphology"></p>
+        </div>
+    </aside>
+</div>
+
+<!-- Microscope Lens Overlay -->
+<div id="lens-view">
+    <div class="eyepiece">
+        <div id="microbe-container" class="microbe-graphic">
+            <!-- SVG content injected by JS -->
+        </div>
+    </div>
+
+    <div class="controls">
+        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+            <label>Coarse Focus Adjustment</label>
+            <input type="range" class="slider" id="focus-knob" min="0" max="25" value="20">
+            
+            <label>Magnification (Zoom)</label><br>
+            <button class="btn" style="background:#444; color:white" onclick="lab.zoom(1)">10x</button>
+            <button class="btn" style="background:#444; color:white" onclick="lab.zoom(2)">40x</button>
+            <button class="btn" style="background:#444; color:white" onclick="lab.zoom(3)">100x</button>
+        </div>
+
+        <div style="margin-top:20px">
+            <select id="id-dropdown" style="padding:10px; width:100%; border-radius:5px">
+                <option value="">-- Identify the Organism --</option>
+                <option value="Bacteria">Bacteria</option>
+                <option value="Fungi">Fungi</option>
+                <option value="Algae">Algae</option>
+                <option value="Protozoa">Protozoa</option>
+                <option value="Virus">Virus</option>
+            </select>
+            <button class="btn btn-check" onclick="lab.checkID()">Verify Identification</button>
+            <button class="btn btn-exit" onclick="lab.closeLens()">Exit Microscope</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const DATA = {
+    'Bacteria': {
+        morph: "Cocci (Spherical) bacteria in clusters. Very small size.",
+        svg: `<svg viewBox="0 0 100 100"><circle cx="40" cy="40" r="6" fill="#8e44ad"/><circle cx="52" cy="42" r="6" fill="#8e44ad"/><circle cx="45" cy="53" r="6" fill="#8e44ad"/><circle cx="60" cy="55" r="6" fill="#8e44ad"/><circle cx="35" cy="65" r="6" fill="#8e44ad"/></svg>`,
+        voice: "This sample shows small spherical structures called Cocci bacteria. They often form clusters."
+    },
+    'Fungi': {
+        morph: "Fungal hyphae and sporangia (Bread mold appearance).",
+        svg: `<svg viewBox="0 0 100 100"><path d="M50 80 L50 40 M50 50 L30 30 M50 60 L70 40" stroke="#5d4037" stroke-width="3"/><circle cx="30" cy="30" r="8" fill="#e67e22"/><circle cx="70" cy="40" r="8" fill="#e67e22"/><circle cx="50" cy="40" r="8" fill="#e67e22"/></svg>`,
+        voice: "You are observing Fungal hyphae. Note the thread like structures and the round spore cases at the tips."
+    },
+    'Algae': {
+        morph: "Filamentous Algae (Spirogyra) with spiral chloroplasts.",
+        svg: `<svg viewBox="0 0 100 100"><rect x="35" y="10" width="30" height="80" fill="#e9f7ef" stroke="#27ae60"/><path d="M40 20 Q50 30 40 40 Q50 50 40 60 Q50 70 40 80" fill="none" stroke="#2ecc71" stroke-width="4"/></svg>`,
+        voice: "This is a green algae. Look closely at the spiral shaped chloroplasts inside the long cells."
+    },
+    'Protozoa': {
+        morph: "Unicellular Amoeba with irregular shape and pseudopods.",
+        svg: `<svg viewBox="0 0 100 100"><path d="M30 40 Q20 60 40 80 Q70 85 85 60 Q80 30 50 20 Z" fill="#3498db" opacity="0.6" stroke="#2980b9"/><circle cx="55" cy="50" r="5" fill="#2c3e50"/></svg>`,
+        voice: "Observe the Protozoa. It moves by extending its cell membrane, forming what we call false feet or pseudopods."
+    },
+    'Virus': {
+        morph: "Bacteriophage virus. Symmetrical protein head and tail.",
+        svg: `<svg viewBox="0 0 100 100"><path d="M50 20 L65 30 L65 50 L50 60 L35 50 L35 30 Z" fill="#95a5a6" stroke="#333"/><path d="M50 60 L50 80 M30 90 L50 80 L70 90" stroke="#333" stroke-width="2"/></svg>`,
+        voice: "This is a Virus. Specifically a bacteriophage. It is much smaller than bacteria and requires an electron microscope in reality."
+    }
+};
+
+class MicroLab {
+    constructor() {
+        this.selectedSample = null;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        // Drag and Drop Setup
+        document.querySelectorAll('.slide').forEach(s => {
+            s.addEventListener('dragstart', (e) => e.dataTransfer.setData('id', e.target.id));
+        });
+
+        const stage = document.getElementById('stage');
+        stage.addEventListener('dragover', (e) => e.preventDefault());
+        stage.addEventListener('drop', (e) => {
+            e.preventDefault();
+            this.loadSample(e.dataTransfer.getData('id'));
+        });
+
+        // Focus logic
+        document.getElementById('focus-knob').addEventListener('input', (e) => {
+            document.getElementById('microbe-container').style.filter = `blur(${e.target.value}px)`;
+        });
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.rate = 0.9;
+        this.synth.speak(msg);
+    }
+
+    log(msg) {
+        const l = document.getElementById('log');
+        l.innerHTML += `<br>> ${msg}`;
+        l.scrollTop = l.scrollHeight;
+    }
+
+    loadSample(id) {
+        this.selectedSample = id;
+        document.getElementById('stage').innerHTML = `<div class="mounted-slide"></div>`;
+        this.log(`Mounted ${id} slide onto stage.`);
+        this.speak(`Sample mounted. Now, look through the lens to observe the ${id}.`);
+        
+        // Update Steps
+        document.getElementById('s1').classList.remove('active');
+        document.getElementById('s2').classList.remove('active');
+        document.getElementById('s3').classList.add('active');
+
+        setTimeout(() => {
+            document.getElementById('lens-view').style.display = 'flex';
+            this.render();
+        }, 1200);
+    }
+
+    render() {
+        const container = document.getElementById('microbe-container');
+        container.innerHTML = DATA[this.selectedSample].svg;
+        container.style.filter = "blur(20px)";
+        document.getElementById('focus-knob').value = 20;
+        document.getElementById('id-dropdown').value = "";
+    }
+
+    zoom(level) {
+        const scales = [1, 2.5, 5];
+        document.getElementById('microbe-container').style.transform = `scale(${scales[level-1]})`;
+        this.log(`Magnification set to ${level === 1 ? '10x' : level === 2 ? '40x' : '100x'}`);
+    }
+
+    checkID() {
+        const userChoice = document.getElementById('id-dropdown').value;
+        const focusValue = document.getElementById('focus-knob').value;
+
+        if (!userChoice) {
+            this.speak("Please select an organism name from the list.");
+            return;
+        }
+
+        if (focusValue > 3) {
+            this.speak("The image is too blurry. Please adjust the focus knob first.");
+            this.log("System: Image not in focus.");
+            return;
+        }
+
+        if (userChoice === this.selectedSample) {
+            this.speak("Correct! " + DATA[this.selectedSample].voice);
+            this.log(`Result: Correct identification of ${userChoice}.`);
+            document.getElementById('details').style.display = "block";
+            document.getElementById('morphology').innerText = DATA[this.selectedSample].morph;
+        } else {
+            this.speak("That is incorrect. Look at the structures again carefully.");
+            this.log(`Result: Incorrect identification.`);
+        }
+    }
+
+    closeLens() {
+        document.getElementById('lens-view').style.display = 'none';
+        this.log("Microscope view closed.");
+    }
+}
+
+const lab = new MicroLab();
+</script>
+</body>
+</html>

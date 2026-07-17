@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hematology Lab: Blood Typing Virtual Experience</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #c0392b;
+            --success: #27ae60;
+            --table-top: #cfd8dc;
+            --wood-trim: #3e2723;
+            --blood-red: #8b0000;
+            --anti-a: #3498db;
+            --anti-b: #f1c40f;
+            --anti-d: #ecf0f1;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #2c3e50; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; background: #2c3e50; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 280px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .blood-icon { background: var(--secondary); color: white; padding: 5px 12px; border-radius: 50%; font-size: 1.2rem; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff5f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace / Lab Table */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: linear-gradient(0deg, rgba(255,255,255,0.2) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; display: flex; justify-content: space-between; align-items: center; }
+        .header-text { flex: 1; }
+
+        /* Full Screen Button Styling */
+        .btn-fullscreen {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-fullscreen:hover {
+            background: #1a252f;
+            transform: translateY(-1px);
+        }
+
+        /* Main Lab Station - Blood Slide Setup */
+        .lab-station {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        #testing-slide {
+            width: 450px;
+            height: 150px;
+            background: rgba(240, 248, 255, 0.6);
+            border: 2px solid rgba(255,255,255,0.9);
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .well-container { text-align: center; }
+        .well-label { font-weight: bold; margin-bottom: 10px; font-size: 1.2rem; color: #333; }
+        .slide-well {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #95a5a6;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.5s;
+        }
+        
+        .blood-drop {
+            position: absolute;
+            inset: 5px;
+            background: var(--blood-red);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Agglutination Effect */
+        .agglutinated {
+            background: radial-gradient(circle at 30% 30%, #5a0000 10%, transparent 15%),
+                        radial-gradient(circle at 70% 60%, #4a0000 12%, transparent 18%),
+                        radial-gradient(circle at 40% 70%, #600000 15%, transparent 20%),
+                        radial-gradient(circle at 80% 20%, #700000 8%, transparent 12%);
+            background-color: var(--blood-red);
+            background-size: 30px 30px;
+            filter: contrast(1.5) brightness(0.8);
+        }
+
+        /* Tools Tray */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; background: #fff; padding: 15px 30px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 75px; }
+        .tool:hover { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 50px; height: 50px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; line-height: 1.1; }
+        .tool.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+        /* UI Buttons */
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: white; color: #333; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-ui:hover { transform: scale(1.05); }
+        .btn-ui.primary { background: var(--secondary); color: white; }
+        
+        #btn-analyze { position: absolute; top: 120px; right: 40px; display: none; z-index: 15; animation: pulse-btn 2s infinite; }
+        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(192, 57, 43, 0); } 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); } }
+
+        /* Molecular Animation Viewer */
+        #molecular-viewer { position: absolute; inset: 0; background: #111; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        
+        #molecular-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #2c3e50, #000); }
+        
+        /* RBCs and Antibodies */
+        .rbc { 
+            position: absolute; width: 150px; height: 150px; background: radial-gradient(circle at 30% 30%, #e74c3c, #8b0000); 
+            border-radius: 50%; box-shadow: inset 0 0 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.5); 
+            display: flex; align-items: center; justify-content: center; transition: all 2s; z-index: 10;
+        }
+        
+        /* Antigens */
+        .antigen-a { position: absolute; width: 15px; height: 15px; background: #3498db; border-radius: 50%; border: 2px solid #fff; }
+        .antigen-rh { position: absolute; width: 15px; height: 15px; background: #ecf0f1; transform: rotate(45deg); border: 2px solid #333; }
+
+        /* Antibodies */
+        .antibody { position: absolute; width: 40px; height: 40px; opacity: 0; transition: all 2s; z-index: 5; }
+        .antibody svg { width: 100%; height: 100%; }
+        
+        .agglutination-cluster { position: absolute; width: 400px; height: 400px; display: flex; align-items: center; justify-content: center; transition: all 3s; }
+
+        /* Viewer UI */
+        .phase-footer { background: rgba(0,0,0,0.85); padding: 30px; border-top: 2px solid var(--secondary); text-align: center; z-index: 30; position: relative; }
+        #v-title { color: #fff; margin: 0 0 10px 0; font-size: 2rem; letter-spacing: 3px; text-transform: uppercase; }
+        #v-desc { color: #dfe6e9; max-width: 900px; margin: 0 auto 20px auto; font-size: 1.1rem; min-height: 3.3em; }
+    </style>
+</head>
+<body>
+
+<div class="app-container" id="main-app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="blood-icon">🩸</span> Hematology Lab</div>
+        <h2>Test Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <div class="header-text">
+                <h2 id="task-title">Lab Initialization</h2>
+                <p id="task-desc">Loading patient sample setup...</p>
+            </div>
+            <button class="btn-fullscreen" id="btn-fullscreen" onclick="lab.toggleFullScreen()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                <span>Full Screen</span>
+            </button>
+        </header>
+
+        <button id="btn-analyze" class="btn-ui primary" onclick="lab.startMolecularAnalysis()">View Agglutination Reaction</button>
+
+        <div class="lab-station">
+            <div id="testing-slide">
+                <div class="well-container">
+                    <div class="well-label">Anti-A</div>
+                    <div class="slide-well" id="well-a"><div class="blood-drop" id="drop-a"></div></div>
+                </div>
+                <div class="well-container">
+                    <div class="well-label">Anti-B</div>
+                    <div class="slide-well" id="well-b"><div class="blood-drop" id="drop-b"></div></div>
+                </div>
+                <div class="well-container">
+                    <div class="well-label">Anti-D (Rh)</div>
+                    <div class="slide-well" id="well-d"><div class="blood-drop" id="drop-d"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-blood">
+                <svg viewBox="0 0 100 100">
+                    <path d="M50 10 Q65 40 70 60 A 20 20 0 0 1 30 60 Q35 40 50 10 Z" fill="var(--secondary)"/>
+                    <rect x="45" y="0" width="10" height="15" fill="#7f8c8d"/>
+                </svg>
+                <span>Patient Sample</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-anti-a">
+                <svg viewBox="0 0 100 100">
+                    <rect x="35" y="30" width="30" height="60" rx="5" fill="rgba(255,255,255,0.7)" stroke="#bdc3c7" stroke-width="2"/>
+                    <rect x="37" y="50" width="26" height="38" fill="var(--anti-a)"/>
+                    <rect x="40" y="10" width="20" height="20" rx="2" fill="#2c3e50"/>
+                    <text x="50" y="75" font-size="20" font-weight="bold" text-anchor="middle" fill="#fff">A</text>
+                </svg>
+                <span>Anti-A Serum</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-anti-b">
+                <svg viewBox="0 0 100 100">
+                    <rect x="35" y="30" width="30" height="60" rx="5" fill="rgba(255,255,255,0.7)" stroke="#bdc3c7" stroke-width="2"/>
+                    <rect x="37" y="50" width="26" height="38" fill="var(--anti-b)"/>
+                    <rect x="40" y="10" width="20" height="20" rx="2" fill="#2c3e50"/>
+                    <text x="50" y="75" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">B</text>
+                </svg>
+                <span>Anti-B Serum</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-anti-d">
+                <svg viewBox="0 0 100 100">
+                    <rect x="35" y="30" width="30" height="60" rx="5" fill="rgba(255,255,255,0.7)" stroke="#bdc3c7" stroke-width="2"/>
+                    <rect x="37" y="50" width="26" height="38" fill="var(--anti-d)"/>
+                    <rect x="40" y="10" width="20" height="20" rx="2" fill="#2c3e50"/>
+                    <text x="50" y="75" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">Rh</text>
+                </svg>
+                <span>Anti-D Serum</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-stick">
+                <svg viewBox="0 0 100 100">
+                    <rect x="47" y="10" width="6" height="80" rx="3" fill="#d35400"/>
+                </svg>
+                <span>Mixer Stick</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+    </aside>
+
+    <!-- Shifted inside the app container so it expands natively during fullscreen -->
+    <div id="molecular-viewer">
+        <div class="viewer-layout">
+            <div id="molecular-stage">
+                <div class="agglutination-cluster" id="cell-cluster">
+                    <div class="rbc" id="rbc-main"></div>
+                </div>
+            </div>
+            
+            <div class="phase-footer">
+                <h1 id="v-title">MICROSCOPIC VIEW</h1>
+                <p id="v-desc">Initial state...</p>
+                <div id="controls-row">
+                    <button class="btn-ui primary" id="btn-next-phase" onclick="lab.advanceMolecularPhase()">NEXT PHASE</button>
+                    <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, tool: 'tool-blood', target: 'testing-slide', title: "Sample Preparation", instruction: "Drag the Patient Sample to the slide.", narration: "Place a drop of the patient's blood into each of the three wells on the testing slide." },
+        { id: 1, tool: 'tool-anti-a', target: 'well-a', title: "Apply Anti-A", instruction: "Add Anti-A Serum to the first well.", narration: "Add Anti-A serum containing antibodies against the A antigen to the first well." },
+        { id: 2, tool: 'tool-anti-b', target: 'well-b', title: "Apply Anti-B", instruction: "Add Anti-B Serum to the second well.", narration: "Add Anti-B serum to the second well to test for the B antigen." },
+        { id: 3, tool: 'tool-anti-d', target: 'well-d', title: "Apply Anti-D (Rh)", instruction: "Add Anti-D Serum to the third well.", narration: "Finally, add Anti-D serum to test for the Rhesus factor, which determines positive or negative." },
+        { id: 4, tool: 'tool-stick', target: 'testing-slide', title: "Mix & Observe", instruction: "Use the mixer stick to stir the samples and observe for agglutination.", narration: "Mix each sample. Look closely for agglutination, which appears as clumping. Clumping indicates a positive reaction." }
+    ]
+};
+
+// Fixed Patient Type for this tutorial: A Positive (A+, B-, Rh+)
+const PATIENT_TYPE = { A: true, B: false, Rh: true };
+
+class BloodTypingLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.molecularPhase = 0;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+        this.listenFullScreenChanges();
+    }
+
+    /* --- Full Screen Logic --- */
+    toggleFullScreen() {
+        const container = document.getElementById('main-app-container');
+        if (!document.fullscreenElement) {
+            container.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    listenFullScreenChanges() {
+        document.addEventListener('fullscreenchange', () => {
+            const btnSpan = document.querySelector('#btn-fullscreen span');
+            const btnSvg = document.querySelector('#btn-fullscreen svg');
+            if (document.fullscreenElement) {
+                btnSpan.textContent = "Exit Fullscreen";
+                btnSvg.innerHTML = '<path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4"/>'; // Collapse icon
+            } else {
+                btnSpan.textContent = "Full Screen";
+                btnSvg.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>'; // Expand icon
+            }
+        });
+    }
+
+    playSound(freq, type = 'sine', duration = 0.15) {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+    }
+
+    renderStepList() {
+        const container = document.getElementById('step-list');
+        container.innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        if(this.stepIdx >= LAB_DATA.steps.length) return;
+        
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+
+        document.querySelectorAll('.tool').forEach(t => t.classList.add('disabled'));
+        document.getElementById(step.tool).classList.remove('disabled');
+
+        this.speak(step.narration);
+    }
+
+    speak(text, callback) {
+        this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.onend = () => { if(callback) callback(); };
+        this.synth.speak(utterance);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.querySelectorAll('.tool').forEach(tool => {
+            tool.addEventListener('dragstart', e => {
+                if(!tool.classList.contains('disabled')) {
+                    e.dataTransfer.setData('text', e.target.id);
+                }
+            });
+        });
+
+        const targets = ['testing-slide', 'well-a', 'well-b', 'well-d'];
+        targets.forEach(tId => {
+            const dropzone = document.getElementById(tId);
+            dropzone.addEventListener('dragover', e => e.preventDefault());
+            dropzone.addEventListener('drop', e => {
+                e.preventDefault();
+                e.stopPropagation();
+                const toolId = e.dataTransfer.getData('text');
+                const step = LAB_DATA.steps[this.stepIdx];
+                
+                const isValidTarget = (step.target === tId) || (step.target === 'testing-slide' && tId.startsWith('well'));
+                
+                if (toolId === step.tool && isValidTarget) {
+                    this.handleAction(toolId);
+                }
+            });
+        });
+    }
+
+    handleAction(toolId) {
+        this.playSound(600, 'triangle');
+        
+        if (this.stepIdx === 0) {
+            document.querySelectorAll('.blood-drop').forEach(drop => {
+                drop.style.opacity = '1';
+                drop.style.transform = 'scale(1)';
+            });
+            this.log("Blood drops applied to slide.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 1) {
+            document.getElementById('drop-a').style.boxShadow = "inset -5px -5px 10px rgba(0,0,0,0.5), 0 0 10px var(--anti-a)";
+            this.log("Anti-A serum added.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 2) {
+            document.getElementById('drop-b').style.boxShadow = "inset -5px -5px 10px rgba(0,0,0,0.5), 0 0 10px var(--anti-b)";
+            this.log("Anti-B serum added.");
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 3) {
+            document.getElementById('drop-d').style.boxShadow = "inset -5px -5px 10px rgba(0,0,0,0.5), 0 0 10px var(--anti-d)";
+            this.log("Anti-D (Rh) serum added.");
+            this.advanceStep();
+        }
+        else if (this.stepIdx === 4) {
+            if(PATIENT_TYPE.A) document.getElementById('drop-a').classList.add('agglutinated');
+            if(PATIENT_TYPE.B) document.getElementById('drop-b').classList.add('agglutinated');
+            if(PATIENT_TYPE.Rh) document.getElementById('drop-d').classList.add('agglutinated');
+            
+            const resultText = "A Positive (A+)";
+            this.log(`Agglutination observed in Anti-A and Anti-D. Blood Type: ${resultText}`);
+            
+            this.stepIdx++;
+            document.getElementById('task-title').textContent = `Diagnosis: ${resultText}`;
+            document.getElementById('task-desc').textContent = "Based on the clumping pattern, we can determine the blood type. Click below to see the microscopic mechanism.";
+            document.getElementById('btn-analyze').style.display = 'block';
+            this.playSound(800, 'sine', 0.5);
+            this.speak(`Testing complete. The sample clumped in Anti-A and Anti-D. This indicates the patient has Blood Type ${resultText}. Let's view the reaction at the molecular level.`);
+        }
+    }
+
+    advanceStep() {
+        this.stepIdx++;
+        setTimeout(() => this.updateStepUI(), 500);
+    }
+
+    /* --- Molecular Animation Sequence --- */
+
+    async startMolecularAnalysis() {
+        document.getElementById('btn-analyze').style.display = 'none';
+        document.getElementById('molecular-viewer').style.display = 'block';
+        
+        this.setupRBC();
+        this.molecularPhase = 0;
+        this.advanceMolecularPhase();
+    }
+
+    setupRBC() {
+        const rbc = document.getElementById('rbc-main');
+        for(let i=0; i<6; i++) {
+            const ag = document.createElement('div');
+            ag.className = 'antigen-a';
+            const angle = (i * 60) * (Math.PI / 180);
+            ag.style.left = `calc(50% + ${Math.cos(angle) * 75}px - 7px)`;
+            ag.style.top = `calc(50% + ${Math.sin(angle) * 75}px - 7px)`;
+            rbc.appendChild(ag);
+        }
+        for(let i=0; i<4; i++) {
+            const rh = document.createElement('div');
+            rh.className = 'antigen-rh';
+            const angle = (i * 90 + 45) * (Math.PI / 180);
+            rh.style.left = `calc(50% + ${Math.cos(angle) * 70}px - 7px)`;
+            rh.style.top = `calc(50% + ${Math.sin(angle) * 70}px - 7px)`;
+            rbc.appendChild(rh);
+        }
+    }
+
+    createAntibody(color, startX, startY) {
+        const ab = document.createElement('div');
+        ab.className = 'antibody';
+        ab.style.left = startX;
+        ab.style.top = startY;
+        ab.innerHTML = `
+            <svg viewBox="0 0 50 50">
+                <path d="M25 50 L25 30 L10 10 M25 30 L40 10" stroke="${color}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+        document.getElementById('molecular-stage').appendChild(ab);
+        return ab;
+    }
+
+    async advanceMolecularPhase() {
+        const title = document.getElementById('v-title');
+        const desc = document.getElementById('v-desc');
+        const btn = document.getElementById('btn-next-phase');
+
+        if(this.molecularPhase === 0) {
+            title.textContent = "Type A+ Red Blood Cell";
+            desc.textContent = "Notice the specific proteins on the surface of the cell. The blue circles are 'A' antigens, and the white diamonds are 'Rh' antigens. There are no 'B' antigens present.";
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        } 
+        else if (this.molecularPhase === 1) {
+            title.textContent = "Anti-B Serum Reaction (Negative)";
+            desc.textContent = "When Anti-B serum is added, Anti-B antibodies (yellow) float around. Because the cell lacks 'B' antigens, the antibodies cannot bind. No clumping occurs.";
+            
+            const ab1 = this.createAntibody('var(--anti-b)', '10%', '10%');
+            const ab2 = this.createAntibody('var(--anti-b)', '80%', '80%');
+            
+            setTimeout(() => {
+                ab1.style.opacity = 1; ab2.style.opacity = 1;
+                ab1.style.transform = "translate(200px, 100px) rotate(45deg)";
+                ab2.style.transform = "translate(-200px, -100px) rotate(-45deg)";
+            }, 500);
+
+            setTimeout(() => {
+                ab1.style.transform = "translate(500px, -100px)";
+                ab2.style.transform = "translate(-500px, 300px)";
+                ab1.style.opacity = 0; ab2.style.opacity = 0;
+            }, 3000);
+
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        }
+        else if (this.molecularPhase === 2) {
+            title.textContent = "Anti-A & Anti-D Reaction (Positive)";
+            desc.textContent = "When Anti-A (blue) and Anti-D (white) serums are added, their matching antibodies bind specifically to the A and Rh antigens like a lock and key.";
+            
+            const aba = this.createAntibody('var(--anti-a)', '20%', '50%');
+            const abd = this.createAntibody('var(--anti-d)', '80%', '20%');
+            
+            setTimeout(() => {
+                aba.style.opacity = 1; abd.style.opacity = 1;
+                aba.style.transform = "translate(240px, 0px) rotate(90deg)"; 
+                abd.style.transform = "translate(-250px, 150px) rotate(-45deg)";
+            }, 500);
+
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        }
+        else if (this.molecularPhase === 3) {
+            title.textContent = "Agglutination (Clumping)";
+            desc.textContent = "Because each antibody has two binding sites, it can attach to antigens on multiple red blood cells, linking them together into a visible clump called agglutination.";
+            
+            btn.textContent = "FINISH LAB";
+            
+            const rbc2 = document.getElementById('rbc-main').cloneNode(true);
+            rbc2.id = 'rbc-2';
+            rbc2.style.left = '300px';
+            rbc2.style.opacity = 0;
+            document.getElementById('cell-cluster').appendChild(rbc2);
+
+            setTimeout(() => {
+                rbc2.style.opacity = 1;
+                document.getElementById('cell-cluster').style.transform = "scale(0.8) rotate(-15deg)";
+            }, 500);
+
+            await this.waitSpeak(desc.textContent);
+            this.molecularPhase++;
+        }
+        else {
+            alert("Hematology Lab Complete: You have mastered Blood Typing!");
+            location.reload();
+        }
+    }
+
+    waitSpeak(text) {
+        return new Promise(resolve => {
+            this.speak(text, resolve);
+        });
+    }
+}
+
+// Initialize Lab
+const lab = new BloodTypingLab();
+</script>
+</body>
+</html>

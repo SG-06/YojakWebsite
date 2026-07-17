@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioCore | Human Digestive System</title>
+   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-content">
+            <div class="logo-text">BIO-CORE <span class="v-line">|</span> SYSTEMS</div>
+            <div class="loader-track"><div id="boot-bar" class="boot-bar"></div></div>
+            <div class="boot-status">CALIBRATING BIOMETRIC DATA...</div>
+        </div>
+    </div>
+
+    <div id="vlab-main">
+        <nav class="hud-nav">
+            <div class="nav-brand"><span class="pulse-icon"></span>BIOMETRIC SCANNER v2.4</div>
+            <div class="nav-buttons">
+                <button id="btn-freeview" class="hud-btn active">1. EXPLORATION</button>
+                <button id="btn-identify" class="hud-btn">2. ORGAN ANALYSIS</button>
+                <button id="btn-overview" class="hud-btn highlight">3. SYSTEM OVERVIEW</button>
+            </div>
+        </nav>
+
+        <div id="info-hud" class="info-hud hidden">
+            <label class="scan-text">ORGAN IDENTIFICATION</label>
+            <h1 id="part-name">SELECT ORGAN</h1>
+            <p id="part-description">Interact with the anatomical model to begin analysis.</p>
+        </div>
+
+        <div id="specs-hud" class="specs-hud">
+            <div class="spec-group"><label>LOCAL pH</label><div class="spec-value" id="ph-data">---</div></div>
+            <div class="spec-group"><label>ENZYME STATUS</label><div id="live-data" class="spec-value">MONITORING...</div></div>
+        </div>
+
+       <div class="control-hud">
+    <!-- Environment Themes -->
+    <div class="control-group">
+        <label>ENVIRONMENT THEME</label>
+        <div class="theme-selector">
+            <button class="theme-circle default active" data-theme="default" title="Default Studio"></button>
+            <button class="theme-circle grey" data-theme="grey" title="Dark Grey"></button>
+            <button class="theme-circle pink" data-theme="pink" title="Light Pink"></button>
+            <button class="theme-circle space" data-theme="space" title="Deep Space"></button>
+        </div>
+    </div>
+
+<div class="control-group">
+        <label>STUDIO LIGHTING (EXPOSURE)</label>
+        <input type="range" id="range-exposure" min="0.2" max="3" step="0.1" value="1.0">
+    </div>
+    
+    <button id="btn-labels" class="toggle-btn active">LABELS: ON</button>
+</div>
+
+        <model-viewer 
+    id="main-viewer" 
+    src="digestive_system.glb" 
+    camera-controls 
+    auto-rotate 
+    shadow-intensity="1" 
+    camera-orbit="0deg 75deg 105%"
+    style="width: 100%; height: 100vh;">
+    
+
+            <!-- YOUR EXACT HOTSPOTS FROM EDITOR -->
+            <button class="Hotspot" slot="hotspot-1" data-position="-0.376m 0.804m -0.023m" data-normal="-0.79m 0.58m -0.13m" data-name="LIVER"><div class="HotspotAnnotation">Liver</div></button>
+            <button class="Hotspot" slot="hotspot-2" data-position="0.420m 0.617m -0.012m" data-normal="0.94m 0.33m 0.008m" data-name="STOMACH"><div class="HotspotAnnotation">Stomach</div></button>
+            <button class="Hotspot" slot="hotspot-4" data-position="-0.183m 0.521m 0.108m" data-normal="-0.26m -0.44m 0.85m" data-name="GALLBLADDER"><div class="HotspotAnnotation">Gallbladder</div></button>
+            <button class="Hotspot" slot="hotspot-6" data-position="-0.207m 0.407m -0.022m" data-normal="-0.87m 0.20m -0.42m" data-name="DUODENUM"><div class="HotspotAnnotation">Duodenum</div></button>
+            <button class="Hotspot" slot="hotspot-7" data-position="0.110m 0.231m 0.142m" data-normal="0.26m 0.44m 0.85m" data-name="PANCREAS"><div class="HotspotAnnotation">Pancreas</div></button>
+            <button class="Hotspot" slot="hotspot-10" data-position="-0.384m -0.282m 0.030m" data-normal="0.15m 0.08m 0.98m" data-name="ASCENDING COLON"><div class="HotspotAnnotation">Ascending Colon</div></button>
+            <button class="Hotspot" slot="hotspot-11" data-position="-0.422m -0.475m 0.119m" data-normal="-0.61m -0.12m 0.78m" data-name="CECUM"><div class="HotspotAnnotation">Cecum</div></button>
+            <button class="Hotspot" slot="hotspot-12" data-position="-0.247m -0.658m 0.078m" data-normal="-0.98m 0.10m 0.15m" data-name="APPENDIX"><div class="HotspotAnnotation">Appendix</div></button>
+            <button class="Hotspot" slot="hotspot-14" data-position="0.006m 0.037m 0.194m" data-normal="-0.03m 0.66m 0.74m" data-name="TRANSVERSE COLON"><div class="HotspotAnnotation">Transverse Colon</div></button>
+            <button class="Hotspot" slot="hotspot-15" data-position="0.319m -0.072m 0.039m" data-normal="0.48m -0.06m 0.87m" data-name="JEJUNUM"><div class="HotspotAnnotation">Jejunum</div></button>
+            <button class="Hotspot" slot="hotspot-16" data-position="0.402m -0.334m 0.049m" data-normal="0.47m 0.53m 0.69m" data-name="DESCENDING COLON"><div class="HotspotAnnotation">Descending Colon</div></button>
+            <button class="Hotspot" slot="hotspot-19" data-position="0.0002m -0.726m 0.038m" data-normal="-0.05m -0.65m 0.75m" data-name="RECTUM"><div class="HotspotAnnotation">Rectum</div></button>
+            <button class="Hotspot" slot="hotspot-20" data-position="-0.0006m -0.928m -0.052m" data-normal="0.005m -0.54m 0.83m" data-name="ANUS"><div class="HotspotAnnotation">Anus</div></button>
+
+        </model-viewer>
+
+      <!-- Bottom HUD: Status Bar -->
+<div class="hud-status">
+    <div class="status-item">BIO-SYNC: <span class="online">ACTIVE</span></div>
+    
+    <!-- Updated Model Attribution -->
+    <div class="status-item credits">
+        <a href="https://skfb.ly/pBG8o" target="_blank">"Digestive System"</a> by 
+        <a href="https://sketchfab.com/jrdnether" target="_blank">jrdnether</a> 
+        is licensed under 
+        <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
+    </div>
+    
+    <div class="status-item timer" id="clock">00:00:00</div>
+</div>
+    <script src="js/app.js"></script>
+</body>
+</html>

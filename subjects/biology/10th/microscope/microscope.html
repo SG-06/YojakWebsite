@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroView | Cinematic Lab</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <!-- Loading / Boot Screen -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-content">
+            <div class="logo-glitch">MICRO-OS</div>
+            <div class="loader-track"><div id="boot-bar" class="boot-bar"></div></div>
+            <div class="boot-status">INITIALIZING SYSTEMS...</div>
+        </div>
+    </div>
+
+    <div id="vlab-main">
+        <!-- Floating Nav -->
+        <nav class="hud-nav">
+            <div class="nav-brand"><span class="pulse-icon"></span>CORE SYSTEM</div>
+            <div class="nav-buttons">
+                <button id="btn-freeview" class="hud-btn active">1. FREE VIEW</button>
+                <button id="btn-identify" class="hud-btn">2. IDENTIFICATION</button>
+                <button id="btn-overview" class="hud-btn highlight">3. INSTRUMENT OVERVIEW</button>
+            </div>
+        </nav>
+
+        <!-- Left HUD: Identification info -->
+        <div id="info-hud" class="info-hud hidden">
+    <label class="scan-text">OPTICAL SCAN</label>
+    <h1 id="part-name">SELECT COMPONENT</h1>
+    <p id="part-description">Select a node on the microscope to analyze its optical function.</p>
+</div>
+
+        <!-- Left HUD: Free View Tech Specs -->
+        <div id="specs-hud" class="specs-hud">
+            <div class="spec-group"><label>MAGNIFICATION</label><div class="spec-value">1000X</div></div>
+            <div class="spec-group"><label>LIGHT SOURCE</label><div class="spec-value">LED - 3.2V</div></div>
+            <div class="spec-group"><label>SENSORS</label><div id="live-data" class="spec-value">SCANNING...</div></div>
+        </div>
+
+        <!-- Right HUD: Controls -->
+        <div class="control-hud">
+            <div class="control-group">
+                <label>EXPOSURE</label>
+                <input type="range" id="range-exposure" min="0.5" max="2" step="0.1" value="1.2">
+            </div>
+            <div class="control-group">
+                <button id="btn-lamp" class="lamp-btn active">SYSTEM LIGHT: ON</button>
+            </div>
+        </div>
+
+        <!-- 3D Viewport -->
+        <model-viewer id="main-viewer" src="assets/models/microscope.glb" camera-controls auto-rotate shadow-intensity="2" exposure="1.2" camera-orbit="45deg 75deg 80%"></model-viewer>
+
+        <!-- Bottom HUD -->
+        <div class="hud-status">
+            <div>SYSTEM: <span class="online">ONLINE</span></div>
+            <div id="clock">00:00:00</div>
+        </div>
+    </div>
+<!-- Bottom HUD: Status Bar -->
+<div class="hud-status">
+    <div class="status-item">SYSTEM: <span class="online">ONLINE</span></div>
+    
+    <!-- Model Attribution -->
+    <div class="status-item credits">
+        OBJECT: <a href="https://skfb.ly/6RusU" target="_blank">EUGEN VAHRUSHIN</a> [CC BY 4.0]
+    </div>
+    
+    <div class="status-item timer" id="clock">00:00:00</div>
+</div>
+    <script src="js/app.js"></script>
+</body>
+</html>

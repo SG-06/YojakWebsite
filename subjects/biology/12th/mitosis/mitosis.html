@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nucleus Lab: Advanced Mitosis Virtual Experience</title>
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --success: #27ae60;
+            --table-top: #cfd8dc;
+            --wood-trim: #5d4037;
+            --dna-purple: #8e44ad;
+            --centriole-yellow: #f1c40f;
+            --spindle-color: rgba(255, 255, 255, 0.3);
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #2c3e50; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 280px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .nucleus-icon { background: var(--dna-purple); color: white; padding: 5px 12px; border-radius: 50%; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff5f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace / Lab Table */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: radial-gradient(circle, #b0bec5 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Lab Header with Flex Layout for Fullscreen Positioning */
+        .lab-header { 
+            padding: 20px; 
+            background: rgba(255,255,255,0.8); 
+            backdrop-filter: blur(5px); 
+            border-bottom: 2px solid #999; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-text { flex: 1; }
+
+        /* Integrated Fullscreen Button Styling matching image */
+        .btn-fullscreen-style {
+            background-color: #7f8c8d;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .btn-fullscreen-style:hover {
+            background-color: #6c7a7d;
+            transform: translateY(-1px);
+        }
+        .btn-fullscreen-style:active {
+            transform: translateY(1px);
+        }
+
+        /* Slide Preparation Area */
+        .slide-zone {
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 250px;
+            border: 3px dashed #7f8c8d;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+        }
+
+        #glass-slide { 
+            width: 280px; 
+            height: 80px; 
+            background: rgba(173, 216, 230, 0.4); 
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative; 
+            cursor: grab; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        #glass-slide:active { cursor: grabbing; }
+
+        .slide-content-wrapper { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+        
+        #slide-root-img { width: 40px; display: none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); z-index: 1; }
+        #slide-stain-overlay { position: absolute; width: 45px; height: 45px; background: rgba(142, 68, 173, 0.6); border-radius: 50%; display: none; filter: blur(5px); z-index: 2; }
+        #slide-slip-img { width: 55px; height: 55px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.2); display: none; z-index: 3; position: absolute; }
+
+        /* Tools */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; background: #fff; padding: 15px 40px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; }
+        .tool:hover { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 60px; height: 60px; }
+        .tool span { display: block; font-size: 0.75rem; font-weight: bold; margin-top: 5px; }
+
+        /* Microscope Stage */
+        #microscope-target { 
+            position: absolute; 
+            bottom: 40px; 
+            right: 40px; 
+            width: 180px; 
+            text-align: center;
+        }
+        #microscope-target svg { width: 100%; height: auto; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
+        .pulse-area { animation: pulse 1.5s infinite; stroke: var(--secondary); stroke-width: 2px; fill: rgba(178, 31, 31, 0.2) !important; }
+
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
+
+        /* Microscope View & Focusing */
+        #lens-view { 
+            position: fixed; inset: 0; background: #000; z-index: 1000; display: none; 
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .eyepiece {
+            width: 600px; height: 600px; border: 40px solid #1a1a1a; border-radius: 50%;
+            overflow: hidden; position: relative; background: #fdf5e6; box-shadow: inset 0 0 100px #000;
+        }
+        #micro-cells { width: 100%; height: 100%; display: grid; grid-template-columns: repeat(6, 1fr); padding: 40px; filter: blur(20px); }
+        .micro-cell { width: 70px; height: 70px; border-radius: 40%; border: 1px solid rgba(0,0,0,0.1); margin: 5px; }
+        
+        .focus-controls {
+            position: absolute; right: 100px; top: 50%; transform: translateY(-50%);
+            text-align: center; color: white;
+        }
+        #focus-knob { width: 100px; height: 100px; transition: transform 0.1s; margin-bottom: 10px; }
+
+        /* Mitosis Animation Viewer Rebuild */
+        #mitosis-viewer { position: fixed; inset: 0; background: #000; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        
+        #cell-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; padding-top: 50px; }
+        
+        #cell-membrane { 
+            position: relative; width: 600px; height: 450px; 
+            border: 6px solid rgba(255, 182, 193, 0.6); 
+            border-radius: 50%; 
+            background: rgba(255, 182, 193, 0.05); 
+            transition: all 2s ease-in-out; 
+            display: flex; align-items: center; justify-content: center;
+            overflow: visible;
+        }
+
+        /* Daughter Cells for Cytokinesis */
+        .daughter-cell {
+            position: absolute;
+            width: 350px; height: 280px;
+            border: 6px solid rgba(255, 182, 193, 0.8);
+            border-radius: 50%;
+            background: rgba(255, 182, 193, 0.1);
+            opacity: 0;
+            transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        #v-nucleus { 
+            position: absolute; width: 280px; height: 280px; 
+            border: 3px dashed rgba(255,255,255,0.7); 
+            border-radius: 50%; background: rgba(255,255,255,0.1); 
+            transition: opacity 3s, transform 2s; 
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        #nucleolus {
+            width: 60px; height: 60px; background: rgba(75, 0, 130, 0.6);
+            border-radius: 50%; transition: opacity 2s;
+        }
+
+        .chromatin-cloud {
+            position: absolute; width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.6;
+        }
+        .chromatin-grain {
+            position: absolute; width: 4px; height: 4px; background: var(--dna-purple);
+            border-radius: 50%; filter: blur(1px); transition: all 3s;
+        }
+
+        .centriole { 
+            position: absolute; width: 35px; height: 18px; 
+            background: var(--centriole-yellow); 
+            border: 2px solid #d4ac0d;
+            opacity: 0; transition: all 3s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 0 15px var(--centriole-yellow); 
+            z-index: 20;
+        }
+
+        .spindle-layer {
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+        }
+        .spindle-fiber {
+            position: absolute; background: var(--spindle-color);
+            height: 1px; transform-origin: left center; transition: width 2s, transform 2s;
+        }
+
+        /* Metaphase Plate (Horizontal) */
+        .metaphase-plate {
+            position: absolute; width: 100%; height: 2px; background: rgba(0, 255, 255, 0.4);
+            left: 0; top: 50%; display: none; box-shadow: 0 0 15px cyan;
+        }
+        .plate-label {
+            position: absolute; color: cyan; font-size: 0.8rem; left: 50%; top: -25px;
+            transform: translateX(-50%);
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        /* Improved Chromosomes */
+        .chromosome-pair { 
+            position: absolute; width: 50px; height: 50px; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; z-index: 15;
+        }
+        .chromatid { 
+            position: absolute; width: 8px; height: 40px; 
+            background: var(--dna-purple); border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(142, 68, 173, 0.8); 
+            transition: all 3s;
+        }
+        .c-left { transform: rotate(20deg); transform-origin: bottom center; }
+        .c-right { transform: rotate(-20deg); transform-origin: bottom center; }
+        .centromere { 
+            position: absolute; width: 12px; height: 12px; 
+            background: #ff00ff; border-radius: 50%; z-index: 5;
+            box-shadow: 0 0 5px #fff;
+        }
+
+        /* UI Overlays */
+        #comparison-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            display: none; align-items: center; justify-content: center; z-index: 3000;
+        }
+        .comparison-card {
+            background: white; padding: 40px; border-radius: 20px; max-width: 800px; text-align: center;
+        }
+        .plant-cell-box {
+            width: 300px; height: 200px; border: 10px solid #27ae60; background: #e9f7ef;
+            margin: 20px auto; position: relative; display: flex; align-items: center; justify-content: center;
+        }
+        #cell-plate {
+            width: 0%; height: 12px; background: #8d6e63; transition: width 5s linear;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .phase-footer { background: rgba(0,0,0,0.85); padding: 30px; border-top: 2px solid var(--dna-purple); text-align: center; }
+        #v-title { color: #fff; margin: 0 0 10px 0; font-size: 2rem; letter-spacing: 3px; text-transform: uppercase; }
+        #v-desc { color: #dfe6e9; max-width: 900px; margin: 0 auto 20px auto; font-size: 1.1rem; min-height: 3.3em; }
+
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: white; color: #333; margin: 0 10px; }
+        .btn-ui:hover { transform: scale(1.1); }
+        .btn-ui.primary { background: var(--success); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="nucleus-icon">N</span> Nucleus Lab</div>
+        <h2>Lab Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <div class="header-text">
+                <h2 id="task-title">Lab Initialization</h2>
+                <p id="task-desc" style="margin: 5px 0 0 0;">Loading experimental setup...</p>
+            </div>
+            <!-- Integrated Fullscreen Button -->
+            <button class="btn-fullscreen-style" id="btn-fullscreen">Fullscreen</button>
+        </header>
+
+        <div class="slide-zone">
+            <div id="glass-slide" draggable="true">
+                <div class="slide-content-wrapper">
+                    <img id="slide-root-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNMzAgMTAgQzQwIDQwIDIwIDgwIDUwIDkwIEM4MCA4MCA2MCA0MCA3MCAxMCBaIiBmaWxsPSIjOGQ2ZTYzIi8+PC9zdmc+" />
+                    <div id="slide-stain-overlay"></div>
+                    <div id="slide-slip-img"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="microscope-target">
+            <svg viewBox="0 0 100 120">
+                <rect x="20" y="100" width="60" height="10" rx="2" fill="#2d3436"/>
+                <path d="M70 100 Q90 70 70 30" stroke="#2d3436" stroke-width="8" fill="none"/>
+                <rect x="30" y="20" width="20" height="40" fill="#636e72"/>
+                <circle id="target-spot" class="pulse-area" cx="40" cy="75" r="15" />
+                <rect x="25" y="72" width="30" height="4" fill="#2d3436"/>
+            </svg>
+            <p style="font-weight: bold; font-size: 0.8rem;">MICROSCOPE STAGE</p>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-root">
+                <svg viewBox="0 0 100 100"><path d="M40 20 Q50 50 30 80 Q50 90 70 80 Q50 50 60 20 Z" fill="#8d6e63"/></svg>
+                <span>Onion Root</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-stain">
+                <svg viewBox="0 0 100 100">
+                    <rect x="35" y="20" width="30" height="50" rx="5" fill="#8e44ad"/><rect x="40" y="10" width="20" height="10" fill="#2d3436"/>
+                    <path d="M35 45 H65" stroke="white" stroke-width="2"/>
+                </svg>
+                <span>Stain</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-slip">
+                <svg viewBox="0 0 100 100">
+                    <rect x="25" y="25" width="50" height="50" fill="rgba(255,255,255,0.5)" stroke="#999" stroke-width="1"/>
+                    <path d="M25 25 L35 35" stroke="white" stroke-width="2"/>
+                </svg>
+                <span>Cover Slip</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<div id="lens-view">
+    <div class="eyepiece"><div id="micro-cells"></div></div>
+    <div class="focus-controls">
+        <svg id="focus-knob" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#444" stroke="#888" stroke-width="2"/>
+            <rect x="47" y="5" width="6" height="20" fill="#eee" rx="2"/>
+        </svg>
+        <p>SCROLL TO FOCUS</p>
+        <div id="focus-action-area"></div>
+    </div>
+</div>
+
+<div id="mitosis-viewer">
+    <div class="viewer-layout">
+        <div id="cell-stage">
+            <div id="cell-membrane">
+                <div id="centriole-a" class="centriole"></div>
+                <div id="centriole-b" class="centriole"></div>
+                <div id="spindle-container" class="spindle-layer"></div>
+                
+                <div id="v-nucleus">
+                    <div id="nucleolus"></div>
+                    <div id="chromatin-field" class="chromatin-cloud"></div>
+                </div>
+                
+                <div id="chromosome-container"></div>
+                
+                <div id="m-plate" class="metaphase-plate">
+                    <span class="plate-label">Metaphase Plate (Equator)</span>
+                </div>
+            </div>
+            <div id="daughter-top" class="daughter-cell"></div>
+            <div id="daughter-bottom" class="daughter-cell"></div>
+        </div>
+        
+        <div class="phase-footer">
+            <h1 id="v-title">PHASE</h1>
+            <p id="v-desc">Initial state...</p>
+            <div id="controls-row">
+                <button class="btn-ui" id="btn-pause">PAUSE</button>
+                <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="comparison-overlay">
+    <div class="comparison-card">
+        <h2>Plant Cell Cytokinesis</h2>
+        <div class="plant-cell-box">
+            <div id="cell-plate"></div>
+        </div>
+        <p id="plant-info">Explanation appearing here...</p>
+        <button class="btn-ui primary" id="btn-close-comp" style="display:none">Close & Complete</button>
+    </div>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, title: "Sample Selection", instruction: "Drag the Root Tip to the glass slide.", narration: "Place the onion root tip onto the center of your glass slide." },
+        { id: 1, title: "Staining", instruction: "Apply Purple Stain to the sample.", narration: "Apply the acetocarmine stain to bind to the DNA." },
+        { id: 2, title: "Preparation", instruction: "Place the Cover Slip on the sample.", narration: "Carefully place the cover slip on top to flatten the tissue." },
+        { id: 3, title: "Mounting", instruction: "Move the slide to the microscope stage.", narration: "Secure the slide onto the microscope stage." },
+        { id: 4, title: "Focusing", instruction: "Scroll to focus the lens.", narration: "Adjust the fine focus until cells become clear." },
+        { id: 5, title: "Analysis", instruction: "Observe mitosis phases.", narration: "We will now begin biological analysis of the mitosis process." }
+    ]
+};
+
+class MitosisLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.blur = 20;
+        this.rotation = 0;
+        this.isPaused = false;
+        this.synth = window.speechSynthesis;
+        this.chromosomes = [];
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+        this.generateCells();
+    }
+
+    playSound(freq, type = 'sine', duration = 0.1) {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+    }
+
+    renderStepList() {
+        const container = document.getElementById('step-list');
+        container.innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        this.speak(step.narration);
+    }
+
+    speak(text, callback) {
+        this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.onend = () => { if(callback) callback(); };
+        this.synth.speak(utterance);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text', e.target.id);
+        });
+
+        const zones = ['glass-slide', 'microscope-target'];
+        zones.forEach(z => {
+            const el = document.getElementById(z);
+            el.addEventListener('dragover', e => e.preventDefault());
+            el.addEventListener('drop', e => {
+                e.preventDefault();
+                this.handleAction(e.dataTransfer.getData('text'), z);
+            });
+        });
+
+        window.addEventListener('wheel', e => {
+            if (this.stepIdx !== 4) return;
+            this.rotation += e.deltaY * 0.2;
+            document.getElementById('focus-knob').style.transform = `rotate(${this.rotation}deg)`;
+            this.blur -= Math.abs(e.deltaY) * 0.01;
+            if (this.blur < 0) this.blur = 0;
+            document.getElementById('micro-cells').style.filter = `blur(${this.blur}px)`;
+            if (this.blur === 0 && !document.getElementById('start-btn')) {
+                document.getElementById('focus-action-area').innerHTML = `<button id="start-btn" class="btn-ui primary" onclick="lab.startAnalysis()">START ANALYSIS</button>`;
+            }
+        });
+
+        document.getElementById('btn-pause').onclick = () => {
+            this.isPaused = !this.isPaused;
+            document.getElementById('btn-pause').textContent = this.isPaused ? "RESUME" : "PAUSE";
+            this.isPaused ? this.synth.pause() : this.synth.resume();
+        };
+
+        // Fullscreen Toggle Hook Mechanism
+        document.getElementById('btn-fullscreen').onclick = () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error enabling fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        };
+    }
+
+    handleAction(toolId, zoneId) {
+        if (this.stepIdx === 0 && toolId === 'tool-root') {
+            document.getElementById('slide-root-img').style.display = 'block';
+            this.advanceStep("Sample mounted.");
+        } else if (this.stepIdx === 1 && toolId === 'tool-stain') {
+            document.getElementById('slide-stain-overlay').style.display = 'block';
+            this.advanceStep("Sample stained.");
+        } else if (this.stepIdx === 2 && toolId === 'tool-slip') {
+            document.getElementById('slide-slip-img').style.display = 'block';
+            this.advanceStep("Cover slip placed.");
+        } else if (this.stepIdx === 3 && toolId === 'glass-slide') {
+            document.getElementById('lens-view').style.display = 'flex';
+            this.advanceStep("Microscope ready.");
+        }
+    }
+
+    advanceStep(msg) {
+        this.log(msg);
+        this.stepIdx++;
+        this.updateStepUI();
+        this.playSound(400);
+    }
+
+    generateCells() {
+        const container = document.getElementById('micro-cells');
+        for(let i=0; i<30; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'micro-cell';
+            cell.style.background = `rgba(142, 68, 173, ${0.1 + Math.random()*0.3})`;
+            container.appendChild(cell);
+        }
+    }
+
+    async startAnalysis() {
+        document.getElementById('lens-view').style.display = 'none';
+        document.getElementById('mitosis-viewer').style.display = 'block';
+        this.createChromatin();
+        this.createChromosomes();
+        
+        await this.runProphase();
+        await this.runMetaphase();
+        await this.runAnaphase();
+        await this.runTelophase();
+        await this.runCytokinesis();
+        await this.runPlantComparison();
+    }
+
+    createChromatin() {
+        const field = document.getElementById('chromatin-field');
+        for(let i=0; i<60; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'chromatin-grain';
+            dot.style.left = Math.random() * 90 + '%';
+            dot.style.top = Math.random() * 90 + '%';
+            field.appendChild(dot);
+        }
+    }
+
+    createChromosomes() {
+        const container = document.getElementById('chromosome-container');
+        container.innerHTML = '';
+        this.chromosomes = [];
+        for(let i=0; i<4; i++) {
+            const pair = document.createElement('div');
+            pair.className = 'chromosome-pair';
+            pair.innerHTML = `
+                <div class="chromatid c-left"></div>
+                <div class="chromatid c-right"></div>
+                <div class="centromere"></div>
+            `;
+            container.appendChild(pair);
+            this.chromosomes.push(pair);
+        }
+    }
+
+    updateSpindles() {
+        const container = document.getElementById('spindle-container');
+        container.innerHTML = '';
+        const cA = document.getElementById('centriole-a').getBoundingClientRect();
+        const cB = document.getElementById('centriole-b').getBoundingClientRect();
+        const stage = document.getElementById('cell-membrane').getBoundingClientRect();
+
+        this.chromosomes.forEach(c => {
+            const rect = c.getBoundingClientRect();
+            this.drawFiber(cA.left + 17 - stage.left, cA.top + 9 - stage.top, rect.left + 25 - stage.left, rect.top + 25 - stage.top);
+            this.drawFiber(cB.left + 17 - stage.left, cB.top + 9 - stage.top, rect.left + 25 - stage.left, rect.top + 25 - stage.top);
+        });
+    }
+
+    drawFiber(x1, y1, x2, y2) {
+        const dist = Math.sqrt((x2-x1)**2 + (y2-y1)**2);
+        const ang = Math.atan2(y2-y1, x2-x1) * 180 / Math.PI;
+        const line = document.createElement('div');
+        line.className = 'spindle-fiber';
+        line.style.width = dist + 'px';
+        line.style.left = x1 + 'px';
+        line.style.top = y1 + 'px';
+        line.style.transform = `rotate(${ang}deg)`;
+        document.getElementById('spindle-container').appendChild(line);
+    }
+
+    async runProphase() {
+        document.getElementById('v-title').textContent = "Prophase";
+        document.getElementById('v-desc').textContent = "Initially, the nucleus is intact with a visible nucleolus and diffuse chromatin.";
+        
+        const cA = document.getElementById('centriole-a');
+        const cB = document.getElementById('centriole-b');
+        cA.style.opacity = 1; cB.style.opacity = 1;
+        cA.style.top = '40%'; cA.style.left = '45%';
+        cB.style.top = '45%'; cB.style.left = '52%';
+
+        await this.waitSpeak("In Prophase, the chromatin gradually condenses into visible chromosomes. The nucleolus begins to fade away.");
+        
+        document.querySelectorAll('.chromatin-grain').forEach(g => {
+            g.style.left = '50%'; g.style.top = '50%'; g.style.opacity = 0;
+        });
+        this.chromosomes.forEach(c => {
+            c.style.opacity = 1;
+            c.style.left = (30 + Math.random()*40) + '%';
+            c.style.top = (30 + Math.random()*40) + '%';
+            c.style.transform = `rotate(${Math.random()*360}deg)`;
+        });
+        document.getElementById('nucleolus').style.opacity = 0;
+
+        await this.waitSpeak("Centrioles move toward opposite poles while spindle fibers fan outward.");
+
+        cA.style.top = '5%'; cA.style.left = '47%';
+        cB.style.top = '90%'; cB.style.left = '47%';
+
+        await new Promise(r => setTimeout(r, 2000));
+        this.updateSpindles();
+
+        await this.waitSpeak("The nuclear membrane dissolves, and spindle fibers attach to the centromeres.");
+        document.getElementById('v-nucleus').style.opacity = 0;
+    }
+
+    async runMetaphase() {
+        document.getElementById('v-title').textContent = "Metaphase";
+        document.getElementById('v-desc').textContent = "Chromosomes align along the metaphase plate.";
+        
+        document.getElementById('m-plate').style.display = 'block';
+        
+        this.chromosomes.forEach((c, i) => {
+            c.style.top = '45%'; 
+            c.style.left = (20 + i*20) + '%'; 
+            c.style.transform = 'rotate(0deg)'; 
+        });
+        
+        setTimeout(() => this.updateSpindles(), 500);
+        await this.waitSpeak("The spindle fibers line up the chromosomes along the horizontal equator of the cell, forming the metaphase plate.");
+    }
+
+    async runAnaphase() {
+        document.getElementById('v-title').textContent = "Anaphase";
+        document.getElementById('v-desc').textContent = "Sister chromatids separate and move toward opposite poles.";
+
+        await this.waitSpeak("During Anaphase, sister chromatids separate. Each chromatid now moves toward the centrioles at the poles.");
+
+        this.chromosomes.forEach((c, i) => {
+            const left = c.querySelector('.c-left');
+            const right = c.querySelector('.c-right');
+            c.querySelector('.centromere').style.opacity = 0;
+            
+            left.style.transform = "translateY(-180px) rotate(0deg) scaleY(0.8)";
+            right.style.transform = "translateY(180px) rotate(180deg) scaleY(0.8)";
+        });
+
+        document.getElementById('spindle-container').style.opacity = 0.3;
+        await new Promise(r => setTimeout(r, 2000));
+    }
+
+    async runTelophase() {
+        document.getElementById('v-title').textContent = "Telophase";
+        document.getElementById('v-desc').textContent = "Two new nuclei form as chromosomes decondense.";
+
+        this.chromosomes.forEach(c => c.style.opacity = 0);
+        document.getElementById('spindle-container').style.display = 'none';
+        document.getElementById('m-plate').style.display = 'none';
+
+        await this.waitSpeak("In Telophase, two distinct nuclei form at opposite ends of the cell.");
+    }
+
+    async runCytokinesis() {
+        document.getElementById('v-title').textContent = "Cytokinesis";
+        const parent = document.getElementById('cell-membrane');
+        const dTop = document.getElementById('daughter-top');
+        const dBot = document.getElementById('daughter-bottom');
+
+        await this.waitSpeak("In Cytokinesis, the cell physically divides into two identical daughter cells.");
+
+        parent.style.transition = "all 2s ease-in";
+        parent.style.width = "400px";
+        parent.style.height = "100px"; 
+        parent.style.opacity = "0"; 
+
+        dTop.style.opacity = "1";
+        dTop.style.top = "15%";
+        
+        dBot.style.opacity = "1";
+        dBot.style.top = "55%";
+
+        await new Promise(r => setTimeout(r, 3000));
+        await this.waitSpeak("The parent cell has successfully split into two separate, independent cells.");
+    }
+
+    async runPlantComparison() {
+        const overlay = document.getElementById('comparison-overlay');
+        overlay.style.display = 'flex';
+        document.getElementById('plant-info').textContent = "Plant cells form a cell plate instead of pinching into two cells.";
+        
+        setTimeout(() => {
+            document.getElementById('cell-plate').style.width = "100%";
+        }, 1000);
+
+        await this.waitSpeak("In plant cells, a rigid cell wall prevents pinching. Instead, a cell plate forms to divide the cell.");
+
+        const closeBtn = document.getElementById('btn-close-comp');
+        closeBtn.style.display = "inline-block";
+        closeBtn.onclick = () => {
+            alert("Activity Complete!");
+            location.reload();
+        };
+    }
+
+    waitSpeak(text) {
+        return new Promise(resolve => {
+            this.speak(text, resolve);
+        });
+    }
+}
+
+const lab = new MitosisLab();
+</script>
+</body>
+</html>

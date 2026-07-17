@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan: Food Chemistry Virtual Lab</title>
+    <style>
+        :root {
+            --primary: #008080; /* Teal */
+            --secondary: #d35400; /* Burnt Orange */
+            --success: #27ae60;
+            --table-top: #eceff1;
+            --wood-trim: #5d4037;
+            --reagent-iodine: #f39c12;
+            --reagent-benedict: #3498db;
+            --reagent-biuret: #9b59b6;
+            --reagent-ethanol: #bdc3c7;
+            --glass-sheen: rgba(255, 255, 255, 0.4);
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #1a1a1a; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 300px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .lab-icon { background: var(--primary); color: white; padding: 5px 12px; border-radius: 8px; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff5f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: radial-gradient(circle, #cfd8dc 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 12px solid var(--wood-trim);
+            border-right: 12px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.9); border-bottom: 2px solid #999; }
+
+        /* Experimental Area */
+        .test-zone {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 30px;
+            align-items: flex-end;
+        }
+
+        .test-tube-rack {
+            display: flex;
+            gap: 15px;
+            background: #7f8c8d;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border-bottom: 8px solid #34495e;
+        }
+
+        .test-tube {
+            width: 40px;
+            height: 180px;
+            background: var(--glass-sheen);
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: rgba(255,255,255,0.3);
+            transition: all 1s ease;
+        }
+
+        /* Bunsen Burner */
+        #burner {
+            width: 80px;
+            height: 100px;
+            position: relative;
+            display: none;
+        }
+        .flame {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(transparent, #3498db, #e74c3c);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.1s infinite alternate;
+            display: none;
+        }
+        @keyframes flicker { 
+            0% { transform: translateX(-50%) scale(1); } 
+            100% { transform: translateX(-52%) scale(1.1); } 
+        }
+
+        /* Tools */
+        .tool-tray { 
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            display: flex; gap: 20px; background: #fff; padding: 15px 30px; 
+            border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); 
+        }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 70px;}
+        .tool:hover { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 45px; height: 45px; }
+        .tool span { display: block; font-size: 0.65rem; font-weight: bold; margin-top: 5px; }
+
+        /* Fullscreen Analysis View */
+        #analysis-viewer { position: fixed; inset: 0; background: #050b14; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        #molecular-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        
+        .molecule { position: absolute; transition: all 1s; }
+        
+        .phase-footer { background: #02060c; padding: 25px; border-top: 2px solid var(--primary); text-align: center; }
+        #v-title { color: #fff; margin: 0 0 5px 0; font-size: 1.8rem; letter-spacing: 2px; }
+        #v-desc { color: #b0bec5; max-width: 800px; margin: 0 auto 15px auto; font-size: 1rem; }
+
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: var(--primary); color: white; }
+        .btn-ui:hover { transform: scale(1.05); background: var(--secondary); }
+
+        /* Results Table */
+        .results-table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.8rem; }
+        .results-table th, .results-table td { border: 1px solid #444; padding: 8px; text-align: left; }
+        .results-table th { background: #2c3e50; }
+
+        #completion-screen {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; 
+            display: none; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="lab-icon">F</span> NutriScan Lab</div>
+        <h2>Experiment Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Lab Initialization</h2>
+            <p id="task-desc">Loading food samples...</p>
+        </header>
+
+        <div class="test-zone">
+            <div id="burner">
+                <div class="flame"></div>
+                <svg viewBox="0 0 100 100"><rect x="30" y="70" width="40" height="30" fill="#2c3e50"/><path d="M45 70 L45 50 L55 50 L55 70" fill="#95a5a6"/></svg>
+            </div>
+            <div class="test-tube-rack">
+                <div class="test-tube" id="tube-active"><div class="liquid" id="liquid-main"></div></div>
+            </div>
+        </div>
+
+        <div class="tool-tray" id="tray-samples">
+            <div class="tool" draggable="true" id="food-potato">
+                <svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="30" ry="20" fill="#d35400"/></svg>
+                <span>Potato (Starch)</span>
+            </div>
+            <div class="tool" draggable="true" id="food-glucose">
+                <svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="40" fill="#ecf0f1" stroke="#bdc3c7"/></svg>
+                <span>Glucose Sol.</span>
+            </div>
+            <div class="tool" draggable="true" id="food-egg">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="#fff"/><circle cx="50" cy="50" r="12" fill="#f1c40f"/></svg>
+                <span>Egg White</span>
+            </div>
+            <div class="tool" draggable="true" id="food-oil">
+                <svg viewBox="0 0 100 100"><path d="M50 20 Q70 60 50 80 Q30 60 50 20" fill="#f1c40f"/></svg>
+                <span>Cooking Oil</span>
+            </div>
+        </div>
+
+        <div class="tool-tray" id="tray-reagents" style="display:none; bottom: 120px;">
+            <div class="tool" draggable="true" id="reg-iodine">
+                <svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="50" fill="#f39c12"/><path d="M45 30 V10" stroke="#000" stroke-width="5"/></svg>
+                <span>Iodine</span>
+            </div>
+            <div class="tool" draggable="true" id="reg-benedict">
+                <svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="50" fill="#3498db"/><path d="M45 30 V10" stroke="#000" stroke-width="5"/></svg>
+                <span>Benedict's</span>
+            </div>
+            <div class="tool" draggable="true" id="reg-biuret">
+                <svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="50" fill="#9b59b6"/><path d="M45 30 V10" stroke="#000" stroke-width="5"/></svg>
+                <span>Biuret</span>
+            </div>
+            <div class="tool" draggable="true" id="reg-ethanol">
+                <svg viewBox="0 0 100 100"><rect x="35" y="30" width="30" height="50" fill="#ecf0f1"/><path d="M45 30 V10" stroke="#000" stroke-width="5"/></svg>
+                <span>Ethanol</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+        <table class="results-table">
+            <thead>
+                <tr><th>Nutrient</th><th>Test</th><th>Result</th></tr>
+            </thead>
+            <tbody id="results-body">
+                <tr><td>Starch</td><td>Iodine</td><td id="res-starch">-</td></tr>
+                <tr><td>Sugar</td><td>Benedict</td><td id="res-sugar">-</td></tr>
+                <tr><td>Protein</td><td>Biuret</td><td id="res-protein">-</td></tr>
+                <tr><td>Lipids</td><td>Ethanol</td><td id="res-fat">-</td></tr>
+            </tbody>
+        </table>
+    </aside>
+</div>
+
+<!-- Analysis Mode (Molecular Level) -->
+<div id="analysis-viewer">
+    <div class="viewer-layout">
+        <div id="molecular-stage"></div>
+        <div class="phase-footer">
+            <h1 id="v-title">MOLECULAR ANALYSIS</h1>
+            <p id="v-desc">Observing chemical interaction...</p>
+            <button class="btn-ui" id="btn-close-analysis" style="display:none">Return to Lab</button>
+        </div>
+    </div>
+</div>
+
+<div id="completion-screen">
+    <h1>Experiment Complete!</h1>
+    <p>You have successfully identified the nutrients in various food samples.</p>
+    <div style="background: white; color: #333; padding: 20px; border-radius: 10px; margin: 20px;">
+        <h3>Nutrient Summary</h3>
+        <p>Starch: Iodine Blue-Black (+) | Protein: Biuret Violet (+)</p>
+        <p>Sugar: Benedict's Brick Red (+) | Fats: Milky Emulsion (+)</p>
+    </div>
+    <button class="btn-ui" onclick="location.reload()">Restart Laboratory</button>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, title: "Sample Selection", instruction: "Drag a food sample to the test tube.", narration: "First, select a food sample to analyze its nutritional content." },
+        { id: 1, title: "Starch Test", instruction: "Apply Iodine solution to the sample.", narration: "We will test for starch. Add Iodine solution. A blue-black color indicates a positive result." },
+        { id: 2, title: "Sugar Test", instruction: "Add Benedict's reagent and heat.", narration: "Now for reducing sugars. Add Benedict's reagent and we must apply heat to catalyze the reaction." },
+        { id: 3, title: "Protein Test", instruction: "Add Biuret reagent and observe.", narration: "To detect proteins, we use Biuret reagent. Look for a violet or purple color change." },
+        { id: 4, title: "Fat Test", instruction: "Use Ethanol Emulsion test.", narration: "Finally, test for lipids using ethanol. A milky emulsion indicates the presence of fats." },
+        { id: 5, title: "Lab Finalization", instruction: "Review your findings in the journal.", narration: "The experiment is complete. Review your observations in the lab journal." }
+    ]
+};
+
+class FoodLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.currentFood = null;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+        this.log("System Ready. Lab Initialized.");
+    }
+
+    renderStepList() {
+        document.getElementById('step-list').innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+       // Wait 1 second after loading before starting to speak
+setTimeout(() => {
+    this.speak(step.narration);
+}, 1000);
+        
+        // Show/Hide trays based on step
+        document.getElementById('tray-samples').style.display = (this.stepIdx === 0) ? 'flex' : 'none';
+        document.getElementById('tray-reagents').style.display = (this.stepIdx > 0 && this.stepIdx < 5) ? 'flex' : 'none';
+    }
+
+    speak(text) {
+        this.synth.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.rate = 1.0;
+        this.synth.speak(msg);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.addEventListener('dragstart', e => { e.dataTransfer.setData('text', e.target.id); });
+        const target = document.getElementById('tube-active');
+        
+        target.addEventListener('dragover', e => e.preventDefault());
+        target.addEventListener('drop', e => {
+            e.preventDefault();
+            this.handleDrop(e.dataTransfer.getData('text'));
+        });
+
+        document.getElementById('btn-close-analysis').onclick = () => {
+            document.getElementById('analysis-viewer').style.display = 'none';
+            this.advanceStep();
+        };
+    }
+
+    handleDrop(itemId) {
+        if (this.stepIdx === 0 && itemId.startsWith('food-')) {
+            this.currentFood = itemId.split('-')[1];
+            document.getElementById('liquid-main').style.height = "40%";
+            document.getElementById('liquid-main').style.background = "#ddd";
+            this.log(`Sample [${this.currentFood}] prepared in test tube.`);
+            this.advanceStep();
+        } 
+        else if (this.stepIdx === 1 && itemId === 'reg-iodine') {
+            this.runTest('Starch', 'reg-iodine', '#2c3e50', 'starch');
+        }
+        else if (this.stepIdx === 2 && itemId === 'reg-benedict') {
+            this.runTest('Sugar', 'reg-benedict', '#e67e22', 'sugar', true);
+        }
+        else if (this.stepIdx === 3 && itemId === 'reg-biuret') {
+            this.runTest('Protein', 'reg-biuret', '#8e44ad', 'protein');
+        }
+        else if (this.stepIdx === 4 && itemId === 'reg-ethanol') {
+            this.runTest('Lipid', 'reg-ethanol', '#ecf0f1', 'fat');
+        }
+    }
+
+    async runTest(name, reagent, color, resultId, needsHeat = false) {
+        this.log(`Adding ${name} reagent...`);
+        const liquid = document.getElementById('liquid-main');
+        liquid.style.height = "60%";
+        
+        if (needsHeat) {
+            document.getElementById('burner').style.display = "block";
+            document.querySelector('.flame').style.display = "block";
+            this.log("Applying heat...");
+            await new Promise(r => setTimeout(r, 2000));
+        }
+
+        const isPositive = (this.currentFood === 'potato' && name === 'Starch') ||
+                           (this.currentFood === 'glucose' && name === 'Sugar') ||
+                           (this.currentFood === 'egg' && name === 'Protein') ||
+                           (this.currentFood === 'oil' && name === 'Lipid');
+
+        if (isPositive) {
+            liquid.style.background = color;
+            document.getElementById(`res-${resultId}`).textContent = "POSITIVE";
+            document.getElementById(`res-${resultId}`).style.color = "var(--success)";
+        } else {
+            document.getElementById(`res-${resultId}`).textContent = "NEGATIVE";
+        }
+
+        this.showMolecularView(name, isPositive);
+    }
+
+    showMolecularView(testName, isPositive) {
+        const viewer = document.getElementById('analysis-viewer');
+        const stage = document.getElementById('molecular-stage');
+        const title = document.getElementById('v-title');
+        const desc = document.getElementById('v-desc');
+        const btn = document.getElementById('btn-close-analysis');
+        
+        viewer.style.display = 'block';
+        btn.style.display = 'none';
+        stage.innerHTML = '';
+        
+        title.textContent = `${testName} Test Analysis`;
+        
+        if (testName === 'Starch') {
+            this.animateStarch(stage, isPositive);
+            desc.textContent = isPositive ? 
+                "Iodine molecules (triiodide ions) slide into the starch helical structure, forming a complex that absorbs light, appearing blue-black." :
+                "No starch helices present. Iodine remains in its elemental brown state.";
+        } else if (testName === 'Sugar') {
+            this.animateSugar(stage, isPositive);
+            desc.textContent = isPositive ?
+                "Copper (II) ions in Benedict's solution are reduced to Copper (I) oxide by the sugar, creating a brick-red precipitate." :
+                "No reducing sugars detected. Copper ions remain unreduced.";
+        } else if (testName === 'Protein') {
+            this.animateProtein(stage, isPositive);
+            desc.textContent = isPositive ?
+                "Copper (II) ions form a coordination complex with the peptide bonds of the protein, shifting color to violet." :
+                "No peptide bonds available to complex with copper ions.";
+        } else if (testName === 'Lipid') {
+            this.animateLipid(stage, isPositive);
+            desc.textContent = isPositive ?
+                "Lipids dissolve in ethanol. When water is added, they precipitate out as tiny droplets, scattering light into a milky white emulsion." :
+                "No lipids detected. Ethanol remains clear.";
+        }
+
+        setTimeout(() => {
+            btn.style.display = 'inline-block';
+            this.speak(desc.textContent);
+        }, 1000);
+    }
+
+    /* Molecular Animations */
+    animateStarch(stage, pos) {
+        // Create spiral starch
+        for(let i=0; i<10; i++) {
+            const part = document.createElement('div');
+            part.style.cssText = `position:absolute; width:40px; height:40px; border:4px solid #fff; border-radius:50%; left:${100+i*30}px; top:${200 + Math.sin(i)*50}px`;
+            stage.appendChild(part);
+        }
+        // Iodine dots
+        for(let i=0; i<15; i++) {
+            const dot = document.createElement('div');
+            dot.style.cssText = `position:absolute; width:10px; height:10px; background:${pos ? '#2c3e50' : '#f39c12'}; border-radius:50%; left:${Math.random()*800}px; top:${Math.random()*500}px; transition: all 2s`;
+            stage.appendChild(dot);
+            if(pos) setTimeout(() => { dot.style.left = (200 + Math.random()*200) + 'px'; dot.style.top = '220px'; }, 100);
+        }
+    }
+
+    animateSugar(stage, pos) {
+        for(let i=0; i<20; i++) {
+            const hex = document.createElement('div');
+            hex.style.cssText = `position:absolute; width:30px; height:30px; background:${pos ? '#e67e22' : '#3498db'}; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); left:${Math.random()*800}px; top:${Math.random()*500}px;`;
+            stage.appendChild(hex);
+        }
+    }
+
+    animateProtein(stage, pos) {
+        const ribbon = document.createElement('div');
+        ribbon.style.cssText = `position:absolute; width:600px; height:10px; background:#ccc; top:50%; left:10%; border-radius:5px;`;
+        stage.appendChild(ribbon);
+        for(let i=0; i<12; i++) {
+            const cu = document.createElement('div');
+            cu.style.cssText = `position:absolute; width:20px; height:20px; background:${pos ? '#8e44ad' : '#3498db'}; border-radius:50%; left:${150 + i*40}px; top:48%; box-shadow: 0 0 15px ${pos ? '#8e44ad' : 'transparent'};`;
+            stage.appendChild(cu);
+        }
+    }
+
+    animateLipid(stage, pos) {
+        for(let i=0; i<40; i++) {
+            const drop = document.createElement('div');
+            drop.style.cssText = `position:absolute; width:${pos?20:10}px; height:${pos?20:10}px; background:rgba(255,255,255,${pos?0.8:0.2}); border-radius:50%; left:${Math.random()*800}px; top:${Math.random()*500}px;`;
+            stage.appendChild(drop);
+        }
+    }
+
+    advanceStep() {
+        this.stepIdx++;
+        if (this.stepIdx >= LAB_DATA.steps.length - 1) {
+            document.getElementById('completion-screen').style.display = 'flex';
+        } else {
+            this.updateStepUI();
+            document.getElementById('burner').style.display = "none";
+        }
+    }
+}
+
+const lab = new FoodLab();
+</script>
+</body>
+</html>

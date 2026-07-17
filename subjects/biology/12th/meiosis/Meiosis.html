@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nucleus Lab: Advanced Meiosis Virtual Experience</title>
+    <style>
+        :root {
+            --primary: #008080;
+            --secondary: #d35400;
+            --success: #27ae60;
+            --table-top: #e0f2f1;
+            --wood-trim: #4e342e;
+            --dna-maternal: #e91e63;
+            --dna-paternal: #2196f3;
+            --centriole-yellow: #f1c40f;
+            --spindle-color: rgba(255, 255, 255, 0.3);
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            background: #121212; 
+            overflow: hidden; 
+            color: #333; 
+        }
+
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar & Journal */
+        .sidebar, .notebook { 
+            width: 280px; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #dfe6e9; 
+            z-index: 10; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .nucleus-icon { background: var(--dna-maternal); color: white; padding: 5px 12px; border-radius: 50%; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #fff5f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Workspace / Lab Table */
+        .workspace { 
+            flex: 1; 
+            position: relative; 
+            background-color: var(--table-top);
+            background-image: radial-gradient(circle, #b2dfdb 1px, transparent 1px);
+            background-size: 30px 30px;
+            border-left: 10px solid var(--wood-trim);
+            border-right: 10px solid var(--wood-trim);
+        }
+
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; }
+
+        /* Slide Preparation Area */
+        .slide-zone {
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 250px;
+            border: 3px dashed #7f8c8d;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+        }
+
+        #glass-slide { 
+            width: 280px; 
+            height: 80px; 
+            background: rgba(173, 216, 230, 0.4); 
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative; 
+            cursor: grab; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        #glass-slide:active { cursor: grabbing; }
+
+        .slide-content-wrapper { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+        
+        #slide-anther-img { width: 40px; display: none; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); z-index: 1; }
+        #slide-stain-overlay { position: absolute; width: 45px; height: 45px; background: rgba(211, 84, 0, 0.6); border-radius: 50%; display: none; filter: blur(5px); z-index: 2; }
+        #slide-slip-img { width: 55px; height: 55px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.2); display: none; z-index: 3; position: absolute; }
+
+        /* Tools */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; background: #fff; padding: 15px 40px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; }
+        .tool:hover { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 60px; height: 60px; }
+        .tool span { display: block; font-size: 0.75rem; font-weight: bold; margin-top: 5px; }
+
+        /* Microscope Stage */
+        #microscope-target { 
+            position: absolute; 
+            bottom: 40px; 
+            right: 40px; 
+            width: 180px; 
+            text-align: center;
+        }
+        #microscope-target svg { width: 100%; height: auto; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
+        .pulse-area { animation: pulse 1.5s infinite; stroke: var(--secondary); stroke-width: 2px; fill: rgba(211, 84, 0, 0.2) !important; }
+
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 0.8; } 100% { opacity: 0.3; } }
+
+        /* Microscope View & Focusing */
+        #lens-view { 
+            position: fixed; inset: 0; background: #000; z-index: 1000; display: none; 
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .eyepiece {
+            width: 600px; height: 600px; border: 40px solid #1a1a1a; border-radius: 50%;
+            overflow: hidden; position: relative; background: #faf0e6; box-shadow: inset 0 0 100px #000;
+        }
+        #micro-cells { width: 100%; height: 100%; display: grid; grid-template-columns: repeat(6, 1fr); padding: 40px; filter: blur(20px); }
+        .micro-cell { width: 70px; height: 70px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); margin: 5px; }
+        
+        .focus-controls {
+            position: absolute; right: 100px; top: 50%; transform: translateY(-50%);
+            text-align: center; color: white;
+        }
+        #focus-knob { width: 100px; height: 100px; transition: transform 0.1s; margin-bottom: 10px; }
+
+        /* Meiosis Animation Canvas Layout */
+        #meiosis-viewer { position: fixed; inset: 0; background: #050b14; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        
+        #cell-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: visible; }
+        
+        /* Master container holding cells dynamic structures */
+        .cell-container-node {
+            position: absolute;
+            border: 4px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 2s ease-in-out;
+        }
+
+        .main-cell { width: 650px; height: 480px; background: rgba(0, 128, 128, 0.03); border-color: var(--primary); }
+        .meiosis-ii-cell { width: 310px; height: 420px; background: rgba(211, 84, 0, 0.02); border-color: var(--secondary); }
+        .tetrad-cell { width: 140px; height: 200px; background: rgba(39, 174, 96, 0.03); border-color: var(--success); }
+
+        .v-nucleus-envelope { 
+            position: absolute; width: 260px; height: 260px; 
+            border: 3px dashed rgba(255,255,255,0.6); 
+            border-radius: 50%; background: rgba(255,255,255,0.05); 
+            transition: opacity 2s, transform 2s; 
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .centriole-node { 
+            position: absolute; width: 24px; height: 12px; 
+            background: var(--centriole-yellow); 
+            border: 1px solid #d4ac0d;
+            box-shadow: 0 0 10px var(--centriole-yellow); 
+            z-index: 20; transition: all 2s ease-in-out; opacity: 0;
+        }
+
+        .spindle-layer-canvas {
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+        }
+        .spindle-strand {
+            position: absolute; background: var(--spindle-color);
+            height: 1px; transform-origin: left center; transition: width 1.5s, transform 1.5s;
+        }
+
+        /* Highly configurable modular chromosome pairs */
+        .chromosome-arm-pair { 
+            position: absolute; width: 40px; height: 40px; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 2s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; z-index: 15;
+        }
+        .chromatid-strand { 
+            position: absolute; width: 8px; height: 36px; 
+            border-radius: 4px; transition: all 2s;
+        }
+        .maternal-color { background: var(--dna-maternal); box-shadow: 0 0 8px rgba(233,30,99,0.6); }
+        .paternal-color { background: var(--dna-paternal); box-shadow: 0 0 8px rgba(33,150,243,0.6); }
+        
+        /* Recombination crossing nodes */
+        .chiasma-tip {
+            position: absolute; width: 8px; height: 10px; bottom: 0; border-radius: 0 0 4px 4px;
+        }
+
+        .c-left-arm { transform: rotate(22deg); transform-origin: bottom center; left: 10px; }
+        .c-right-arm { transform: rotate(-22deg); transform-origin: bottom center; right: 10px; }
+        .centromere-core { 
+            position: absolute; width: 10px; height: 10px; 
+            background: #ffffff; border-radius: 50%; z-index: 22;
+            box-shadow: 0 0 5px #fff;
+        }
+
+        .phase-footer { background: #02060c; padding: 25px; border-top: 2px solid var(--primary); text-align: center; z-index: 2500; }
+        #v-title { color: #fff; margin: 0 0 5px 0; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase; }
+        #v-desc { color: #b0bec5; max-width: 900px; margin: 0 auto 15px auto; font-size: 1rem; min-height: 3em; }
+
+        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: white; color: #333; margin: 0 10px; }
+        .btn-ui:hover { transform: scale(1.05); }
+        .btn-ui.primary { background: var(--primary); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="nucleus-icon">M</span> Meiosis Lab</div>
+        <h2>Lab Progress</h2>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Lab Initialization</h2>
+            <p id="task-desc">Loading experimental setup...</p>
+        </header>
+
+        <button id="btn-fullscreen" class="btn-ui" onclick="lab.toggleFullscreen()" style="position: absolute; top: 15px; right: 25px; z-index: 1000; margin: 0; padding: 8px 15px; font-size: 0.8rem; background: #7f8c8d; color: white;">FULLSCREEN</button>
+
+        <div class="slide-zone">
+            <div id="glass-slide" draggable="true">
+                <div class="slide-content-wrapper">
+                    <img id="slide-anther-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzNCIgZmlsbD0iI2RhYjM1YSIgc3Ryb2tlPSIjNWQ0MDM3IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=" />
+                    <div id="slide-stain-overlay"></div>
+                    <div id="slide-slip-img"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="microscope-target">
+            <svg viewBox="0 0 100 120">
+                <rect x="20" y="100" width="60" height="10" rx="2" fill="#2d3436"/>
+                <path d="M70 100 Q90 70 70 30" stroke="#2d3436" stroke-width="8" fill="none"/>
+                <rect x="30" y="20" width="20" height="40" fill="#636e72"/>
+                <circle id="target-spot" class="pulse-area" cx="40" cy="75" r="15" />
+                <rect x="25" y="72" width="30" height="4" fill="#2d3436"/>
+            </svg>
+            <p style="font-weight: bold; font-size: 0.8rem;">MICROSCOPE STAGE</p>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-anther">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="#e67e22"/></svg>
+                <span>Flower Anther</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-stain">
+                <svg viewBox="0 0 100 100">
+                    <rect x="35" y="20" width="30" height="50" rx="5" fill="#d35400"/><rect x="40" y="10" width="20" height="10" fill="#2d3436"/>
+                </svg>
+                <span>Carmine Stain</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-slip">
+                <svg viewBox="0 0 100 100">
+                    <rect x="25" y="25" width="50" height="50" fill="rgba(255,255,255,0.5)" stroke="#999" stroke-width="1"/>
+                </svg>
+                <span>Cover Slip</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Lab Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<div id="lens-view">
+    <div class="eyepiece"><div id="micro-cells"></div></div>
+    <div class="focus-controls">
+        <svg id="focus-knob" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#444" stroke="#888" stroke-width="2"/>
+            <rect x="47" y="5" width="6" height="20" fill="#eee" rx="2"/>
+        </svg>
+        <p>SCROLL TO FOCUS</p>
+        <div id="focus-action-area"></div>
+    </div>
+</div>
+
+<div id="meiosis-viewer">
+    <div class="viewer-layout">
+        <div id="cell-stage">
+            </div>
+        
+        <div class="phase-footer">
+            <h1 id="v-title">PHASE</h1>
+            <p id="v-desc">Initial state...</p>
+            <div id="controls-row">
+                <button class="btn-ui" id="btn-pause">PAUSE</button>
+                <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const LAB_DATA = {
+    steps: [
+        { id: 0, title: "Tissue Harvest", instruction: "Drag the Flower Anther to the glass slide.", narration: "Place the young flower anther tissue sample onto the clean glass slide." },
+        { id: 1, title: "Fixation & Stain", instruction: "Apply Carmine Stain to reveal structures.", narration: "Apply the acetocarmine stain to fix the germ tissue and highlight nuclear distribution." },
+        { id: 2, title: "Maceration Preparation", instruction: "Add the thin cover slip to flatten.", narration: "Gently position the cover slip on top of the sample before applying minor pressure." },
+        { id: 3, title: "Optical Docking", instruction: "Move the prepared slide to the stage.", narration: "Carefully align your sample with the objective path on the microscope stage." },
+        { id: 4, title: "Resolution Adjustment", instruction: "Scroll anywhere to adjust fine focus.", narration: "Turn the fine adjustment dial until clear individual pollen mother cells emerge." },
+        { id: 5, title: "Meiotic Analysis", instruction: "Observe standard germinal processing.", narration: "We are now ready to execute the virtual high-resolution rendering of meiotic progression." }
+    ]
+};
+
+class MeiosisLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.blur = 20;
+        this.rotation = 0;
+        this.isPaused = false;
+        this.synth = window.speechSynthesis;
+        this.activeCells = [];
+        this.init();
+    }
+
+    init() {
+        this.renderStepList();
+        this.setupInteractions();
+        this.updateStepUI();
+        this.generateCells();
+    }
+
+    playSound(freq, type = 'sine', duration = 0.1) {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + duration);
+        } catch(e){}
+    }
+
+    renderStepList() {
+        document.getElementById('step-list').innerHTML = LAB_DATA.steps.map((s, i) => `
+            <div class="step-item" id="step-${i}">${s.title}</div>
+        `).join('');
+    }
+
+    updateStepUI() {
+        const step = LAB_DATA.steps[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.instruction;
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
+        });
+        this.speak(step.narration);
+    }
+
+    speak(text, callback) {
+        this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        utterance.onend = () => { if(callback) callback(); };
+        this.synth.speak(utterance);
+    }
+
+    log(msg) {
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>> ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    setupInteractions() {
+        document.addEventListener('dragstart', e => { e.dataTransfer.setData('text', e.target.id); });
+        const zones = ['glass-slide', 'microscope-target'];
+        zones.forEach(z => {
+            const el = document.getElementById(z);
+            el.addEventListener('dragover', e => e.preventDefault());
+            el.addEventListener('drop', e => {
+                e.preventDefault();
+                this.handleAction(e.dataTransfer.getData('text'), z);
+            });
+        });
+
+        window.addEventListener('wheel', e => {
+            if (this.stepIdx !== 4) return;
+            this.rotation += e.deltaY * 0.2;
+            document.getElementById('focus-knob').style.transform = `rotate(${this.rotation}deg)`;
+            this.blur -= Math.abs(e.deltaY) * 0.015;
+            if (this.blur < 0) this.blur = 0;
+            document.getElementById('micro-cells').style.filter = `blur(${this.blur}px)`;
+            if (this.blur === 0 && !document.getElementById('start-btn')) {
+                document.getElementById('focus-action-area').innerHTML = `<button id="start-btn" class="btn-ui primary" onclick="lab.startAnalysis()">START ANALYSIS</button>`;
+            }
+        });
+
+        document.getElementById('btn-pause').onclick = () => {
+            this.isPaused = !this.isPaused;
+            document.getElementById('btn-pause').textContent = this.isPaused ? "RESUME" : "PAUSE";
+            this.isPaused ? this.synth.pause() : this.synth.resume();
+        };
+    }
+
+    handleAction(toolId, zoneId) {
+        if (this.stepIdx === 0 && toolId === 'tool-anther') {
+            document.getElementById('slide-anther-img').style.display = 'block';
+            this.advanceStep("Germinal tissue harvested.");
+        } else if (this.stepIdx === 1 && toolId === 'tool-stain') {
+            document.getElementById('slide-stain-overlay').style.display = 'block';
+            this.advanceStep("Acetocarmine staining applied.");
+        } else if (this.stepIdx === 2 && toolId === 'tool-slip') {
+            document.getElementById('slide-slip-img').style.display = 'block';
+            this.advanceStep("Tissue mounted flat under cover slip.");
+        } else if (this.stepIdx === 3 && toolId === 'glass-slide') {
+            document.getElementById('lens-view').style.display = 'flex';
+            this.advanceStep("Optical path linked.");
+        }
+    }
+
+    advanceStep(msg) {
+        this.log(msg);
+        this.stepIdx++;
+        this.updateStepUI();
+        this.playSound(460);
+    }
+
+    generateCells() {
+        const container = document.getElementById('micro-cells');
+        for(let i=0; i<30; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'micro-cell';
+            cell.style.background = `rgba(211, 84, 0, ${0.1 + Math.random()*0.35})`;
+            container.appendChild(cell);
+        }
+    }
+
+    /* --- Meiosis Core Simulation Logic --- */
+
+    createCellElement(className, id, styleStr = "") {
+        const div = document.createElement('div');
+        div.className = `cell-container-node ${className}`;
+        div.id = id;
+        if(styleStr) div.style.cssText = styleStr;
+        return div;
+    }
+
+    buildChromosomesInCell(cellNode, typeMap = ['M','P','M','P'], sizeScale = [1, 1, 0.6, 0.6]) {
+        const chroms = [];
+        const wrap = document.createElement('div');
+        wrap.className = 'chrom-wrapper';
+        cellNode.appendChild(wrap);
+
+        for(let i=0; i<4; i++) {
+            const chrom = document.createElement('div');
+            chrom.className = 'chromosome-arm-pair';
+            const isMat = typeMap[i] === 'M';
+            const baseColorClass = isMat ? 'maternal-color' : 'paternal-color';
+            
+            chrom.innerHTML = `
+                <div class="chromatid-strand c-left-arm ${baseColorClass}"></div>
+                <div class="chromatid-strand c-right-arm ${baseColorClass}"></div>
+                <div class="centromere-core"></div>
+            `;
+            chrom.style.transform = `scale(${sizeScale[i]})`;
+            wrap.appendChild(chrom);
+            chroms.push(chrom);
+        }
+        return chroms;
+    }
+
+    async startAnalysis() {
+        document.getElementById('lens-view').style.display = 'none';
+        document.getElementById('meiosis-viewer').style.display = 'block';
+        
+        const stage = document.getElementById('cell-stage');
+        stage.innerHTML = '';
+
+        // Generate Master Archetype Mother Cell
+        const motherCell = this.createCellElement('main-cell', 'cell-alpha');
+        stage.appendChild(motherCell);
+
+        const nucleus = document.createElement('div');
+        nucleus.className = 'v-nucleus-envelope';
+        nucleus.id = 'nucleus-alpha';
+        motherCell.appendChild(nucleus);
+
+        const centA = document.createElement('div'); centA.className = 'centriole-node'; centA.id = 'cent-a';
+        const centB = document.createElement('div'); centB.className = 'centriole-node'; centB.id = 'cent-b';
+        motherCell.appendChild(centA); motherCell.appendChild(centB);
+
+        const spindleLayer = document.createElement('div'); spindleLayer.className = 'spindle-layer-canvas'; spindleLayer.id = 'spindles-alpha';
+        motherCell.appendChild(spindleLayer);
+
+        const chroms = this.buildChromosomesInCell(motherCell);
+
+        await this.runMeiosis1(motherCell, nucleus, centA, centB, chroms);
+    }
+
+    async runMeiosis1(cell, nucleus, cA, cB, chroms) {
+        // --- PROPHASE I ---
+        document.getElementById('v-title').textContent = "Prophase I (Synapsis & Crossing Over)";
+        document.getElementById('v-desc').textContent = "Homologous chromosomes pair up to form tetrads and cross over alleles.";
+        
+        cA.style.opacity = 1; cB.style.opacity = 1;
+        cA.style.top = '42%'; cA.style.left = '42%';
+        cB.style.top = '45%'; cB.style.left = '54%';
+
+        chroms.forEach((c, idx) => {
+            c.style.opacity = 1;
+            c.style.left = (25 + Math.random() * 45) + '%';
+            c.style.top = (25 + Math.random() * 45) + '%';
+            c.style.transform += ` rotate(${Math.random() * 360}deg)`;
+        });
+
+        await this.waitSpeak("In Prophase One, unique mechanics occur. Homologous chromosomes map together via synapsis, and non-sister chromatids trade genetic fragments during crossing over.");
+
+        // Visual Homologous pairing arrangement (Synapsis)
+        // Pair 1 Large
+        chroms[0].style.left = '42%'; chroms[0].style.top = '35%'; chroms[0].style.transform = 'scale(1) rotate(45deg)';
+        chroms[1].style.left = '47%'; chroms[1].style.top = '35%'; chroms[1].style.transform = 'scale(1) rotate(45deg)';
+        // Pair 2 Small
+        chroms[2].style.left = '44%'; chroms[2].style.top = '55%'; chroms[2].style.transform = 'scale(0.6) rotate(-30deg)';
+        chroms[3].style.left = '49%'; chroms[3].style.top = '55%'; chroms[3].style.transform = 'scale(0.6) rotate(-30deg)';
+
+        await new Promise(r => setTimeout(r, 1500));
+        this.playSound(300, 'triangle', 0.2);
+
+        // Render crossing over visual switch
+        chroms[0].querySelector('.c-right-arm').innerHTML = `<div class="chiasma-tip paternal-color"></div>`;
+        chroms[1].querySelector('.c-left-arm').innerHTML = `<div class="chiasma-tip maternal-color"></div>`;
+        chroms[2].querySelector('.c-right-arm').innerHTML = `<div class="chiasma-tip paternal-color"></div>`;
+        chroms[3].querySelector('.c-left-arm').innerHTML = `<div class="chiasma-tip maternal-color"></div>`;
+
+        await this.waitSpeak("Centrioles move towards polar vector axes while the nuclear envelope completely breaks down.");
+        cA.style.top = '5%'; cA.style.left = '48%';
+        cB.style.top = '90%'; cB.style.left = '48%';
+        nucleus.style.opacity = 0;
+
+        // --- METAPHASE I ---
+        document.getElementById('v-title').textContent = "Metaphase I";
+        document.getElementById('v-desc').textContent = "Homologous pairs align side-by-side along the equatorial plate independently.";
+        
+        chroms[0].style.left = '42%'; chroms[0].style.top = '40%'; chroms[0].style.transform = 'scale(1) rotate(90deg)';
+        chroms[1].style.left = '50%'; chroms[1].style.top = '40%'; chroms[1].style.transform = 'scale(1) rotate(90deg)';
+        chroms[2].style.left = '44%'; chroms[2].style.top = '60%'; chroms[2].style.transform = 'scale(0.6) rotate(90deg)';
+        chroms[3].style.left = '48%'; chroms[3].style.top = '60%'; chroms[3].style.transform = 'scale(0.6) rotate(90deg)';
+
+        await this.waitSpeak("During Metaphase One, homologous pairs line up side-by-side along the center plate. Their distribution direction is completely random, facilitating independent assortment.");
+
+        // --- ANAPHASE I ---
+        document.getElementById('v-title').textContent = "Anaphase I";
+        document.getElementById('v-desc').textContent = "Homologous chromosomes separate to opposing poles. Sister chromatids remain attached.";
+
+        await this.waitSpeak("In Anaphase One, entire homologous pairs separate and travel to opposite poles. Note that sister chromatids remain structurally joined at their centromeres.");
+
+        // Separate pairs intact
+        chroms[0].style.top = '15%'; chroms[2].style.top = '22%';
+        chroms[1].style.top = '72%'; chroms[3].style.top = '65%';
+
+        await new Promise(r => setTimeout(r, 2000));
+
+        // --- TELOPHASE I & CYTOKINESIS I ---
+        document.getElementById('v-title').textContent = "Telophase I & Cytokinesis";
+        document.getElementById('v-desc').textContent = "The cytoplasm divides, resulting in two distinct haploid intermediate cells.";
+        
+        await this.waitSpeak("The cell matrix pinches completely apart, establishing two independent intermediate cells, each with half the original chromosome payload count.");
+
+        cell.style.width = "0px"; cell.style.height = "0px"; cell.style.opacity = 0;
+        await new Promise(r => setTimeout(r, 1500));
+
+        // Setup Meiosis II dual structure environment
+        const stage = document.getElementById('cell-stage');
+        stage.innerHTML = '';
+        
+        const cellII_A = this.createCellElement('meiosis-ii-cell', 'cell-2a', "left:12%; top:15%;");
+        const cellII_B = this.createCellElement('meiosis-ii-cell', 'cell-2b', "right:12%; top:15%;");
+        stage.appendChild(cellII_A); stage.appendChild(cellII_B);
+
+        // Populating elements inside Cell A
+        const cA2 = document.createElement('div'); cA2.className = 'centriole-node'; cA2.style.cssText = "opacity:1; top:5%; left:46%"; cellII_A.appendChild(cA2);
+        const cB2 = document.createElement('div'); cB2.className = 'centriole-node'; cB2.style.cssText = "opacity:1; top:90%; left:46%"; cellII_A.appendChild(cB2);
+        const chromsA = this.buildChromosomesInCell(cellII_A, ['M','M'], [1, 0.6]);
+
+        // Populating elements inside Cell B
+        const cC2 = document.createElement('div'); cC2.className = 'centriole-node'; cC2.style.cssText = "opacity:1; top:5%; left:46%"; cellII_B.appendChild(cC2);
+        const cD2 = document.createElement('div'); cD2.className = 'centriole-node'; cD2.style.cssText = "opacity:1; top:90%; left:46%"; cellII_B.appendChild(cD2);
+        const chromsB = this.buildChromosomesInCell(cellII_B, ['P','P'], [1, 0.6]);
+
+        // Retain crossing over fragments visually
+        chromsA[0].querySelector('.c-right-arm').innerHTML = `<div class="chiasma-tip paternal-color"></div>`;
+        chromsA[1].querySelector('.c-right-arm').innerHTML = `<div class="chiasma-tip paternal-color"></div>`;
+        chromsB[0].querySelector('.c-left-arm').innerHTML = `<div class="chiasma-tip maternal-color"></div>`;
+        chromsB[1].querySelector('.c-left-arm').innerHTML = `<div class="chiasma-tip maternal-color"></div>`;
+
+        chromsA.forEach(c => c.style.opacity = 1);
+        chromsB.forEach(c => c.style.opacity = 1);
+
+        await this.runMeiosis2(cellII_A, cellII_B, chromsA, chromsB);
+    }
+
+    async runMeiosis2(cellA, cellB, chromsA, chromsB) {
+       // --- METAPHASE II ---
+        document.getElementById('v-title').textContent = "Metaphase II";
+        document.getElementById('v-desc').textContent = "Chromosomes line up single-file along the center axis in both cells.";
+        
+        chromsA[0].style.left = '45%'; chromsA[0].style.top = '35%'; chromsA[0].style.transform = 'scale(1) rotate(0deg)';
+        chromsA[1].style.left = '45%'; chromsA[1].style.top = '55%'; chromsA[1].style.transform = 'scale(0.6) rotate(0deg)';
+
+        chromsB[0].style.left = '45%'; chromsB[0].style.top = '35%'; chromsB[0].style.transform = 'scale(1) rotate(0deg)';
+        chromsB[1].style.left = '45%'; chromsB[1].style.top = '55%'; chromsB[1].style.transform = 'scale(0.6) rotate(0deg)';
+
+        await this.waitSpeak("We enter Meiosis Two. In Metaphase Two, chromosomes align single-file down the center plane line.");
+
+        // --- ANAPHASE II ---
+        document.getElementById('v-title').textContent = "Anaphase II";
+        document.getElementById('v-desc').textContent = "Sister chromatids finally separate and move towards opposite poles.";
+
+        await this.waitSpeak("During Anaphase Two, centromere hooks break apart, and individual sister chromatids are pulled toward separate pole structures.");
+
+        chromsA.forEach((c) => {
+            const left = c.querySelector('.c-left-arm');
+            const right = c.querySelector('.c-right-arm');
+            c.querySelector('.centromere-core').style.opacity = 0;
+            left.style.transform = "translateX(-60px) rotate(0deg)";
+            right.style.transform = "translateX(60px) rotate(0deg)";
+        });
+
+        chromsB.forEach((c) => {
+            const left = c.querySelector('.c-left-arm');
+            const right = c.querySelector('.c-right-arm');
+            c.querySelector('.centromere-core').style.opacity = 0;
+            left.style.transform = "translateX(-60px) rotate(0deg)";
+            right.style.transform = "translateX(60px) rotate(0deg)";
+        });
+
+        await new Promise(r => setTimeout(r, 2500));
+
+        // --- TELOPHASE II & CYTOKINESIS II (UPDATED) ---
+        document.getElementById('v-title').textContent = "Telophase II & Final Cytokinesis";
+        document.getElementById('v-desc').textContent = "Four distinct haploid germ cells are generated, each containing completely unique DNA variations.";
+
+        cellA.style.opacity = 0; cellB.style.opacity = 0;
+        await new Promise(r => setTimeout(r, 1200));
+
+        const stage = document.getElementById('cell-stage');
+        stage.innerHTML = '';
+
+        // Genetic profiles for the 4 final single-stranded gametes
+        // Each array element represents a cell containing: [Chrom1_Color, Chrom1_Tip, Chrom2_Color, Chrom2_Tip]
+        const gameteDNA = [
+            { c1: 'maternal-color', t1: null,             c2: 'maternal-color', t2: null },             // Cell 1: Pure Maternal
+            { c1: 'maternal-color', t1: 'paternal-color', c2: 'maternal-color', t2: 'paternal-color' }, // Cell 2: Recombinant (Maternal + Paternal tip)
+            { c1: 'paternal-color', t1: 'maternal-color', c2: 'paternal-color', t2: 'maternal-color' }, // Cell 3: Recombinant (Paternal + Maternal tip)
+            { c1: 'paternal-color', t1: null,             c2: 'paternal-color', t2: null }              // Cell 4: Pure Paternal
+        ];
+
+        // Build 4 final tetrad gametes and inject their unique single-chromatid variations
+        for(let i = 0; i < 4; i++) {
+            const gamete = this.createCellElement('tetrad-cell', `g-${i}`, `position:relative; margin: 15px; display:inline-flex; flex-direction:column; justify-content:center;`);
+            
+            const dna = gameteDNA[i];
+            
+            // Generate HTML layout for individual single-stranded chromosomes (former sister chromatids)
+            const chrom1HTML = `<div class="chromatid-strand ${dna.c1}" style="position:absolute; left:35%; top:25%; transform:scale(1.0);">${dna.t1 ? `<div class="chiasma-tip ${dna.t1}"></div>` : ''}</div>`;
+            const chrom2HTML = `<div class="chromatid-strand ${dna.c2}" style="position:absolute; left:55%; top:40%; transform:scale(0.6);">${dna.t2 ? `<div class="chiasma-tip ${dna.t2}"></div>` : ''}</div>`;
+
+            gamete.innerHTML = `
+                <div style="width:100px; height:140px; border:2px dashed rgba(255,255,255,0.4); border-radius:50%; background:rgba(255,255,255,0.03); position:relative;">
+                    ${chrom1HTML}
+                    ${chrom2HTML}
+                </div>
+                <span style="color:#fff; font-size:0.7rem; margin-top:8px; text-align:center; letter-spacing:1px;">GAMETE ${i+1}</span>
+            `;
+            
+            stage.appendChild(gamete);
+        }
+
+        await this.waitSpeak("Meiosis concludes fully. The final cytoplasmic cleavage yields four non-identical haploid gametes. Look closely at the chromosomes inside: each cell contains a completely unique genetic combination due to crossing over.");
+
+        this.playSound(600, 'sine', 0.5);
+        setTimeout(() => {
+            alert("Meiosis Lab Routine Complete: Four unique haploid gamete cells successfully generated.");
+            location.reload();
+        }, 1000);
+    }
+
+    waitSpeak(text) {
+        return new Promise(resolve => {
+            if (this.isPaused) {
+                let check = setInterval(() => {
+                    if (!this.isPaused) { clearInterval(check); this.speak(text, resolve); }
+                }, 200);
+            } else {
+                this.speak(text, resolve);
+            }
+        });
+    }
+}
+
+const lab = new MeiosisLab();
+
+// Native Fullscreen Integration
+MeiosisLab.prototype.toggleFullscreen = function() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+        document.getElementById('btn-fullscreen').textContent = "EXIT FULLSCREEN";
+    } else {
+        document.exitFullscreen();
+        document.getElementById('btn-fullscreen').textContent = "FULLSCREEN";
+    }
+};
+</script>
+</body>
+</html>

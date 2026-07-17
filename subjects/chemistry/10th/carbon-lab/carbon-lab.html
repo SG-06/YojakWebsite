@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elementum Lab · Carbon: An Important Element</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="carbon-lab.css">
+</head>
+<body data-theme="dark">
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand">
+  <button class="back-dashboard-btn" onclick="window.location.href='../../../../homeindex.html'">
+    ← Back to Dashboard
+  </button>
+</div>
+  </div>
+  <div class="topbar-center">
+    <span class="experiment-chip">EXPERIMENT <strong>Carbon: An Important Element</strong></span>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">☀</button>
+    <button class="pill-btn" id="reset-lab">↺ Reset Lab</button>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ============ EQUIPMENT SHELF ============ -->
+  <aside class="shelf">
+    <h2>Equipment Shelf</h2>
+    <p class="shelf-sub">Carbon: An Important Element</p>
+
+    <!-- ---- 1. Experiment selector (moved here from the topbar) ---- -->
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">1. EXPERIMENT</span>
+      </div>
+      <div class="tab-group vertical" id="activity-tabs">
+        <button class="tab-btn active" data-activity="conduct">Conductivity</button>
+        <button class="tab-btn" data-activity="solubility">Solubility</button>
+        <button class="tab-btn" data-activity="combustion">Reaction with O₂</button>
+      </div>
+    </div>
+
+    <!-- ---- 2. Lab mode ---- -->
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">2. LAB MODE</span>
+      </div>
+      <div class="mode-toggle" id="lab-mode-toggle">
+        <button class="mode-btn active" data-mode="teach">
+          <span class="mode-icon">🎓</span>
+          <span class="mode-text">
+            <strong>Teaching Mode</strong>
+            <small>Names &amp; reasons shown as you go</small>
+          </span>
+        </button>
+        <button class="mode-btn" data-mode="test">
+          <span class="mode-icon">🔍</span>
+          <span class="mode-text">
+            <strong>Test Mode</strong>
+            <small>Observe first, then explain the result</small>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ---- Activity 1 apparatus ---- -->
+    <div class="shelf-section" data-shelf-for="conduct">
+      <div class="shelf-section-head">
+        <span class="shelf-label">3. GRAPHITE ROD</span>
+        <span class="shelf-hint">drag into gap</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="graphite-rod">
+        <div class="reagent-icon"><div class="graphite-rod" style="width:30px;height:9px;margin:13px auto;"></div></div>
+        <div class="reagent-text">
+          <strong id="graphite-rod-name">Pencil Lead (Graphite)</strong>
+          <small id="graphite-rod-sub">removed from a pencil</small>
+        </div>
+      </div>
+    </div>
+    <!-- ---- Activity 2 apparatus ---- -->
+    <div class="shelf-section" data-shelf-for="solubility" hidden>
+      <div class="shelf-section-head">
+        <span class="shelf-label">3. COAL POWDER</span>
+        <span class="shelf-hint">drag onto each flask</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="coal-powder">
+        <div class="reagent-icon"><div style="width:18px;height:18px;border-radius:50%;background:#1e2024;margin:9px auto;"></div></div>
+        <div class="reagent-text">
+          <strong id="coal-powder-name">Coal Powder</strong>
+          <small>half a spoonful per flask</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- Activity 3 apparatus ---- -->
+    <div class="shelf-section" data-shelf-for="combustion" hidden>
+      <div class="shelf-section-head">
+        <span class="shelf-label">3. COAL</span>
+        <span class="shelf-hint">drag into tongs</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="coal">
+        <div class="reagent-icon"><div style="width:24px;height:16px;border-radius:40% 45% 50% 35%;background:#1e2024;margin:10px auto;"></div></div>
+        <div class="reagent-text">
+          <strong id="coal-name">Lump of Coal</strong>
+          <small>place in the tongs</small>
+        </div>
+      </div>
+    </div>
+    <div class="shelf-section" data-shelf-for="combustion" hidden>
+      <div class="shelf-section-head">
+        <span class="shelf-label">4. MOIST LITMUS PAPER</span>
+        <span class="shelf-hint">drag over the fumes</span>
+      </div>
+      <div class="reagent-card disabled" draggable="true" data-item="litmus">
+        <div class="reagent-icon"><div style="width:8px;height:26px;border-radius:2px;background:#3f6fd1;margin:5px auto;"></div></div>
+        <div class="reagent-text">
+          <strong>Moist Blue Litmus</strong>
+          <small>hold over the gas released</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- Shared: Lab Notebook ---- -->
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">LAB NOTEBOOK</span>
+      </div>
+      <div class="notebook-panel" id="notebook-panel">
+        <div class="notebook-item" id="nb-conduct"><span class="nb-mark">1</span><span>Conductivity of graphite — not yet tested.</span></div>
+        <div class="notebook-item" id="nb-solubility"><span class="nb-mark">2</span><span>Solubility of carbon — not yet tested.</span></div>
+        <div class="notebook-item" id="nb-combustion"><span class="nb-mark">3</span><span>Reaction of carbon with oxygen — not yet tested.</span></div>
+      </div>
+    </div>
+
+    <div class="shelf-section" data-shelf-for="conduct">
+      <div class="shelf-section-head">
+        <span class="shelf-label">EXPLANATION VIDEO</span>
+      </div>
+      <a class="video-link-card" id="video-link-card-conduct" href="https://www.youtube.com/watch?v=9UYiDbQ6fv8" target="_blank" rel="noopener noreferrer">
+        <div class="video-link-icon">▶</div>
+        <div class="video-link-text">
+          <strong>Graphite Conducts Electricity</strong>
+          <small>Watch the circuit test demo on YouTube</small>
+        </div>
+      </a>
+    </div>
+    <div class="shelf-section" data-shelf-for="solubility" hidden>
+      <div class="shelf-section-head">
+        <span class="shelf-label">EXPLANATION VIDEO</span>
+      </div>
+      <a class="video-link-card" id="video-link-card-solubility" href="https://www.youtube.com/watch?v=5YoJeh9bdco" target="_blank" rel="noopener noreferrer">
+        <div class="video-link-icon">▶</div>
+        <div class="video-link-text">
+          <strong>Carbon: An Important Element</strong>
+          <small>Full chapter walkthrough incl. solubility test</small>
+        </div>
+      </a>
+    </div>
+    <div class="shelf-section" data-shelf-for="combustion" hidden>
+      <div class="shelf-section-head">
+        <span class="shelf-label">EXPLANATION VIDEO</span>
+      </div>
+      <a class="video-link-card" id="video-link-card-combustion" href="https://www.youtube.com/watch?v=dg0za--6qTc" target="_blank" rel="noopener noreferrer">
+        <div class="video-link-icon">▶</div>
+        <div class="video-link-text">
+          <strong>Carbon Burns in Oxygen</strong>
+          <small>Watch the combustion &amp; litmus test on YouTube</small>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ ACTIVE WORKBENCH ============ -->
+  <section class="workbench">
+    <div class="workbench-head">
+      <h2>Active Workbench</h2>
+      <p class="shelf-sub">Follow Iris-sensei's instructions below</p>
+    </div>
+
+    <!-- ================= ACTIVITY 1: CONDUCTIVITY ================= -->
+    <div class="activity-panel" id="activity-conduct">
+      <div class="step-tracker mini" id="step-tracker-conduct">
+        <div class="step active" data-step="1"><span class="step-num">1</span><span class="step-name">Place Graphite</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2"><span class="step-num">2</span><span class="step-name">Close Switch</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="3"><span class="step-num">3</span><span class="step-name">Explain</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="4"><span class="step-num">4</span><span class="step-name">Conclude</span></div>
+      </div>
+
+      <div class="iris-card" id="iris-card-trigger-conduct">
+        <div class="iris-avatar">🧪</div>
+        <div class="iris-text">
+          <span class="iris-label">IRIS · YOUR LAB GUIDE <span class="iris-expand-hint">· tap to learn more ▾</span></span>
+          <p id="iris-message-conduct">Let's start with the "lead" inside a pencil — it isn't lead metal at all, it's graphite, a form of carbon. Drag the <strong>Pencil Lead</strong> into the circuit gap to test whether it conducts electricity.</p>
+        </div>
+      </div>
+      <div class="iris-panel" id="iris-panel-conduct" hidden>
+        <div class="iris-panel-tabs">
+          <button class="iris-tab active" data-tab="theory">📖 Theory</button>
+          <button class="iris-tab" data-tab="materials">🧪 Materials</button>
+          <button class="iris-tab" data-tab="procedure">📋 Procedure</button>
+        </div>
+        <div class="iris-tab-content" id="iris-tab-content-conduct"></div>
+      </div>
+
+      <div class="instruction-card">
+        <span class="instruction-icon">→</span>
+        <div>
+          <strong id="instruction-title-conduct">Step 1: Place the Graphite in the Circuit</strong>
+          <p id="instruction-body-conduct">Drag (or tap) the Pencil Lead from the shelf into the gap in the circuit below.</p>
+        </div>
+      </div>
+
+      <div class="sim-stage">
+        <div class="sim-left">
+          <div class="result-card">
+            <h3>Observation Log</h3>
+            <div class="log-row"><span>Feel of the lead</span><strong id="log-feel">—</strong></div>
+            <div class="log-row"><span>Bulb with graphite in circuit</span><strong id="log-bulb">—</strong></div>
+          </div>
+
+          <div class="test-mode-panel" id="test-mode-panel-conduct" hidden>
+            <h3>Evaluation <span class="quiz-progress" id="quiz-progress-conduct">Question 1 / 10</span></h3>
+            <p id="quiz-question-conduct"></p>
+            <div class="answer-btns" id="quiz-answers-conduct"></div>
+            <div class="verdict-banner" id="verdict-banner-conduct" hidden></div>
+            <button class="ghost-btn quiz-next-btn" id="quiz-next-conduct" hidden>Next Question →</button>
+            <div class="quiz-score-banner" id="quiz-score-conduct" hidden></div>
+          </div>
+
+          <button class="ghost-btn" id="open-microscope-conduct" disabled>
+            <span>🔬</span> Molecular View
+          </button>
+        </div>
+        <div class="sim-right">
+          <div class="bench-surface">
+            <div class="circuit-board">
+              <div class="circuit-row">
+                <div class="battery-cell">CELL</div>
+                <div class="circuit-wire" id="wire-1"></div>
+                <div class="lead-gap" id="lead-gap"><span class="drop-hint">Drop graphite here</span></div>
+                <div class="circuit-wire" id="wire-2"></div>
+                <div class="bulb" id="circuit-bulb">💡</div>
+              </div>
+              <button class="switch-btn" id="switch-btn" disabled>Close Switch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict-banner-main" id="verdict-conduct" hidden></div>
+    </div>
+
+    <!-- ================= ACTIVITY 2: SOLUBILITY ================= -->
+    <div class="activity-panel" id="activity-solubility" hidden>
+      <div class="step-tracker mini" id="step-tracker-solubility">
+        <div class="step active" data-step="1"><span class="step-num">1</span><span class="step-name">Add to Water</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2"><span class="step-num">2</span><span class="step-name">Add to Kerosene</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="3"><span class="step-num">3</span><span class="step-name">Add to Oil</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="4"><span class="step-num">4</span><span class="step-name">Conclude</span></div>
+      </div>
+
+      <div class="iris-card" id="iris-card-trigger-solubility">
+        <div class="iris-avatar">🧪</div>
+        <div class="iris-text">
+          <span class="iris-label">IRIS · YOUR LAB GUIDE <span class="iris-expand-hint">· tap to learn more ▾</span></span>
+          <p id="iris-message-solubility">Three flasks are set up with water, kerosene and cooking oil. Drag <strong>Coal Powder</strong> into the Water flask first, then stir, and watch what happens.</p>
+        </div>
+      </div>
+      <div class="iris-panel" id="iris-panel-solubility" hidden>
+        <div class="iris-panel-tabs">
+          <button class="iris-tab active" data-tab="theory">📖 Theory</button>
+          <button class="iris-tab" data-tab="materials">🧪 Materials</button>
+          <button class="iris-tab" data-tab="procedure">📋 Procedure</button>
+        </div>
+        <div class="iris-tab-content" id="iris-tab-content-solubility"></div>
+      </div>
+
+      <div class="instruction-card">
+        <span class="instruction-icon">→</span>
+        <div>
+          <strong id="instruction-title-solubility">Step 1: Add Coal Powder to Water</strong>
+          <p id="instruction-body-solubility">Drag the Coal Powder onto the Water flask, then press its Stir button.</p>
+        </div>
+      </div>
+
+      <div class="sim-stage">
+        <div class="sim-left">
+          <div class="result-card">
+            <h3>Observation Log</h3>
+            <div class="log-row"><span>Coal in water</span><strong id="log-flask-water">—</strong></div>
+            <div class="log-row"><span>Coal in kerosene</span><strong id="log-flask-kerosene">—</strong></div>
+            <div class="log-row"><span>Coal in cooking oil</span><strong id="log-flask-oil">—</strong></div>
+          </div>
+
+          <div class="test-mode-panel" id="test-mode-panel-solubility" hidden>
+            <h3>Evaluation <span class="quiz-progress" id="quiz-progress-solubility">Question 1 / 10</span></h3>
+            <p id="quiz-question-solubility"></p>
+            <div class="answer-btns" id="quiz-answers-solubility"></div>
+            <div class="verdict-banner" id="verdict-banner-solubility" hidden></div>
+            <button class="ghost-btn quiz-next-btn" id="quiz-next-solubility" hidden>Next Question →</button>
+            <div class="quiz-score-banner" id="quiz-score-solubility" hidden></div>
+          </div>
+
+          <button class="ghost-btn" id="open-microscope-solubility" disabled>
+            <span>🔬</span> Molecular View
+          </button>
+        </div>
+        <div class="sim-right">
+          <div class="bench-surface">
+            <div class="flask-row">
+              <div class="flask-wrap">
+                <div class="flask" id="flask-water" data-flask="water">
+                  <div class="flask-liquid water-l"></div>
+                  <div class="flask-powder-cloud" id="cloud-water"></div>
+                  <div class="flask-sediment" id="sediment-water"></div>
+                </div>
+                <span class="flask-label">Water</span>
+                <button class="stir-btn" id="stir-water" disabled>Stir</button>
+              </div>
+              <div class="flask-wrap">
+                <div class="flask" id="flask-kerosene" data-flask="kerosene">
+                  <div class="flask-liquid kerosene-l"></div>
+                  <div class="flask-powder-cloud" id="cloud-kerosene"></div>
+                  <div class="flask-sediment" id="sediment-kerosene"></div>
+                </div>
+                <span class="flask-label">Kerosene</span>
+                <button class="stir-btn" id="stir-kerosene" disabled>Stir</button>
+              </div>
+              <div class="flask-wrap">
+                <div class="flask" id="flask-oil" data-flask="oil">
+                  <div class="flask-liquid oil-l"></div>
+                  <div class="flask-powder-cloud" id="cloud-oil"></div>
+                  <div class="flask-sediment" id="sediment-oil"></div>
+                </div>
+                <span class="flask-label">Cooking Oil</span>
+                <button class="stir-btn" id="stir-oil" disabled>Stir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict-banner-main" id="verdict-solubility" hidden></div>
+    </div>
+
+    <!-- ================= ACTIVITY 3: COMBUSTION ================= -->
+    <div class="activity-panel" id="activity-combustion" hidden>
+      <div class="step-tracker mini" id="step-tracker-combustion">
+        <div class="step active" data-step="1"><span class="step-num">1</span><span class="step-name">Place Coal</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2"><span class="step-num">2</span><span class="step-name">Ignite</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="3"><span class="step-num">3</span><span class="step-name">Test Gas</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step="4"><span class="step-num">4</span><span class="step-name">Conclude</span></div>
+      </div>
+
+      <div class="iris-card" id="iris-card-trigger-combustion">
+        <div class="iris-avatar">🧪</div>
+        <div class="iris-text">
+          <span class="iris-label">IRIS · YOUR LAB GUIDE <span class="iris-expand-hint">· tap to learn more ▾</span></span>
+          <p id="iris-message-combustion">Drag the <strong>Lump of Coal</strong> into the tongs so we can ignite it and find out which gas carbon releases when it burns.</p>
+        </div>
+      </div>
+      <div class="iris-panel" id="iris-panel-combustion" hidden>
+        <div class="iris-panel-tabs">
+          <button class="iris-tab active" data-tab="theory">📖 Theory</button>
+          <button class="iris-tab" data-tab="materials">🧪 Materials</button>
+          <button class="iris-tab" data-tab="procedure">📋 Procedure</button>
+        </div>
+        <div class="iris-tab-content" id="iris-tab-content-combustion"></div>
+      </div>
+
+      <div class="instruction-card">
+        <span class="instruction-icon">→</span>
+        <div>
+          <strong id="instruction-title-combustion">Step 1: Place the Coal in the Tongs</strong>
+          <p id="instruction-body-combustion">Drag the Lump of Coal from the shelf into the tongs on the bench.</p>
+        </div>
+      </div>
+
+      <div class="sim-stage">
+        <div class="sim-left">
+          <div class="result-card">
+            <h3>Observation Log</h3>
+            <div class="log-row"><span>Gas released on burning</span><strong id="log-gas">—</strong></div>
+            <div class="log-row"><span>Moist blue litmus paper</span><strong id="log-litmus">—</strong></div>
+          </div>
+          <div class="equation-panel" style="margin-top:2px;">
+            <div class="equation-row" id="combustion-eq">C (s) + O₂ (g) → ?</div>
+          </div>
+
+          <div class="test-mode-panel" id="test-mode-panel-combustion" hidden>
+            <h3>Evaluation <span class="quiz-progress" id="quiz-progress-combustion">Question 1 / 10</span></h3>
+            <p id="quiz-question-combustion"></p>
+            <div class="answer-btns" id="quiz-answers-combustion"></div>
+            <div class="verdict-banner" id="verdict-banner-combustion" hidden></div>
+            <button class="ghost-btn quiz-next-btn" id="quiz-next-combustion" hidden>Next Question →</button>
+            <div class="quiz-score-banner" id="quiz-score-combustion" hidden></div>
+          </div>
+
+          <button class="ghost-btn" id="open-microscope-combustion" disabled>
+            <span>🔬</span> Molecular View
+          </button>
+        </div>
+        <div class="sim-right">
+          <div class="bench-surface">
+            <div class="burn-stage">
+              <div class="tongs-slot" id="tongs-slot"><span class="drop-hint">Drop coal here</span></div>
+              <button class="match-btn" id="ignite-btn" disabled>🔥 Ignite the Coal</button>
+              <div class="litmus-zone">
+                <div class="litmus-strip" id="litmus-strip"></div>
+                <span class="mini-tube-label">hold over the fumes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict-banner-main" id="verdict-combustion" hidden></div>
+    </div>
+
+    <!-- ================= FINAL LAB CONCLUSION ================= -->
+    <div class="verdict-banner-main final-conclusion" id="final-conclusion" hidden></div>
+
+  </section>
+</main>
+
+<!-- ============ MOLECULAR MICROSCOPE MODAL ============ -->
+<div class="modal-overlay" id="microscope-modal" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><span>🔬</span> Molecular Microscope Analysis</h3>
+      <button class="modal-close" id="close-microscope">✕</button>
+    </div>
+    <div class="modal-body">
+      <canvas id="particle-canvas" width="900" height="420"></canvas>
+      <div class="legend" id="particle-legend"></div>
+      <div class="iris-explains">
+        <span class="iris-label">IRIS EXPLAINS</span>
+        <p id="microscope-explainer"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="carbon-lab.js"></script>
+</body>
+</html>

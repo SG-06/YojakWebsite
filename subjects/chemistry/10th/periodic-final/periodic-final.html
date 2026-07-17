@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeriodicLab · Mendeleev vs Modern Periodic Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="periodic-final.css">
+</head>
+<body data-theme="dark">
+
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="../../../../homeindex.html" class="back-btn">← Back to Dashboard</a>
+  </div>
+  <div class="topbar-center">
+    <span class="experiment-chip">EXPERIMENT <strong>Mendeleev vs Modern Periodic Table</strong></span>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">☀</button>
+    <button class="pill-btn" id="reset-lab">↺ Reset Lab</button>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- ===== EQUIPMENT SHELF ===== -->
+  <aside class="shelf">
+    <h2>Equipment Shelf</h2>
+    <p class="shelf-sub">Set up the tables, then classify the element</p>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">1. LAB MODE</span></div>
+      <div class="mode-toggle" id="lab-mode-toggle">
+        <button class="mode-btn active" data-mode="teach">
+          <span class="mode-icon">🎓</span>
+          <span class="mode-text"><strong>Teaching Mode</strong><small>Element identity shown</small></span>
+        </button>
+        <button class="mode-btn" data-mode="test">
+          <span class="mode-icon">🔍</span>
+          <span class="mode-text"><strong>Test Mode</strong><small>Identify the unknown</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">2. ELEMENT SAMPLE</span>
+        <span class="shelf-hint">drag onto tray</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="element" id="element-card">
+        <div class="element-icon" id="element-card-icon">Li</div>
+        <div class="reagent-text">
+          <strong id="element-card-name">Lithium</strong>
+          <small id="element-card-formula">Z = 3 · mass ≈ 7</small>
+        </div>
+      </div>
+      <div class="element-picker" id="element-picker">
+        <!-- populated by JS: H, Li, Be, B, C, N, O, F, Na, Mg, Al, Si, P, S, Cl, K, Ca -->
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">3. TABLE TEMPLATES</span>
+        <span class="shelf-hint">drag onto bench</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="charts">
+        <div class="chart-icon"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="reagent-text">
+          <strong>Table Charts</strong>
+          <small>Mendeleev + Modern grids</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head">
+        <span class="shelf-label">4. CLASSIFICATION TOOLS</span>
+        <span class="shelf-hint">drag onto element</span>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="masssort">
+        <div class="sort-icon mass">m</div>
+        <div class="reagent-text">
+          <strong>Sort by Atomic Mass</strong>
+          <small>places element on Mendeleev's table</small>
+        </div>
+      </div>
+      <div class="reagent-card" draggable="true" data-item="numsort">
+        <div class="sort-icon number">Z</div>
+        <div class="reagent-text">
+          <strong>Sort by Atomic Number</strong>
+          <small>places element on the Modern table</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">5. CLASSIFICATION KEY</span></div>
+      <div class="equation-panel" id="equation-panel">
+        <div class="equation-row" id="basis-eq">Mendeleev: f(atomic mass) · Modern: f(atomic number)</div>
+        <div class="equation-divider"></div>
+        <div class="readout-row"><span>Element</span><strong id="ro-halide">—</strong></div>
+        <div class="readout-row"><span>Mendeleev group</span><strong id="ro-mendeleev">—</strong></div>
+        <div class="readout-row"><span>Modern group</span><strong id="ro-modern">—</strong></div>
+        <div class="readout-row"><span>Family</span><strong id="ro-colour">—</strong></div>
+      </div>
+    </div>
+
+    <div class="shelf-section">
+      <div class="shelf-section-head"><span class="shelf-label">6. EXPLANATION VIDEO</span></div>
+      <a class="video-link-card" href="https://www.youtube.com/watch?v=qJmKM8zy1NY" target="_blank" rel="noopener noreferrer">
+        <div class="video-link-icon">▶</div>
+        <div class="video-link-text">
+          <strong>Watch on YouTube</strong>
+          <small>Mendeleev vs Modern Periodic Table — explained</small>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===== ACTIVE WORKBENCH ===== -->
+  <section class="workbench">
+    <div class="workbench-head">
+      <h2>Active Workbench</h2>
+      <p class="shelf-sub">Follow Iris-sensei's instructions below</p>
+    </div>
+
+    <div class="step-tracker" id="step-tracker">
+      <div class="step active" data-step="1"><span class="step-num">1</span><span class="step-name">Set Up</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2"><span class="step-num">2</span><span class="step-name">Add Sample</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3"><span class="step-num">3</span><span class="step-name">Mendeleev</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="4"><span class="step-num">4</span><span class="step-name">Modern</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="5"><span class="step-num">5</span><span class="step-name">Observe</span></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="6"><span class="step-num">6</span><span class="step-name">Conclude</span></div>
+    </div>
+
+    <!-- Iris card — click to open knowledge panel -->
+    <div class="iris-card" id="iris-card-trigger">
+      <div class="iris-avatar">🧪</div>
+      <div class="iris-text">
+        <span class="iris-label">IRIS · YOUR LAB GUIDE <span class="iris-expand-hint">· tap to learn more ▾</span></span>
+        <p id="iris-message">First, drag the <strong>Table Charts</strong> from the shelf onto the bench to set up both tables.</p>
+      </div>
+    </div>
+
+    <!-- Iris knowledge panel -->
+    <div class="iris-panel" id="iris-panel" hidden>
+      <div class="iris-panel-tabs">
+        <button class="iris-tab active" data-tab="theory">📖 Theory</button>
+        <button class="iris-tab" data-tab="materials">🧪 Materials</button>
+        <button class="iris-tab" data-tab="procedure">📋 Procedure</button>
+      </div>
+      <div class="iris-tab-content" id="iris-tab-content"></div>
+    </div>
+
+    <div class="instruction-card" id="instruction-card">
+      <span class="instruction-icon">→</span>
+      <div>
+        <strong id="instruction-title">Step 1: Set Up the Tables</strong>
+        <p id="instruction-body">Drag (or tap) the Table Charts from the shelf onto the bench to lay out the Mendeleev and Modern grids.</p>
+      </div>
+    </div>
+
+    <div class="sim-stage">
+
+      <div class="sim-left">
+        <div class="result-card">
+          <h3>Observation Log</h3>
+          <div class="log-row"><span>Element tested</span><strong id="log-salt">—</strong></div>
+          <div class="log-row"><span>Placed on Mendeleev's table</span><strong id="log-hno3">—</strong></div>
+          <div class="log-row"><span>Placed on Modern table</span><strong id="log-agno3">—</strong></div>
+          <div class="log-row"><span>Groups match?</span><strong id="log-colour">—</strong></div>
+        </div>
+
+        <div class="test-mode-panel" id="test-mode-panel" hidden>
+          <h3>Identify the unknown</h3>
+          <p>Based on its properties and where it sits in both tables, which family does this element belong to?</p>
+          <div class="answer-btns">
+            <button class="answer-btn" data-answer="alkali">Alkali Metal</button>
+            <button class="answer-btn" data-answer="alkaline">Alkaline Earth Metal</button>
+            <button class="answer-btn" data-answer="pblock">p-Block Element</button>
+            <button class="answer-btn" data-answer="halogen">Halogen</button>
+          </div>
+          <div class="verdict-banner" id="verdict-banner" hidden></div>
+        </div>
+
+        <button class="ghost-btn" id="open-microscope" disabled>
+          <span>⚛</span> Atomic Structure View
+        </button>
+
+        <!-- Evaluation card -->
+        <div class="eval-card">
+          <div class="eval-card-head" id="eval-toggle">
+            <span>📝 Evaluation Questions</span>
+            <span class="eval-chevron" id="eval-chevron">▾</span>
+          </div>
+          <div class="eval-body" id="eval-body"></div>
+        </div>
+      </div>
+
+      <div class="sim-right">
+        <div class="bench-surface">
+          <div class="pt-bench" id="pt-bench">
+            <div class="pt-tray" id="tube-drop-target">
+              <span class="drop-hint">Drop Table Charts here</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="verdict-banner-main" id="verdict-banner-main" hidden></div>
+  </section>
+</main>
+
+<!-- Atomic structure modal (repurposed molecular microscope) -->
+<div class="modal-overlay" id="microscope-modal" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><span>⚛</span> Atomic Structure Analysis</h3>
+      <button class="modal-close" id="close-microscope">✕</button>
+    </div>
+    <div class="modal-body">
+      <canvas id="particle-canvas" width="900" height="420"></canvas>
+      <div class="legend" id="particle-legend"></div>
+      <div class="iris-explains">
+        <span class="iris-label">IRIS EXPLAINS</span>
+        <p id="microscope-explainer"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="periodic-final.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioCore | Advanced Cell Theory Lab</title>
+    <!-- Model Viewer Component -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-theme="default">
+
+    <!-- 0. BOOT SCREEN -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-content">
+            <div class="logo-text">BIO-CORE <span class="v-line">|</span> MICROSCOPY</div>
+            <div class="loader-track"><div id="boot-bar" class="boot-bar"></div></div>
+            <div class="boot-status">INITIALIZING OPTICAL INTERFACE...</div>
+        </div>
+    </div>
+
+    <!-- 1. SELECTION SCREEN -->
+    <div id="selection-screen" class="screen active">
+        <div class="selection-overlay">
+            <h1 style="letter-spacing: 5px; color: var(--medical-blue); margin-bottom: 10px;">SELECT SPECIMEN</h1>
+            <p style="color: var(--text-light); margin-bottom: 40px;">Choose a cellular structure for slide preparation</p>
+            <div class="card-container">
+                <div class="mode-card" onclick="window.lab.startLab('plant')">
+                    <div class="card-icon">🌱</div>
+                    <h2>PLANT CELL</h2>
+                    <p>Allium Cepa (Onion Peel)</p>
+                </div>
+                <div class="mode-card" onclick="window.lab.startLab('animal')">
+                    <div class="card-icon">🔬</div>
+                    <h2>ANIMAL CELL</h2>
+                    <p>Human Cheek Epithelium</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. LAB WORKSPACE -->
+    <div id="lab-workspace" class="screen">
+        <nav class="hud-nav">
+            <div class="nav-brand">PROCEDURE: <span id="current-task">PREPARE SLIDE</span></div>
+        </nav>
+
+        <div class="slide-zone">
+            <div id="glass-slide" class="glass-slide" ondragover="event.preventDefault()">
+                <div class="slide-content-wrapper">
+                    <div id="sample-blob" class="blob"></div>
+                    <div id="stain-overlay" class="stain"></div>
+                    <div id="coverslip-rect" class="coverslip"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="micro-stage" class="micro-stage-target" ondragover="event.preventDefault()">
+            <div class="stage-ring"></div>
+            <p style="font-weight: bold; font-size: 0.7rem; letter-spacing: 1px;">MICROSCOPE STAGE</p>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-sample">
+                <div class="tool-icon">🧫</div>
+                <span>Specimen</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-stain">
+                <div class="tool-icon">💧</div>
+                <span>Stain</span>
+            </div>
+            <div class="tool" draggable="true" id="tool-slip">
+                <div class="tool-icon">⏹️</div>
+                <span>Coverslip</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MICROSCOPE FOCUS PHASE -->
+    <div id="focus-screen" class="screen">
+        <div class="eyepiece">
+            <div id="micro-view-img"></div>
+        </div>
+
+        <div class="focus-controls">
+            <div id="focus-knob" class="knob"></div>
+            <label>FINE FOCUS</label>
+            <p style="font-size: 0.7rem; opacity: 0.7; font-weight: bold;">SCROLL MOUSE WHEEL</p>
+            <button id="btn-analyze" class="btn-primary hidden">START BIO-CORE ANALYSIS</button>
+        </div>
+    </div>
+
+    <!-- 4. 3D ANALYSIS (BIO-CORE HUD) -->
+    <div id="analysis-screen" class="screen">
+        
+        <!-- UI OVERLAYS (Fixed Position) -->
+        <nav class="hud-nav">
+            <div class="nav-brand">ANALYSIS ACTIVE</div>
+            <div class="nav-buttons">
+                <button id="btn-freeview" class="hud-btn">EXPLORATION</button>
+                <button id="btn-identify" class="hud-btn">IDENTIFICATION</button>
+                <button onclick="location.reload()" class="hud-btn exit">EXIT</button>
+            </div>
+        </nav>
+
+        <div class="theme-switcher">
+            <div class="theme-circle default" onclick="window.lab.setTheme('default')" title="Default Clinic"></div>
+            <div class="theme-circle pink" onclick="window.lab.setTheme('pink')" title="Studio Pink"></div>
+            <div class="theme-circle dark" onclick="window.lab.setTheme('dark')" title="Dark Studio"></div>
+            <div class="theme-circle night" onclick="window.lab.setTheme('night')" title="Night Space"></div>
+        </div>
+
+        <div id="info-hud" class="info-hud hidden">
+            <label class="scan-text">ORGANELLE DATA</label>
+            <h1 id="part-name">SELECT STRUCTURE</h1>
+            <p id="part-description">Interact with the 3D model for biometric data readout.</p>
+        </div>
+
+        <div id="specs-hud" class="specs-hud hidden">
+            <div class="spec-group"><label>VIABILITY</label><div class="spec-value">98.4%</div></div>
+            <div class="spec-group"><label>LIVE STATUS</label><div id="live-data" class="spec-value">MONITORING...</div></div>
+        </div>
+
+        <!-- NEW: MODEL LOADING SCREEN -->
+        <div id="model-loader" class="model-loader hidden">
+            <div class="loader-content">
+                <div class="scanner-line"></div>
+                <div class="loader-text">RECONSTRUCTING CELLULAR STRUCTURE...</div>
+            </div>
+        </div>
+
+        <!-- MAIN 3D VIEWER (Occupies Full Space) -->
+        <model-viewer id="main-viewer" 
+            camera-controls 
+            auto-rotate 
+            shadow-intensity="1" 
+            tone-mapping="neutral"
+            interaction-prompt="auto">
+            <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+            </div>
+        </model-viewer>
+
+        <!-- NEW: FLOATING CREDITS -->
+        <div class="model-credits">
+            <p id="credit-plant" class="hidden">
+                Model: <a href="https://skfb.ly/oDTyz" target="_blank">Plant Cell | Biology</a> by Oliver (CC BY 4.0)
+            </p>
+            <p id="credit-animal" class="hidden">
+                Model: <a href="https://skfb.ly/6Rnqn" target="_blank">Animal cell 2.0</a> by montanna (CC BY 4.0)
+            </p>
+        </div>
+    </div>
+
+    <!-- Master Controller -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
