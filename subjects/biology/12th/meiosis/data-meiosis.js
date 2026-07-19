@@ -29,9 +29,23 @@ const experimentData = {
             <p>Following Telophase II and cytokinesis, four non-identical haploid (n) daughter cells (gametes) are generated. Due to crossing over in Prophase I and random independent assortment in Metaphase I, each gamete carries a completely unique combination of alleles.</p>
 
             <h4 style="color:var(--primary); font-size:1.4rem;">Video Explanation: Meiosis Cell Divsion</h4>
-            <div class="video-box" style="background: #000; padding: 15px; border-radius: 15px; margin: 20px 0; text-align: center;">
-                <iframe width="100%" height="450" src="https://www.youtube.com/embed/kQu6Yfrr6j0?si=mbnyPHlNHhYrkgCs" title="DNA Extraction Lab" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px;"></iframe>
-            </div>
+            <div class="video-box">
+    <iframe
+        src="https://www.youtube.com/embed/3VOLjACdbTs?si=lTQpf4fXM1UPPPtG&amp;start=1"
+        title="MITOSIS"
+        allowfullscreen>
+    </iframe>
+
+    <p class="video-credit">
+        🎥 Video Credit:
+        <a href="https://www.youtube.com/embed/3VOLjACdbTs?si=lTQpf4fXM1UPPPtG&amp;start=1" 
+           target="_blank"
+           rel="noopener noreferrer">
+            Quizlet
+        </a>
+    </p>
+</div>
+
 
         </div>
     `,

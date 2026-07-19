@@ -1,0 +1,1272 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduReach — Interactive Learning Resources</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --purple-50: #f4f2ff;
+        --purple-100: #ebe8ff;
+        --purple-200: #d3ceff;
+        --purple-300: #b3adff;
+        --purple-400: #9589ff;
+        --purple-500: #7c5cfc;
+        --purple-600: #6340e8;
+        --purple-700: #5030c8;
+        --purple-800: #3d2490;
+        --purple-900: #2a1868;
+        --white: #ffffff;
+        --bg: #f6f4ff;
+        --text-main: #1e1040;
+        --text-muted: #6e5fa0;
+        --border: #e4dffc;
+        --card-radius: 18px;
+        --nav-h: 64px;
+        --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text-main);
+        min-height: 100vh;
+      }
+
+      /* ===== NAVBAR (mobile-first base styles) ===== */
+      nav {
+        background: var(--white);
+        border-bottom: 1.5px solid var(--border);
+        height: var(--nav-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        box-shadow: 0 2px 16px rgba(100, 70, 220, 0.07);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      /* =============================================
+     LOGO — just set the src attribute on the
+     <img class="logo-img"> tag in the HTML below
+     ============================================= */
+      .logo-img {
+        height: 36px;
+        width: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      @media (min-width: 640px) {
+        .logo-img {
+          height: 42px;
+        }
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      nav ul::-webkit-scrollbar {
+        display: none;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        transition:
+          background var(--transition),
+          color var(--transition);
+        cursor: pointer;
+        display: block;
+        white-space: nowrap;
+      }
+
+      nav ul li a:hover {
+        background: var(--purple-100);
+        color: var(--purple-700);
+      }
+      nav ul li a.active {
+        background: var(--purple-500);
+        color: #fff;
+      }
+
+      /* Virtual Labs button — distinct from regular nav links */
+      .nav-labs {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px !important;
+        background: var(--purple-900) !important;
+        color: #fff !important;
+        border-radius: 30px;
+        font-weight: 600 !important;
+        font-size: 0.8rem !important;
+        white-space: nowrap;
+        transition:
+          background var(--transition),
+          transform var(--transition);
+      }
+      .nav-labs:hover {
+        background: var(--purple-700) !important;
+        transform: translateY(-1px);
+      }
+      .nav-labs svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
+
+      @media (min-width: 640px) {
+        .nav-labs {
+          font-size: 0.875rem !important;
+          padding: 7px 16px !important;
+          gap: 6px;
+        }
+        .nav-labs svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+
+      /* ===== NAVBAR (desktop) ===== */
+      @media (min-width: 640px) {
+        nav {
+          padding: 0 2.5rem;
+          gap: 0;
+        }
+        nav ul {
+          gap: 4px;
+          overflow-x: visible;
+        }
+        nav ul li a {
+          padding: 7px 16px;
+          font-size: 0.875rem;
+        }
+      }
+
+      /* ===== PAGES ===== */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+
+      /* ===== HOME PAGE (mobile-first base styles) ===== */
+      .hero {
+        text-align: center;
+        padding: 2.5rem 1.25rem 2rem;
+      }
+
+      .badge-pill {
+        display: inline-block;
+        background: var(--purple-100);
+        color: var(--purple-700);
+        border-radius: 20px;
+        padding: 5px 18px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--purple-900);
+        line-height: 1.15;
+        margin-bottom: 0.9rem;
+        letter-spacing: -0.4px;
+      }
+
+      .hero h1 span {
+        color: var(--purple-500);
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        max-width: 500px;
+        margin: 0 auto 2rem;
+        line-height: 1.65;
+      }
+
+      .home-cards {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 0 1.25rem 3rem;
+      }
+
+      .home-card {
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: var(--card-radius);
+        width: 100%;
+        max-width: 230px;
+        padding: 1.8rem 1.5rem 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.85rem;
+        cursor: pointer;
+        transition:
+          transform var(--transition),
+          box-shadow var(--transition),
+          border-color var(--transition);
+        text-decoration: none;
+      }
+
+      .home-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(124, 92, 252, 0.18);
+        border-color: var(--purple-300);
+      }
+
+      .num-badge {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
+        font-weight: 900;
+        transition: transform var(--transition);
+      }
+
+      .home-card:hover .num-badge {
+        transform: scale(1.07);
+      }
+      .nb-8 {
+        background: var(--purple-100);
+        color: var(--purple-700);
+      }
+      .nb-9 {
+        background: var(--purple-200);
+        color: var(--purple-800);
+      }
+      .nb-10 {
+        background: var(--purple-300);
+        color: var(--purple-900);
+      }
+
+      .home-card .card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--purple-900);
+      }
+
+      .home-card .card-sub {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      .go-btn {
+        background: var(--purple-500);
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        padding: 9px 24px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 0.25rem;
+        transition: background var(--transition);
+        pointer-events: none;
+      }
+
+      .home-card:hover .go-btn {
+        background: var(--purple-700);
+      }
+
+      /* ===== HOME PAGE (desktop) ===== */
+      @media (min-width: 640px) {
+        .hero {
+          padding: 5rem 2rem 3rem;
+        }
+        .badge-pill {
+          font-size: 0.78rem;
+          margin-bottom: 1.4rem;
+        }
+        .hero h1 {
+          font-size: 2.8rem;
+          margin-bottom: 1.1rem;
+          letter-spacing: -0.6px;
+        }
+        .hero p {
+          font-size: 1.05rem;
+          margin: 0 auto 3rem;
+          line-height: 1.7;
+        }
+        .home-cards {
+          gap: 24px;
+          padding: 0 2rem 5rem;
+        }
+        .home-card {
+          padding: 2.2rem 1.8rem 2rem;
+          gap: 1rem;
+        }
+        .num-badge {
+          width: 88px;
+          height: 88px;
+          border-radius: 20px;
+          font-size: 3rem;
+        }
+        .home-card .card-title {
+          font-size: 1.2rem;
+        }
+        .home-card .card-sub {
+          font-size: 0.82rem;
+          line-height: 1.55;
+        }
+      }
+
+      /* ===== CLASS PAGE (mobile-first base styles) ===== */
+      .class-page {
+        padding: 0 0 3rem;
+      }
+
+      .class-hero {
+        background: var(--white);
+        border-bottom: 1.5px solid var(--border);
+        padding: 1.5rem 1.25rem 1.25rem;
+      }
+
+      .class-hero h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--purple-900);
+        margin-bottom: 0.3rem;
+      }
+
+      .class-hero h2 span {
+        color: var(--purple-500);
+      }
+      .class-hero p {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      /* Subject tabs */
+      .subject-tabs {
+        display: flex;
+        gap: 8px;
+        padding: 1rem 1.25rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        background: var(--white);
+        border-bottom: 1.5px solid var(--border);
+        position: sticky;
+        top: var(--nav-h);
+        z-index: 100;
+      }
+
+      .subject-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .subject-tab {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 30px;
+        border: 1.5px solid var(--border);
+        background: var(--white);
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all var(--transition);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .subject-tab:hover {
+        border-color: var(--purple-300);
+        color: var(--purple-700);
+        background: var(--purple-50);
+      }
+
+      .subject-tab.active {
+        background: var(--purple-500);
+        border-color: var(--purple-500);
+        color: #fff;
+      }
+
+      .subject-tab .tab-icon {
+        font-size: 1rem;
+      }
+
+      /* Subject panel */
+      .subject-panel {
+        display: none;
+        padding: 1.5rem 1.25rem 0;
+      }
+      .subject-panel.active {
+        display: block;
+      }
+
+      /* ===== CLASS PAGE (desktop) ===== */
+      @media (min-width: 640px) {
+        .class-page {
+          padding: 0 0 5rem;
+        }
+        .class-hero {
+          padding: 2.5rem 3rem 2rem;
+        }
+        .class-hero h2 {
+          font-size: 2rem;
+          margin-bottom: 0.35rem;
+        }
+        .class-hero p {
+          font-size: 0.95rem;
+        }
+        .subject-tabs {
+          gap: 10px;
+          padding: 1.5rem 3rem;
+          flex-wrap: wrap;
+          overflow-x: visible;
+        }
+        .subject-tab {
+          gap: 7px;
+          padding: 9px 22px;
+          font-size: 0.88rem;
+        }
+        .subject-tab .tab-icon {
+          font-size: 1.05rem;
+        }
+        .subject-panel {
+          padding: 2rem 3rem 0;
+        }
+      }
+
+      .subject-heading {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--purple-900);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .subject-heading::after {
+        content: "";
+        flex: 1;
+        height: 1.5px;
+        background: var(--border);
+        border-radius: 2px;
+      }
+
+      /* Chapter cards */
+      .chapters-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .chapter-card {
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: var(--card-radius);
+        overflow: hidden;
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition);
+      }
+
+      .chapter-card.open {
+        border-color: var(--purple-300);
+        box-shadow: 0 4px 24px rgba(124, 92, 252, 0.1);
+      }
+
+      .chapter-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.9rem 1rem;
+        cursor: pointer;
+        user-select: none;
+        transition: background var(--transition);
+        gap: 10px;
+      }
+
+      @media (min-width: 640px) {
+        .chapter-header {
+          padding: 1.1rem 1.5rem;
+          gap: 12px;
+        }
+      }
+
+      .chapter-header:hover {
+        background: var(--purple-50);
+      }
+      .chapter-card.open .chapter-header {
+        background: var(--purple-50);
+      }
+
+      .chap-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .chap-num {
+        width: 32px;
+        height: 32px;
+        background: var(--purple-100);
+        color: var(--purple-700);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .chapter-card.open .chap-num {
+        background: var(--purple-500);
+        color: #fff;
+      }
+
+      .chap-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      @media (min-width: 640px) {
+        .chap-left {
+          gap: 14px;
+        }
+        .chap-num {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          font-size: 0.85rem;
+        }
+        .chap-title {
+          font-size: 0.97rem;
+        }
+      }
+
+      .chap-arrow {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--purple-100);
+        transition:
+          transform var(--transition),
+          background var(--transition);
+        flex-shrink: 0;
+      }
+
+      .chapter-card.open .chap-arrow {
+        transform: rotate(180deg);
+        background: var(--purple-500);
+      }
+
+      .chap-arrow svg {
+        width: 14px;
+        height: 14px;
+      }
+      .chapter-card.open .chap-arrow svg path {
+        stroke: #fff;
+      }
+
+      /* Chapter body */
+      .chapter-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .chapter-body.open {
+        max-height: 4000px;
+      }
+
+      .chapter-body-inner {
+        padding: 0 1rem 1.25rem;
+      }
+
+      /* Resource tabs inside chapter */
+      .resource-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 1.1rem;
+        border-bottom: 1.5px solid var(--border);
+        padding-bottom: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .resource-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .res-tab {
+        padding: 8px 12px;
+        border-radius: 8px 8px 0 0;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        border: none;
+        background: none;
+        border-bottom: 2.5px solid transparent;
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+        margin-bottom: -1.5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      @media (min-width: 640px) {
+        .chapter-body-inner {
+          padding: 0 1.5rem 1.5rem;
+        }
+        .resource-tabs {
+          gap: 8px;
+          margin-bottom: 1.2rem;
+          overflow-x: visible;
+        }
+        .res-tab {
+          padding: 8px 18px;
+          font-size: 0.82rem;
+        }
+      }
+
+      .res-tab:hover {
+        color: var(--purple-600);
+      }
+      .res-tab.active {
+        color: var(--purple-600);
+        border-bottom-color: var(--purple-500);
+      }
+
+      .res-panel {
+        display: none;
+      }
+      .res-panel.active {
+        display: block;
+      }
+
+      /* NOTES */
+      .notes-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .notes-list li {
+        display: flex;
+        gap: 10px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--text-main);
+      }
+
+      .notes-list li::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--purple-400);
+        flex-shrink: 0;
+        margin-top: 7px;
+      }
+
+      /* FLASHCARDS */
+      .flashcards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+      }
+
+      @media (min-width: 640px) {
+        .flashcards-grid {
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 14px;
+        }
+      }
+
+      .flashcard-wrap {
+        perspective: 900px;
+        height: 140px;
+        cursor: pointer;
+      }
+
+      .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 14px;
+      }
+
+      .flashcard-wrap.flipped .flashcard-inner {
+        transform: rotateY(180deg);
+      }
+
+      .fc-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+        text-align: center;
+      }
+
+      .fc-front {
+        background: var(--purple-100);
+        border: 1.5px solid var(--purple-200);
+      }
+
+      .fc-back {
+        background: var(--purple-500);
+        transform: rotateY(180deg);
+      }
+
+      .fc-front p {
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--purple-900);
+        line-height: 1.45;
+      }
+
+      .fc-back p {
+        font-size: 0.82rem;
+        color: #fff;
+        line-height: 1.45;
+      }
+
+      .fc-hint {
+        font-size: 0.7rem;
+        color: var(--purple-400);
+        margin-top: 8px;
+      }
+
+      .fc-back .fc-hint {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* PRACTICE */
+      .practice-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .practice-item {
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .practice-q {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background var(--transition);
+        background: var(--white);
+      }
+
+      .practice-q:hover {
+        background: var(--purple-50);
+      }
+      .practice-item.open .practice-q {
+        background: var(--purple-50);
+      }
+
+      .pq-text {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-main);
+        line-height: 1.5;
+        flex: 1;
+      }
+
+      .pq-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: var(--purple-100);
+        color: var(--purple-700);
+        border-radius: 6px;
+        padding: 3px 8px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .practice-item.open .pq-badge {
+        background: var(--purple-500);
+        color: #fff;
+      }
+
+      .practice-a {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background: #faf9ff;
+        border-top: 0 solid var(--border);
+      }
+
+      .practice-item.open .practice-a {
+        max-height: 300px;
+        border-top-width: 1.5px;
+      }
+
+      .practice-a-inner {
+        padding: 12px 16px;
+        font-size: 0.86rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+      }
+
+      .answer-label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--purple-500);
+        margin-bottom: 5px;
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.8rem;
+        color: var(--purple-300);
+        border-top: 1.5px solid var(--border);
+        margin-top: 2rem;
+        background: var(--white);
+      }
+
+      /* LOADING SPINNER */
+      .loading {
+        text-align: center;
+        padding: 4rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* SCROLLBAR */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--purple-200);
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--purple-400);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <div class="logo" onclick="goHome()">
+        <!--
+      =============================================
+      YOUR LOGO — replace the src below with the
+      path or URL to your logo file, e.g.:
+        src="logo.png"
+        src="assets/my-logo.svg"
+        src="https://example.com/logo.png"
+      =============================================
+    -->
+        <img class="logo-img" src="logo.png" alt="Logo" />
+      </div>
+      <ul>
+        <li><a id="nav-home" class="active" onclick="goHome()">Home</a></li>
+        <li><a id="nav-8" onclick="goClass(8)">Class 8</a></li>
+        <li><a id="nav-9" onclick="goClass(9)">Class 9</a></li>
+        <li><a id="nav-10" onclick="goClass(10)">Class 10</a></li>
+        <li>
+          <a
+            href="../../../homeindex.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-labs"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"
+              />
+            </svg>
+            Virtual Labs
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="badge-pill">🌱 Free for All Students</div>
+        <h1>Interactive <span>Learning</span><br />Resources</h1>
+        <p>
+          Explore curated notes, flashcards, and practice questions — designed
+          for students in Classes 8, 9 and 10.
+        </p>
+      </section>
+      <div class="home-cards">
+        <div class="home-card" onclick="goClass(8)">
+          <div class="num-badge nb-8">8</div>
+          <div class="card-title">Class 8</div>
+          <div class="card-sub">
+            Foundations in science,<br />maths & language arts
+          </div>
+          <button class="go-btn">Explore →</button>
+        </div>
+        <div class="home-card" onclick="goClass(9)">
+          <div class="num-badge nb-9">9</div>
+          <div class="card-title">Class 9</div>
+          <div class="card-sub">Core concepts &<br />board preparation</div>
+          <button class="go-btn">Explore →</button>
+        </div>
+        <div class="home-card" onclick="goClass(10)">
+          <div class="num-badge nb-10">10</div>
+          <div class="card-title">Class 10</div>
+          <div class="card-sub">
+            Board exam resources<br />& practice papers
+          </div>
+          <button class="go-btn">Explore →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASS 8 PAGE -->
+    <div class="page" id="page-8">
+      <div class="class-page">
+        <div class="class-hero">
+          <h2>Class <span>8</span></h2>
+          <p>
+            Select a subject to explore chapters, notes, flashcards, and
+            practice questions.
+          </p>
+        </div>
+        <div class="subject-tabs" id="tabs-8"></div>
+        <div id="panels-8"></div>
+      </div>
+    </div>
+
+    <!-- CLASS 9 PAGE -->
+    <div class="page" id="page-9">
+      <div class="class-page">
+        <div class="class-hero">
+          <h2>Class <span>9</span></h2>
+          <p>
+            Select a subject to explore chapters, notes, flashcards, and
+            practice questions.
+          </p>
+        </div>
+        <div class="subject-tabs" id="tabs-9"></div>
+        <div id="panels-9"></div>
+      </div>
+    </div>
+
+    <!-- CLASS 10 PAGE -->
+    <div class="page" id="page-10">
+      <div class="class-page">
+        <div class="class-hero">
+          <h2>Class <span>10</span></h2>
+          <p>
+            Select a subject to explore chapters, notes, flashcards, and
+            practice questions.
+          </p>
+        </div>
+        <div class="subject-tabs" id="tabs-10"></div>
+        <div id="panels-10"></div>
+      </div>
+    </div>
+
+    <footer>© 2026 YOJAK · Empowering students across India</footer>
+
+    <script>
+      // ===== DATA STORE =====
+      const dataStore = {};
+
+      // ===== NAVIGATION =====
+      function setNavActive(id) {
+        document
+          .querySelectorAll("nav ul li a")
+          .forEach((a) => a.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
+
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function goHome() {
+        setNavActive("nav-home");
+        showPage("page-home");
+      }
+
+      async function goClass(cls) {
+        setNavActive("nav-" + cls);
+        showPage("page-" + cls);
+        if (!dataStore[cls]) {
+          await loadClassData(cls);
+        }
+      }
+
+      // ===== DATA LOADING =====
+      async function loadClassData(cls) {
+        const tabsEl = document.getElementById("tabs-" + cls);
+        const panelsEl = document.getElementById("panels-" + cls);
+        tabsEl.innerHTML = '<div class="loading">Loading subjects…</div>';
+
+        try {
+          // cache: 'no-store' + timestamp query param ensures the browser always
+          // fetches the latest JSON instead of serving a stale cached copy.
+          const res = await fetch("class" + cls + ".json?v=" + Date.now(), {
+            cache: "no-store",
+          });
+          const data = await res.json();
+          dataStore[cls] = data;
+          renderClass(cls, data);
+        } catch (e) {
+          tabsEl.innerHTML =
+            '<div class="loading">Could not load data. Make sure JSON files are in the same folder and the site is opened via a local web server (not by double-clicking the file).</div>';
+        }
+      }
+
+      // ===== RENDER CLASS =====
+      function renderClass(cls, data) {
+        const tabsEl = document.getElementById("tabs-" + cls);
+        const panelsEl = document.getElementById("panels-" + cls);
+
+        tabsEl.innerHTML = "";
+        panelsEl.innerHTML = "";
+
+        data.subjects.forEach((subj, idx) => {
+          // Tab button
+          const tab = document.createElement("button");
+          tab.className = "subject-tab" + (idx === 0 ? " active" : "");
+          tab.innerHTML = `<span class="tab-icon">${subj.icon}</span>${subj.name}`;
+          tab.onclick = () => switchSubject(cls, subj.id);
+          tab.id = `tab-${cls}-${subj.id}`;
+          tabsEl.appendChild(tab);
+
+          // Panel
+          const panel = document.createElement("div");
+          panel.className = "subject-panel" + (idx === 0 ? " active" : "");
+          panel.id = `panel-${cls}-${subj.id}`;
+          panel.innerHTML = renderSubjectPanel(cls, subj);
+          panelsEl.appendChild(panel);
+        });
+      }
+
+      function switchSubject(cls, subjId) {
+        const data = dataStore[cls];
+        data.subjects.forEach((s) => {
+          document
+            .getElementById(`tab-${cls}-${s.id}`)
+            .classList.toggle("active", s.id === subjId);
+          document
+            .getElementById(`panel-${cls}-${s.id}`)
+            .classList.toggle("active", s.id === subjId);
+        });
+      }
+
+      // ===== RENDER SUBJECT PANEL =====
+      function renderSubjectPanel(cls, subj) {
+        const chapters = subj.chapters
+          .map((ch, i) => renderChapter(cls, subj.id, ch, i))
+          .join("");
+        return `
+    <div class="subject-heading">${subj.icon} ${subj.name} — Chapters</div>
+    <div class="chapters-list">${chapters}</div>
+  `;
+      }
+
+      // ===== RENDER CHAPTER =====
+      function renderChapter(cls, subjId, ch, idx) {
+        const uid = `ch-${cls}-${subjId}-${idx}`;
+
+        const notes = ch.notes.map((n) => `<li>${n}</li>`).join("");
+
+        const flashcards = ch.flashcards
+          .map(
+            (fc, fi) => `
+    <div class="flashcard-wrap" id="fc-${uid}-${fi}" onclick="flipCard('fc-${uid}-${fi}')">
+      <div class="flashcard-inner">
+        <div class="fc-face fc-front">
+          <p>${fc.q}</p>
+          <span class="fc-hint">Tap to reveal</span>
+        </div>
+        <div class="fc-face fc-back">
+          <p>${fc.a}</p>
+          <span class="fc-hint">Tap to flip back</span>
+        </div>
+      </div>
+    </div>
+  `,
+          )
+          .join("");
+
+        const practice = ch.practice
+          .map(
+            (pq, pi) => `
+    <div class="practice-item" id="pq-${uid}-${pi}">
+      <div class="practice-q" onclick="togglePractice('pq-${uid}-${pi}')">
+        <span class="pq-text">Q${pi + 1}. ${pq.q}</span>
+        <span class="pq-badge">Answer</span>
+      </div>
+      <div class="practice-a">
+        <div class="practice-a-inner">
+          <span class="answer-label">Answer</span>
+          ${pq.a}
+        </div>
+      </div>
+    </div>
+  `,
+          )
+          .join("");
+
+        return `
+    <div class="chapter-card" id="${uid}">
+      <div class="chapter-header" onclick="toggleChapter('${uid}')">
+        <div class="chap-left">
+          <div class="chap-num">${ch.id}</div>
+          <div class="chap-title">${ch.title}</div>
+        </div>
+        <div class="chap-arrow">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="#7c5cfc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="chapter-body" id="body-${uid}">
+        <div class="chapter-body-inner">
+          <div class="resource-tabs">
+            <button class="res-tab active" id="rt-notes-${uid}" onclick="switchRes('${uid}','notes')">📝 Bullet Notes</button>
+            <button class="res-tab" id="rt-flash-${uid}" onclick="switchRes('${uid}','flash')">🃏 Flashcards</button>
+            <button class="res-tab" id="rt-prac-${uid}" onclick="switchRes('${uid}','prac')">✅ Practice Q&A</button>
+          </div>
+          <div class="res-panel active" id="rp-notes-${uid}">
+            <ul class="notes-list">${notes}</ul>
+          </div>
+          <div class="res-panel" id="rp-flash-${uid}">
+            <div class="flashcards-grid">${flashcards}</div>
+          </div>
+          <div class="res-panel" id="rp-prac-${uid}">
+            <div class="practice-list">${practice}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+      }
+
+      // ===== INTERACTIONS =====
+      function toggleChapter(uid) {
+        const card = document.getElementById(uid);
+        const body = document.getElementById("body-" + uid);
+        const isOpen = card.classList.contains("open");
+        card.classList.toggle("open", !isOpen);
+        body.classList.toggle("open", !isOpen);
+      }
+
+      function switchRes(uid, tab) {
+        ["notes", "flash", "prac"].forEach((t) => {
+          document
+            .getElementById("rt-" + t + "-" + uid)
+            .classList.toggle("active", t === tab);
+          document
+            .getElementById("rp-" + t + "-" + uid)
+            .classList.toggle("active", t === tab);
+        });
+      }
+
+      function flipCard(id) {
+        document.getElementById(id).classList.toggle("flipped");
+      }
+
+      function togglePractice(id) {
+        const item = document.getElementById(id);
+        const ans = item.querySelector(".practice-a");
+        const isOpen = item.classList.contains("open");
+        item.classList.toggle("open", !isOpen);
+        ans.style.maxHeight = isOpen ? "0" : ans.scrollHeight + "px";
+      }
+    </script>
+  </body>
+</html>

@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botany Lab: Photosynthesis Virtual Experience</title>
+    <title>Photosynthesis Simulator | Rate of Oxygen Evolution</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #27ae60;
-            --success: #2980b9;
+            --primary: #1b5e20;
+            --secondary: #2e7d32;
+            --success: #1565c0;
             --table-top: #cfd8dc;
             --wood-trim: #4e342e;
             --water-color: rgba(52, 152, 219, 0.3);
-            --plant-green: #2ecc71;
-            --light-beam: rgba(241, 196, 15, 0.4);
+            --plant-green: #43a047;
+            --light-beam: rgba(255, 235, 59, 0.3);
         }
 
         body { 
             font-family: 'Segoe UI', system-ui, sans-serif; 
             margin: 0; 
-            background: #2c3e50; 
+            background: #263238; 
             overflow: hidden; 
             color: #333; 
         }
 
-        .app-container { display: flex; height: 100vh; }
+        .app-container { display: flex; height: 100vh; width: 100vw; }
 
         /* Sidebar & Journal */
         .sidebar, .notebook { 
@@ -39,667 +39,433 @@
         }
 
         .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .leaf-icon { background: var(--secondary); color: white; padding: 5px 10px; border-radius: 50%; font-size: 1.2rem; }
+        .lab-icon { background: var(--secondary); color: white; padding: 5px 10px; border-radius: 50%; font-size: 1.1rem; }
 
         .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; transition: 0.3s; font-size: 0.85rem; }
-        .step-item.active { border-left-color: var(--secondary); background: #e8f8f5; transform: translateX(5px); font-weight: 600; }
+        .step-item.active { border-left-color: var(--secondary); background: #e8f5e9; transform: translateX(5px); font-weight: 600; }
         .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
 
-        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+        #log { flex: 1; overflow-y: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.8rem; background: #1a1a1a; color: #00e676; padding: 10px; border-radius: 5px; border: 1px solid #333; }
 
-        /* Workspace / Lab Table */
+        /* Workspace */
         .workspace { 
             flex: 1; 
             position: relative; 
             background-color: var(--table-top);
-            background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: radial-gradient(#b0bec5 1px, transparent 1px);
+            background-size: 25px 25px;
             border-left: 10px solid var(--wood-trim);
             border-right: 10px solid var(--wood-trim);
-        }
-
-        .lab-header { padding: 20px; background: rgba(255,255,255,0.8); backdrop-filter: blur(5px); border-bottom: 2px solid #999; }
-
-        /* Main Lab Station */
-        .lab-station {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 400px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            background: rgba(255,255,255,0.15);
-            border-radius: 20px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-            padding-bottom: 20px;
-        }
-
-        #lab-setup {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        /* Beaker & Plant Setup */
-        .beaker {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 200px;
-            border: 4px solid rgba(255,255,255,0.8);
-            border-top: none;
-            border-radius: 5px 5px 20px 20px;
-            background: rgba(255,255,255,0.2);
-            box-shadow: inset 0 -20px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            z-index: 5;
-        }
-        
-        .water-level {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 80%;
-            background: var(--water-color);
-            transition: all 1s;
-        }
-
-        #elodea-plant {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 140px;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        .powder-cloud {
-            position: absolute;
-            bottom: 20px;
-            left: 20%;
-            width: 60%;
-            height: 20%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6), transparent);
-            opacity: 0;
-            transition: opacity 2s;
-        }
-
-        /* Lamp Setup */
-        #lamp {
-            position: absolute;
-            bottom: 20px;
-            left: 80px;
-            width: 100px;
-            height: 250px;
-            opacity: 0;
-            transition: opacity 1s, transform 1s;
-            transform: translateX(-50px);
-        }
-
-        #light-beam {
-            position: absolute;
-            bottom: 50px;
-            left: 150px;
-            width: 250px;
-            height: 200px;
-            background: linear-gradient(90deg, var(--light-beam), transparent);
-            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
-            opacity: 0;
-            transition: opacity 1s;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        /* Bubbles */
-        .bubble-container { position: absolute; inset: 0; pointer-events: none; }
-        .o2-bubble {
-            position: absolute;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,1);
-            animation: rise 2s infinite ease-in;
-            opacity: 0;
-        }
-
-        @keyframes rise {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
-        }
-
-        /* Timer Setup */
-        #stopwatch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 100px;
-            height: 120px;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-        .timer-text { font-family: monospace; font-size: 1.5rem; font-weight: bold; fill: #e74c3c; }
-
-        /* Tools Tray */
-        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 30px; background: #fff; padding: 15px 30px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--primary); }
-        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 75px; }
-        .tool:hover { transform: scale(1.1) translateY(-5px); }
-        .tool svg { width: 50px; height: 50px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
-        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; line-height: 1.1; }
-        .tool.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-
-        /* UI Buttons */
-        .btn-ui { padding: 12px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; background: white; color: #333; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .btn-ui:hover { transform: scale(1.05); }
-        .btn-ui.primary { background: var(--secondary); color: white; }
-        
-        #btn-analyze { position: absolute; top: 120px; right: 40px; display: none; animation: pulse-btn 2s infinite; }
-        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(39, 174, 96, 0); } 100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); } }
-
-        /* Molecular Animation Viewer */
-        #molecular-viewer { position: fixed; inset: 0; background: #1a252f; z-index: 2000; display: none; }
-        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
-        
-        #molecular-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        
-        /* Chloroplast Elements */
-        .chloroplast {
-            width: 700px;
-            height: 400px;
-            background: rgba(46, 204, 113, 0.1);
-            border: 8px solid #27ae60;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            position: relative;
-            box-shadow: inset 0 0 50px rgba(39, 174, 96, 0.3);
-            transition: all 2s;
-        }
-
-        .granum {
-            position: absolute;
-            width: 60px;
-            height: 120px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            opacity: 0;
-            transition: opacity 1s;
         }
-        .thylakoid { width: 100%; height: 20px; background: #2ecc71; border: 2px solid #27ae60; border-radius: 10px; }
 
-        .stroma-label { position: absolute; top: 50px; right: 100px; color: rgba(255,255,255,0.5); font-weight: bold; font-size: 1.5rem; letter-spacing: 2px; }
+        .lab-header { 
+            padding: 15px 25px; 
+            background: rgba(255,255,255,0.9); 
+            backdrop-filter: blur(5px); 
+            border-bottom: 2px solid #999; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* Molecules */
-        .photon { position: absolute; width: 10px; height: 10px; background: #f1c40f; border-radius: 50%; box-shadow: 0 0 10px #f1c40f; opacity: 0; }
-        .molecule { position: absolute; font-weight: bold; color: white; padding: 5px 10px; border-radius: 15px; opacity: 0; font-size: 0.9rem; transition: all 2s; z-index: 10;}
-        .m-h2o { background: #3498db; }
-        .m-co2 { background: #7f8c8d; }
-        .m-o2 { background: #ecf0f1; color: #333; }
-        .m-glucose { background: #e67e22; border-radius: 5px; }
-        .energy-carrier { background: #9b59b6; font-size: 0.7rem; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .header-info h2 { margin: 0; font-size: 1.2rem; color: var(--primary); }
+        .header-info p { margin: 2px 0 0 0; font-size: 0.85rem; color: #666; }
 
-        /* Viewer UI */
-        .phase-footer { background: rgba(0,0,0,0.85); padding: 30px; border-top: 2px solid var(--secondary); text-align: center; z-index: 30; position: relative; }
-        #v-title { color: #fff; margin: 0 0 10px 0; font-size: 2rem; letter-spacing: 3px; text-transform: uppercase; }
-        #v-desc { color: #dfe6e9; max-width: 900px; margin: 0 auto 20px auto; font-size: 1.1rem; min-height: 3.3em; }
+        .btn-fullscreen {
+            background: #455a64;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-fullscreen:hover { background: #263238; }
+
+        /* Lab Rig */
+        .lab-station {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #photosynthesis-setup { position: relative; width: 600px; height: 400px; }
+
+        /* Beaker & Setup */
+        .beaker {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 180px; height: 250px; border: 4px solid rgba(255,255,255,0.8);
+            border-top: none; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+            background: rgba(255,255,255,0.2); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1); z-index: 5;
+        }
+        
+        .water-fill { position: absolute; bottom: 0; width: 100%; height: 85%; background: var(--water-color); transition: 0.5s; }
+        #plant-specimen { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 100px; height: 180px; opacity: 0; transition: 0.5s; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.2)); }
+        #bicarb-cloud { position: absolute; bottom: 20px; left: 20%; width: 60%; height: 30px; background: radial-gradient(white, transparent); opacity: 0; filter: blur(5px); pointer-events: none; }
+
+        /* Bubbles */
+        .bubble-zone { position: absolute; inset: 0; pointer-events: none; }
+        .bubble {
+            position: absolute; background: white; border-radius: 50%; border: 1px solid rgba(255,255,255,0.8);
+            animation: floatUp 2s linear forwards; opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-160px) scale(1.2); opacity: 0; }
+        }
+
+        /* Lamp Tool */
+        #lamp-rig { position: absolute; bottom: 20px; left: -50px; width: 120px; opacity: 0; transition: 1s; transform: translateX(-40px); }
+        #light-beam { 
+            position: absolute; bottom: 50px; left: 70px; width: 250px; height: 200px; 
+            background: linear-gradient(90deg, var(--light-beam), transparent); 
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);
+            opacity: 0; transition: 0.5s; pointer-events: none; z-index: 10;
+        }
+        .lamp-on #light-beam { opacity: 1; }
+
+        /* Tools Tray */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; background: #fff; padding: 12px 30px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid var(--primary); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 85px; }
+        .tool:hover:not(.disabled) { transform: scale(1.1) translateY(-5px); }
+        .tool svg { width: 50px; height: 50px; }
+        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 4px; color: var(--primary); }
+        .tool.disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
+
+        /* Timer */
+        #stopwatch-rig { position: absolute; top: 20px; right: 20px; width: 100px; opacity: 0; transition: 0.5s; background: white; padding: 10px; border-radius: 10px; border: 2px solid var(--primary); text-align: center; }
+        #timer-text { font-family: monospace; font-size: 1.4rem; font-weight: bold; color: #d32f2f; }
+
+        /* Analysis Button */
+        #btn-analyze { position: absolute; top: 100px; right: 40px; display: none; padding: 15px 30px; border-radius: 30px; border: none; font-weight: 800; cursor: pointer; background: var(--secondary); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: pulse 2s infinite; z-index: 100; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+        /* Molecular View Overlay */
+        #molecular-viewer { position: fixed; inset: 0; background: #002200; z-index: 2000; display: none; flex-direction: column; }
+        #molecular-stage { flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(#1b5e20, #001a00); }
+        
+        .chloroplast-shell { 
+            position: relative; width: 700px; height: 400px; background: rgba(76, 175, 80, 0.1); 
+            border: 8px solid #1b5e20; border-radius: 50% / 50%; box-shadow: inset 0 0 50px rgba(0,0,0,0.4); 
+        }
+        .granum { position: absolute; width: 60px; height: 120px; display: flex; flex-direction: column; gap: 4px; opacity: 0; transition: 1s; }
+        .thylakoid { width: 100%; height: 20px; background: #4caf50; border: 2px solid #1b5e20; border-radius: 10px; }
+        
+        .molecule { position: absolute; color: white; font-weight: bold; padding: 5px 10px; border-radius: 15px; opacity: 0; transition: 2s; z-index: 10; font-size: 0.8rem; }
+        .m-h2o { background: #1976d2; } .m-o2 { background: #eceff1; color: #333; } .m-co2 { background: #455a64; } .m-glucose { background: #f57c00; border-radius: 5px; }
+
+        .phase-footer { background: rgba(0,0,0,0.9); padding: 25px; border-top: 3px solid var(--secondary); text-align: center; }
+        .phase-footer h1 { color: #fff; margin: 0; font-size: 1.8rem; letter-spacing: 2px; }
+        .phase-footer p { color: #ccc; font-size: 1rem; margin: 10px auto; max-width: 800px; min-height: 3em; }
+        
+        .btn-ui { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin: 5px; }
+        .btn-ui.primary { background: var(--secondary); color: white; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
     <aside class="sidebar">
-        <div class="logo"><span class="leaf-icon">🌿</span> Botany Lab</div>
-        <h2>Experiment Progress</h2>
+        <div class="logo"><span class="lab-icon">🔬</span> Chloroscan</div>
+        <h3>Experimental Steps</h3>
         <div id="step-list"></div>
     </aside>
 
     <main class="workspace">
         <header class="lab-header">
-            <h2 id="task-title">Lab Initialization</h2>
-            <p id="task-desc">Loading physiological setup...</p>
+            <div class="header-info">
+                <h2 id="task-title">Initializing...</h2>
+                <p id="task-desc">Please wait.</p>
+            </div>
+            <button class="btn-fullscreen" onclick="toggleFullscreen()">Toggle Fullscreen</button>
         </header>
 
-        <button id="btn-analyze" class="btn-ui primary" onclick="lab.startMolecularAnalysis()">View Chloroplast Reactions</button>
+        <!-- Fixed Analysis Button -->
+        <button id="btn-analyze" onclick="lab.startMolecularView()">View Chloroplast Reactions</button>
 
-        <div class="lab-station" id="station-dropzone">
-            <div id="lab-setup">
-                
-                <div id="lamp">
-                    <svg viewBox="0 0 100 250">
-                        <rect x="30" y="230" width="40" height="20" fill="#7f8c8d" />
-                        <rect x="45" y="100" width="10" height="130" fill="#95a5a6" />
-                        <path d="M 50 100 Q 80 50 100 50 L 100 20 Q 70 20 50 80 Z" fill="#7f8c8d" />
-                        <path id="bulb-housing" d="M 80 20 L 100 0 L 120 40 L 90 60 Z" fill="#34495e" />
-                        <circle cx="105" cy="25" r="12" fill="#fff" id="bulb-core" />
-                    </svg>
-                </div>
-                
-                <div id="light-beam"></div>
-
+        <div class="lab-station" id="drop-zone">
+            <div id="photosynthesis-setup">
                 <div class="beaker">
-                    <div class="water-level">
-                        <div class="powder-cloud" id="carbon-cloud"></div>
-                        <div class="bubble-container" id="bubble-layer"></div>
-                        
-                        <svg id="elodea-plant" viewBox="0 0 100 200">
-                            <path d="M50 200 Q45 100 50 0" stroke="#27ae60" stroke-width="6" fill="none"/>
-                            <path d="M50 180 Q30 170 45 160 Z" fill="#2ecc71"/>
-                            <path d="M50 170 Q70 160 55 150 Z" fill="#2ecc71"/>
-                            <path d="M50 140 Q25 130 45 120 Z" fill="#2ecc71"/>
-                            <path d="M50 130 Q75 120 55 110 Z" fill="#2ecc71"/>
-                            <path d="M50 100 Q30 90 45 80 Z" fill="#2ecc71"/>
-                            <path d="M50 90 Q70 80 55 70 Z" fill="#2ecc71"/>
-                            <path d="M50 60 Q35 50 48 40 Z" fill="#2ecc71"/>
-                            <path d="M50 50 Q65 40 52 30 Z" fill="#2ecc71"/>
+                    <div class="water-fill">
+                        <div id="bicarb-cloud"></div>
+                        <div class="bubble-zone" id="bubble-layer"></div>
+                        <svg id="plant-specimen" viewBox="0 0 100 200">
+                            <path d="M50 200 L50 20" stroke="#2e7d32" stroke-width="6" fill="none"/>
+                            <path d="M50 180 Q30 170 45 160 Z" fill="#43a047"/>
+                            <path d="M50 160 Q70 150 55 140 Z" fill="#43a047"/>
+                            <path d="M50 130 Q25 120 45 110 Z" fill="#4caf50"/>
+                            <path d="M50 110 Q75 100 55 90 Z" fill="#4caf50"/>
+                            <path d="M50 80 Q30 70 45 60 Z" fill="#66bb6a"/>
                         </svg>
                     </div>
                 </div>
 
-                <div id="stopwatch">
-                    <svg viewBox="0 0 100 120">
-                        <circle cx="50" cy="60" r="45" fill="#34495e" stroke="#bdc3c7" stroke-width="4"/>
-                        <circle cx="50" cy="60" r="35" fill="#fff" />
-                        <rect x="45" y="0" width="10" height="15" fill="#7f8c8d" />
-                        <path d="M 50 60 L 50 35" stroke="#e74c3c" stroke-width="3" id="timer-hand"/>
-                        <text x="50" y="90" class="timer-text" text-anchor="middle" id="timer-display">00:00</text>
+                <div id="lamp-rig">
+                    <svg viewBox="0 0 100 200">
+                        <path d="M40 200 L60 200 L55 120 L45 120 Z" fill="#37474f"/>
+                        <path d="M20 120 L80 120 L70 50 L30 50 Z" fill="#78909c"/>
+                        <circle cx="50" cy="70" r="15" fill="#fff59d"/>
                     </svg>
+                    <div id="light-beam"></div>
                 </div>
 
+                <div id="stopwatch-rig">
+                    <div style="font-size: 0.6rem; font-weight: bold; color: #333;">TIMER</div>
+                    <div id="timer-text">00:00</div>
+                </div>
             </div>
         </div>
 
         <div class="tool-tray">
             <div class="tool" draggable="true" id="tool-plant">
-                <svg viewBox="0 0 100 100">
-                    <path d="M50 90 L50 20" stroke="#27ae60" stroke-width="4" fill="none"/>
-                    <path d="M50 70 Q30 60 50 50 Z" fill="#2ecc71"/>
-                    <path d="M50 50 Q70 40 50 30 Z" fill="#2ecc71"/>
-                </svg>
-                <span>Elodea Plant</span>
+                <svg viewBox="0 0 100 100"><path d="M50 90 L50 20" stroke="#2e7d32" stroke-width="4"/><path d="M50 70 Q30 60 50 50 Z" fill="#4caf50"/></svg>
+                <span>Elodea</span>
             </div>
             <div class="tool disabled" draggable="true" id="tool-bicarb">
-                <svg viewBox="0 0 100 100">
-                    <rect x="35" y="40" width="30" height="50" rx="2" fill="rgba(255,255,255,0.8)" stroke="#bdc3c7"/>
-                    <rect x="37" y="60" width="26" height="28" fill="#ecf0f1"/>
-                    <text x="50" y="75" font-size="12" font-weight="bold" text-anchor="middle" fill="#333">NaHCO3</text>
-                </svg>
-                <span>Bicarbonate</span>
+                <svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="50" rx="5" fill="#f5f5f5" stroke="#999"/><text x="50" y="65" font-size="10" text-anchor="middle" font-weight="bold">CO₂</text></svg>
+                <span>NaHCO₃</span>
             </div>
             <div class="tool disabled" draggable="true" id="tool-lamp">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="40" r="20" fill="#f1c40f" opacity="0.5"/>
-                    <path d="M30 60 L70 60 L60 20 L40 20 Z" fill="#34495e"/>
-                </svg>
-                <span>Light Source</span>
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="40" r="25" fill="#fbc02d"/><path d="M50 65 L50 90" stroke="#333" stroke-width="5"/></svg>
+                <span>Light</span>
             </div>
             <div class="tool disabled" draggable="true" id="tool-timer">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="55" r="30" fill="#ecf0f1" stroke="#7f8c8d" stroke-width="4"/>
-                    <rect x="45" y="10" width="10" height="15" fill="#e74c3c"/>
-                    <line x1="50" y1="55" x2="50" y2="35" stroke="#333" stroke-width="2"/>
-                </svg>
-                <span>Start Timer</span>
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="none" stroke="#d32f2f" stroke-width="4"/><path d="M50 50 L50 30 L65 50" stroke="#333" stroke-width="2"/></svg>
+                <span>Timer</span>
             </div>
         </div>
     </main>
 
     <aside class="notebook">
-        <h3>Lab Journal</h3>
+        <h3>Experimental Log</h3>
         <div id="log"></div>
     </aside>
 </div>
 
+<!-- Molecular View Overlay -->
 <div id="molecular-viewer">
-    <div class="viewer-layout">
-        <div id="molecular-stage">
-            <div class="chloroplast" id="chloroplast-body">
-                <div class="stroma-label">STROMA</div>
-                
-                <div class="granum" id="stack-1" style="left: 150px; top: 120px;">
-                    <div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div>
-                </div>
-                <div class="granum" id="stack-2" style="left: 250px; top: 150px;">
-                    <div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div>
-                </div>
-
-                <div class="molecule m-h2o" id="mol-h2o" style="left: -50px; top: 150px;">H₂O</div>
-                <div class="molecule m-o2" id="mol-o2" style="left: 200px; top: 150px;">O₂</div>
-                
-                <div class="molecule energy-carrier" id="mol-atp" style="left: 300px; top: 180px;">ATP</div>
-                
-                <div class="molecule m-co2" id="mol-co2" style="left: 600px; top: 80px;">CO₂</div>
-                
-                <div id="calvin-cycle" style="position: absolute; right: 100px; top: 120px; width: 150px; height: 150px; border: 4px dashed rgba(255,255,255,0.3); border-radius: 50%; opacity: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: white; font-weight: bold;">Calvin<br>Cycle</div>
-
-                <div class="molecule m-glucose" id="mol-glucose" style="right: 150px; bottom: -50px;">Glucose (C₆H₁₂O₆)</div>
-            </div>
+    <div id="molecular-stage">
+        <div class="chloroplast-shell">
+            <div class="granum" id="g1" style="left: 150px; top: 120px;"><div class="thylakoid"></div><div class="thylakoid"></div></div>
+            <div class="granum" id="g2" style="left: 250px; top: 180px;"><div class="thylakoid"></div><div class="thylakoid"></div><div class="thylakoid"></div></div>
+            <div class="molecule m-h2o" id="mol-h2o" style="left: 50px; top: 150px;">H₂O</div>
+            <div class="molecule m-o2" id="mol-o2" style="left: 200px; top: 100px;">O₂</div>
+            <div class="molecule m-co2" id="mol-co2" style="right: 50px; top: 100px;">CO₂</div>
+            <div class="molecule m-glucose" id="mol-gl" style="right: 150px; bottom: 80px;">GLUCOSE</div>
         </div>
-        
-        <div class="phase-footer">
-            <h1 id="v-title">CHLOROPLAST VIEW</h1>
-            <p id="v-desc">Initial state...</p>
-            <div id="controls-row">
-                <button class="btn-ui primary" id="btn-next-phase" onclick="lab.advanceMolecularPhase()">NEXT PHASE</button>
-                <button class="btn-ui" onclick="location.reload()">RESTART LAB</button>
-            </div>
-        </div>
+    </div>
+    <div class="phase-footer">
+        <h1 id="v-title">Chloroplast Zoom</h1>
+        <p id="v-desc">Loading internal cellular view...</p>
+        <button class="btn-ui primary" id="btn-next-phase" onclick="lab.nextMolecularStep()">Next Stage</button>
+        <button class="btn-ui" onclick="location.reload()">Finish & Reset</button>
     </div>
 </div>
 
 <script>
-const LAB_DATA = {
-    steps: [
-        { id: 0, tool: 'tool-plant', title: "Specimen Placement", instruction: "Drag the Elodea plant into the beaker of water.", narration: "Place the aquatic Elodea plant into the beaker. Because it lives underwater, we can easily see the gases it produces as bubbles." },
-        { id: 1, tool: 'tool-bicarb', title: "Carbon Source", instruction: "Add Sodium Bicarbonate to the water.", narration: "Add sodium bicarbonate. This dissolves to provide dissolved carbon dioxide, a necessary reactant for photosynthesis." },
-        { id: 2, tool: 'tool-lamp', title: "Light Energy", instruction: "Position the light source next to the beaker.", narration: "Place the lamp near the beaker to provide the light energy required to drive the photosynthetic reaction." },
-        { id: 3, tool: 'tool-timer', title: "Data Collection", instruction: "Start the timer and turn on the lamp to measure the rate.", narration: "Turn on the light and start the timer. We will count the oxygen bubbles produced to measure the rate of photosynthesis." }
-    ]
-};
+const STEPS = [
+    { id: 0, tool: 'tool-plant', title: "Add Specimen", desc: "Drag the Elodea plant into the beaker.", voice: "First, place the aquatic Elodea plant into the water. Its thin leaves allow us to easily see oxygen being released as bubbles." },
+    { id: 1, tool: 'tool-bicarb', title: "Add NaHCO₃", desc: "Dissolve Sodium Bicarbonate in the water.", voice: "Now, add sodium bicarbonate. This acts as a source of dissolved carbon dioxide for the plant to consume." },
+    { id: 2, tool: 'tool-lamp', title: "Provide Light", desc: "Position the light source near the plant.", voice: "Position the lamp. This provides the photons required for the light-dependent reactions of photosynthesis." },
+    { id: 3, tool: 'tool-timer', title: "Observe Rate", desc: "Start the timer to count oxygen bubbles.", voice: "Start the analysis. Watch closely as the plant releases oxygen bubbles. More bubbles per minute indicate a higher rate of photosynthesis." }
+];
 
 class PhotosynthesisLab {
     constructor() {
-        this.stepIdx = 0;
-        this.molecularPhase = 0;
+        this.step = 0;
+        this.bubbleFreq = 0;
+        this.mStep = 0;
         this.synth = window.speechSynthesis;
-        this.timerInterval = null;
-        this.bubbleInterval = null;
         this.init();
     }
 
-    init() {
+    async init() {
         this.renderStepList();
-        this.setupInteractions();
-        this.updateStepUI();
+        this.setupDragging();
+        await this.updateUI();
     }
 
-    playSound(freq, type = 'sine', duration = 0.15) {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + duration);
+    // returns a promise that resolves when narration finishes
+    speak(text) {
+        return new Promise((resolve) => {
+            this.synth.cancel();
+            const utt = new SpeechSynthesisUtterance(text);
+            utt.rate = 1.0;
+            utt.onend = () => resolve();
+            utt.onerror = () => resolve(); // fallback
+            this.synth.speak(utt);
+        });
     }
 
     renderStepList() {
-        const container = document.getElementById('step-list');
-        container.innerHTML = LAB_DATA.steps.map((s, i) => `
-            <div class="step-item" id="step-${i}">${s.title}</div>
-        `).join('');
+        const list = document.getElementById('step-list');
+        list.innerHTML = STEPS.map((s, i) => `<div class="step-item" id="step-${i}">${s.title}</div>`).join('');
     }
 
-    updateStepUI() {
-        if(this.stepIdx >= LAB_DATA.steps.length) return;
-        
-        const step = LAB_DATA.steps[this.stepIdx];
-        document.getElementById('task-title').textContent = step.title;
-        document.getElementById('task-desc').textContent = step.instruction;
-        
-        document.querySelectorAll('.step-item').forEach((el, i) => {
-            el.className = 'step-item' + (i === this.stepIdx ? ' active' : i < this.stepIdx ? ' completed' : '');
-        });
-
-        document.querySelectorAll('.tool').forEach(t => t.classList.add('disabled'));
-        document.getElementById(step.tool).classList.remove('disabled');
-
-        this.speak(step.narration);
-    }
-
-    speak(text, callback) {
-        this.synth.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 1.0;
-        utterance.onend = () => { if(callback) callback(); };
-        this.synth.speak(utterance);
-    }
-
-    log(msg) {
-        const log = document.getElementById('log');
-        log.innerHTML += `<div>> ${msg}</div>`;
-        log.scrollTop = log.scrollHeight;
-    }
-
-    setupInteractions() {
-        document.querySelectorAll('.tool').forEach(tool => {
-            tool.addEventListener('dragstart', e => {
-                if(!tool.classList.contains('disabled')) {
-                    e.dataTransfer.setData('text', e.target.id);
-                }
+    setupDragging() {
+        document.querySelectorAll('.tool').forEach(t => {
+            t.addEventListener('dragstart', e => {
+                if(!t.classList.contains('disabled')) e.dataTransfer.setData('text', t.id);
             });
         });
 
-        const dropzone = document.getElementById('station-dropzone');
-        dropzone.addEventListener('dragover', e => e.preventDefault());
-        dropzone.addEventListener('drop', e => {
+        const dz = document.getElementById('drop-zone');
+        dz.addEventListener('dragover', e => e.preventDefault());
+        dz.addEventListener('drop', async (e) => {
             e.preventDefault();
-            const toolId = e.dataTransfer.getData('text');
-            const expectedTool = LAB_DATA.steps[this.stepIdx]?.tool;
-            
-            if (toolId === expectedTool) {
-                this.handleAction(toolId);
+            const id = e.dataTransfer.getData('text');
+            if(id === STEPS[this.step]?.tool) {
+                await this.handleStep(id);
             }
         });
     }
 
-    handleAction(toolId) {
-        this.playSound(400, 'triangle');
+    async updateUI() {
+        const s = STEPS[this.step];
+        if(!s) return;
+        document.getElementById('task-title').textContent = s.title;
+        document.getElementById('task-desc').textContent = s.desc;
         
-        if (this.stepIdx === 0 && toolId === 'tool-plant') {
-            document.getElementById('elodea-plant').style.opacity = '1';
-            this.log("Elodea placed in beaker.");
-            this.advanceStep();
-        } 
-        else if (this.stepIdx === 1 && toolId === 'tool-bicarb') {
-            const cloud = document.getElementById('carbon-cloud');
-            cloud.style.opacity = '1';
-            setTimeout(() => { cloud.style.opacity = '0'; }, 2000);
-            this.log("Sodium Bicarbonate dissolved. CO2 available.");
-            this.advanceStep();
-        } 
-        else if (this.stepIdx === 2 && toolId === 'tool-lamp') {
-            const lamp = document.getElementById('lamp');
-            lamp.style.opacity = '1';
-            lamp.style.transform = 'translateX(0)';
-            this.log("Lamp positioned 10cm from beaker.");
-            this.advanceStep();
-        } 
-        else if (this.stepIdx === 3 && toolId === 'tool-timer') {
-            document.getElementById('stopwatch').style.opacity = '1';
-            document.getElementById('bulb-core').setAttribute('fill', '#f1c40f');
-            document.getElementById('light-beam').style.opacity = '1';
-            
-            this.startExperiment();
-            this.log("Light on. Timer started. Monitoring photosynthesis rate.");
+        document.querySelectorAll('.step-item').forEach((el, i) => {
+            el.className = `step-item ${i === this.step ? 'active' : (i < this.step ? 'completed' : '')}`;
+        });
+
+        document.querySelectorAll('.tool').forEach(t => t.classList.add('disabled'));
+        document.getElementById(s.tool).classList.remove('disabled');
+        
+        // Narrative runs, then function waits
+        await this.speak(s.voice);
+    }
+
+    async handleStep(id) {
+        if(id === 'tool-plant') {
+            document.getElementById('plant-specimen').style.opacity = 1;
+            this.log("Elodea specimen secured in beaker.");
+        } else if(id === 'tool-bicarb') {
+            document.getElementById('bicarb-cloud').style.opacity = 1;
+            setTimeout(() => document.getElementById('bicarb-cloud').style.opacity = 0, 2000);
+            this.log("Sodium Bicarbonate added (CO₂ source).");
+        } else if(id === 'tool-lamp') {
+            document.getElementById('lamp-rig').style.opacity = 1;
+            document.getElementById('lamp-rig').style.transform = 'translateX(0)';
+            document.getElementById('lamp-rig').classList.add('lamp-on');
+            this.log("Light source activated.");
+        } else if(id === 'tool-timer') {
+            document.getElementById('stopwatch-rig').style.opacity = 1;
+            this.startTimer();
+            this.log("Analysis started. Oxygen evolution detected.");
+        }
+
+        this.step++;
+        if(this.step < STEPS.length) {
+            await new Promise(r => setTimeout(r, 500));
+            await this.updateUI();
+        } else {
+            document.getElementById('task-title').textContent = "Photosynthesis Active";
+            document.getElementById('task-desc').textContent = "Analyze cellular reactions below.";
+            await this.speak("The experiment is running. High light and CO2 concentration are resulting in a fast rate of oxygen evolution. Click the green button to zoom into the chloroplast.");
         }
     }
 
-    startExperiment() {
-        let time = 0;
-        let bubbleCount = 0;
-        
-        // Start Timer visually
-        this.timerInterval = setInterval(() => {
-            time++;
-            const deg = (time / 60) * 360;
-            document.getElementById('timer-hand').style.transform = `rotate(${deg}deg)`;
-            document.getElementById('timer-hand').style.transformOrigin = `50px 60px`;
-            
-            const m = Math.floor(time/60).toString().padStart(2, '0');
-            const s = (time%60).toString().padStart(2, '0');
-            document.getElementById('timer-display').textContent = `${m}:${s}`;
-            
-            if(time >= 30) this.finishExperiment(bubbleCount); // Fast forward experiment to 30 "seconds"
-        }, 150);
+    log(msg) {
+        const l = document.getElementById('log');
+        l.innerHTML += `<div>> ${msg}</div>`;
+        l.scrollTop = l.scrollHeight;
+    }
 
-        // Generate Bubbles
-        this.bubbleInterval = setInterval(() => {
-            if(Math.random() > 0.3) {
-                bubbleCount++;
-                this.createBubble();
+    startTimer() {
+        let sec = 0;
+        this.bubbleFreq = 0.8;
+        const interval = setInterval(() => {
+            sec++;
+            const s = (sec % 60).toString().padStart(2, '0');
+            const m = Math.floor(sec / 60).toString().padStart(2, '0');
+            document.getElementById('timer-text').textContent = `${m}:${s}`;
+            if(sec >= 20) {
+                clearInterval(interval);
+                document.getElementById('btn-analyze').style.display = 'block';
             }
-        }, 400);
+        }, 200);
+        this.spawnBubbles();
     }
 
-    createBubble() {
-        const container = document.getElementById('bubble-layer');
-        const b = document.createElement('div');
-        b.className = 'o2-bubble';
-        const size = Math.random() * 8 + 4;
-        b.style.width = `${size}px`;
-        b.style.height = `${size}px`;
-        b.style.left = `${40 + Math.random() * 20}%`;
-        b.style.bottom = `${30 + Math.random() * 20}px`;
-        container.appendChild(b);
-        
-        setTimeout(() => { if(container.contains(b)) container.removeChild(b); }, 2000);
+    spawnBubbles() {
+        setInterval(() => {
+            if(this.bubbleFreq > 0 && Math.random() < this.bubbleFreq) {
+                const layer = document.getElementById('bubble-layer');
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                b.style.width = '8px'; b.style.height = '8px';
+                b.style.left = (45 + Math.random() * 10) + '%';
+                b.style.bottom = '40px';
+                layer.appendChild(b);
+                setTimeout(() => b.remove(), 2000);
+            }
+        }, 500);
     }
 
-    finishExperiment(count) {
-        clearInterval(this.timerInterval);
-        clearInterval(this.bubbleInterval);
-        
-        this.stepIdx++;
-        document.getElementById('task-title').textContent = "Experiment Complete";
-        document.getElementById('task-desc').textContent = `Recorded ${count} oxygen bubbles in 30 seconds. Click below to explore the internal cellular mechanisms.`;
-        document.getElementById('btn-analyze').style.display = 'block';
-        this.playSound(800, 'sine', 0.5);
-        this.speak(`Experiment concluded. The plant produced a steady stream of oxygen bubbles due to the high light intensity. Let's look inside the chloroplast to see how this happens.`);
+    // FIXED: Molecular View Trigger
+    startMolecularView() {
+        const viewer = document.getElementById('molecular-viewer');
+        viewer.style.display = 'flex';
+        this.mStep = 0;
+        this.nextMolecularStep();
     }
 
-    advanceStep() {
-        this.stepIdx++;
-        setTimeout(() => this.updateStepUI(), 500);
-    }
-
-    /* --- Molecular Animation Sequence --- */
-
-    async startMolecularAnalysis() {
-        document.getElementById('btn-analyze').style.display = 'none';
-        document.getElementById('molecular-viewer').style.display = 'block';
-        
-        this.molecularPhase = 0;
-        this.advanceMolecularPhase();
-    }
-
-    createPhoton() {
-        const p = document.createElement('div');
-        p.className = 'photon';
-        p.style.left = '-10px';
-        p.style.top = '-10px';
-        document.getElementById('chloroplast-body').appendChild(p);
-        
-        setTimeout(() => {
-            p.style.opacity = '1';
-            p.style.transition = 'all 1s linear';
-            p.style.transform = 'translate(180px, 150px)'; // To granum 1
-        }, 100);
-        
-        setTimeout(() => { p.remove(); }, 1200);
-    }
-
-    async advanceMolecularPhase() {
-        const title = document.getElementById('v-title');
-        const desc = document.getElementById('v-desc');
+    async nextMolecularStep() {
+        const t = document.getElementById('v-title');
+        const d = document.getElementById('v-desc');
         const btn = document.getElementById('btn-next-phase');
 
-        if(this.molecularPhase === 0) {
-            title.textContent = "The Chloroplast";
-            desc.textContent = "Inside the plant cell leaves are chloroplasts. Inside them are stacks of disc-like structures called Thylakoids (collectively called Grana), surrounded by fluid called the Stroma.";
+        if(this.mStep === 0) {
+            t.textContent = "Thylakoid Phase";
+            const txt = "Welcome to the chloroplast. These green stacks are Thylakoids, where photolysis splits water into oxygen.";
+            document.getElementById('g1').style.opacity = 1;
+            document.getElementById('g2').style.opacity = 1;
+            d.textContent = txt;
+            await this.speak(txt);
+            this.mStep++;
+        } else if(this.mStep === 1) {
+            t.textContent = "Calvin Cycle";
+            const txt = "In the stroma, CO2 is fixed using energy to create Glucose. This is the plant's food.";
+            document.getElementById('mol-co2').style.opacity = 1;
+            document.getElementById('mol-h2o').style.opacity = 1;
+            d.textContent = txt;
+            await this.speak(txt);
             
-            document.getElementById('stack-1').style.opacity = '1';
-            document.getElementById('stack-2').style.opacity = '1';
-
-            await this.waitSpeak(desc.textContent);
-            this.molecularPhase++;
-        } 
-        else if (this.molecularPhase === 1) {
-            title.textContent = "Light-Dependent Reactions";
-            desc.textContent = "In the thylakoids, light energy (photons) is absorbed by chlorophyll. This energy splits water molecules (H2O), releasing Oxygen (O2) as a byproduct—these are the bubbles we saw!";
-            
-            let photonInterval = setInterval(() => this.createPhoton(), 800);
-            
+            // Animation for products
             setTimeout(() => {
-                const h2o = document.getElementById('mol-h2o');
-                h2o.style.opacity = '1';
-                h2o.style.transform = 'translateX(200px)'; // Move to thylakoid
-                
-                setTimeout(() => {
-                    h2o.style.opacity = '0';
-                    const o2 = document.getElementById('mol-o2');
-                    o2.style.opacity = '1';
-                    o2.style.transform = 'translateY(-200px)'; // O2 rises
-                }, 2000);
+                document.getElementById('mol-o2').style.opacity = 1;
+                document.getElementById('mol-gl').style.opacity = 1;
+                document.getElementById('mol-gl').style.transform = 'translateY(-100px)';
             }, 1000);
 
-            setTimeout(() => clearInterval(photonInterval), 5000);
-
-            await this.waitSpeak(desc.textContent);
-            this.molecularPhase++;
-        }
-        else if (this.molecularPhase === 2) {
-            title.textContent = "Energy Transfer";
-            desc.textContent = "The splitting of water also generates energy-rich molecules, specifically ATP and NADPH, which travel from the thylakoids into the stroma.";
-            
-            const atp = document.getElementById('mol-atp');
-            atp.style.opacity = '1';
-            atp.style.transform = 'translateX(200px)';
-
-            await this.waitSpeak(desc.textContent);
-            this.molecularPhase++;
-        }
-        else if (this.molecularPhase === 3) {
-            title.textContent = "Calvin Cycle (Light-Independent)";
-            desc.textContent = "In the stroma, the Calvin Cycle uses the ATP and carbon dioxide (CO2 from the bicarbonate we added) to build glucose, the plant's food.";
-            
-            btn.textContent = "FINISH LAB";
-            
-            document.getElementById('calvin-cycle').style.opacity = '1';
-            document.getElementById('mol-co2').style.opacity = '1';
-            
-            setTimeout(() => {
-                document.getElementById('mol-atp').style.opacity = '0'; // consumed
-                document.getElementById('mol-co2').style.transform = 'translate(-100px, 80px)'; // enter cycle
-                
-                // Spin cycle
-                document.getElementById('calvin-cycle').animate([
-                    { transform: 'rotate(0deg)' },
-                    { transform: 'rotate(360deg)' }
-                ], { duration: 2000, iterations: 1 });
-
-                setTimeout(() => {
-                    document.getElementById('mol-co2').style.opacity = '0'; // consumed
-                    document.getElementById('mol-glucose').style.opacity = '1';
-                    document.getElementById('mol-glucose').style.transform = 'translateY(-100px)';
-                }, 2000);
-
-            }, 1000);
-
-            await this.waitSpeak(desc.textContent);
-            this.molecularPhase++;
-        }
-        else {
-            alert("Botany Lab Complete: You have mastered the mechanics of Photosynthesis!");
+            btn.textContent = "Finish Lab";
+            this.mStep++;
+        } else {
+            alert("Lab Module Complete!");
             location.reload();
         }
     }
+}
 
-    waitSpeak(text) {
-        return new Promise(resolve => {
-            this.speak(text, resolve);
-        });
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(e => console.log(e));
+    } else {
+        if (document.exitFullscreen) document.exitFullscreen();
     }
 }
 
-// Initialize Lab
+// Global Instance
 const lab = new PhotosynthesisLab();
 </script>
 </body>

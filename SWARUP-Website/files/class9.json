@@ -65,44 +65,24 @@
           ],
           "practice": [
             {
-              "q": "Define distance and displacement. How do they differ?",
-              "a": "Distance is the length of the actual path travelled by a moving object between two points.<br>Displacement is the shortest (minimum) distance between the starting and finishing points, taken along with direction.<br>Distance is always positive and can never decrease, while displacement can be zero even when distance travelled is not zero, and it has a direction associated with it."
+              "q": "Write the three equations of motion.",
+              "a": "v = u + at | s = ut + ½at² | v² = u² + 2as"
             },
             {
-              "q": "Define acceleration and state its SI unit.",
-              "a": "Acceleration is the rate of change of velocity of a moving object, i.e.<br>Acceleration = (Change in velocity)/(Time taken).<br>If initial velocity is u and after time t it becomes v, then a = (v-u)/t.<br>Its SI unit is metre per second square (m/s²)."
+              "q": "What is the SI unit of force and how is it defined?",
+              "a": "The SI unit is Newton (N). One Newton is the force that produces an acceleration of 1 m/s² in a body of mass 1 kg."
             },
             {
-              "q": "State Newton's first law of motion.",
-              "a": "Newton's first law of motion states that an object continues to remain at rest or in a state of uniform motion along a straight line unless an external unbalanced force acts on it.<br>It is also called the law of inertia."
+              "q": "State Newton's Third Law and give one example.",
+              "a": "Every action has an equal and opposite reaction. Example: Rocket propulsion — gases are expelled downward and the rocket moves upward."
             },
             {
-              "q": "What is momentum? Give its formula and unit.",
-              "a": "Momentum is the product of the mass and velocity of an object, P = m × v.<br>It is a vector quantity, having the same direction as the velocity.<br>Its SI unit is kg m/s."
+              "q": "What does the area under a velocity-time graph represent?",
+              "a": "The area under a velocity-time graph represents the distance travelled by the object during that time."
             },
             {
-              "q": "Define uniform circular motion.",
-              "a": "When an object moves with a constant speed along a circular path, its motion is called uniform circular motion.<br>Although the speed remains constant, the direction of velocity keeps changing continuously, so the motion is accelerated."
-            },
-            {
-              "q": "State and explain Newton's third law of motion with an example.",
-              "a": "Newton's third law states that every action force has an equal and opposite reaction force which acts simultaneously.<br>Forces always occur in pairs;<br>when one object exerts a force on a second object, the second object exerts an equal and opposite force on the first.<br>For example, when a bullet is fired from a gun, the gun exerts a forward force (action) on the bullet, and the bullet exerts an equal backward force (reaction) on the gun, causing the gun to recoil."
-            },
-            {
-              "q": "Derive the first equation of motion (v = u + at) using the velocity-time graph method.",
-              "a": "Consider a velocity-time graph where an object starts with initial velocity u (point D) and after time t reaches final velocity v (point B), moving with uniform acceleration a.<br>From the graph, acceleration a = (change in velocity)/time = (OC - OD)/t = CD/t, so CD = at.<br>Since v = CD + OD (as AB = CD and AE = OD), we get v = at + u, i.e. v = u + at.<br>This is the first equation of motion, giving the relation between velocity and time."
-            },
-            {
-              "q": "State the law of conservation of momentum and give one example from everyday life.",
-              "a": "The law of conservation of momentum states that when no external force acts on two interacting objects, their total momentum before the interaction is equal to their total momentum after the interaction;<br>the total momentum remains constant.<br>Example: when a bullet is fired from a gun, before firing the total momentum of the gun-bullet system is zero (both at rest).<br>After firing, the forward momentum of the bullet is balanced by an equal and opposite backward momentum of the recoiling gun, so the total momentum remains zero."
-            },
-            {
-              "q": "Derive the second equation of motion s = ut + ½at² using the graphical method.",
-              "a": "Consider the velocity-time graph of an object moving with uniform acceleration a, starting with initial velocity u at time 0, reaching velocity v at time t.<br>The distance covered s is given by the area under the velocity-time graph, which is the area of quadrangle DOEB.<br>This area = area of rectangle DOEA + area of triangle DAB.<br>Area of rectangle DOEA = OE × AE = t × u = ut.<br>Area of triangle DAB = ½ × AB × DA = ½ × at × t = ½at² (since AB = at from the first equation, and DA = t).<br>Therefore, s = ut + ½at².<br>This is Newton's second equation of motion, relating displacement and time."
-            },
-            {
-              "q": "Solve: An object of mass 16 kg is moving with an acceleration of 3 m/s². Calculate the applied force. If the same force is applied on an object of mass 24 kg, how much will be the acceleration?",
-              "a": "Given: m₁ = 16 kg, a₁ = 3 m/s², m₂ = 24 kg.<br>Force applied, F = m₁ × a₁ = 16 × 3 = 48 N.<br>When the same force F = 48 N acts on mass m₂ = 24 kg: a₂ = F/m₂ = 48/24 = 2 m/s².<br>Thus, the applied force is 48 N, and the acceleration produced in the 24 kg object is 2 m/s²."
+              "q": "Differentiate between balanced and unbalanced forces.",
+              "a": "Balanced forces do not change the motion of an object. Unbalanced forces produce a net force that changes the speed or direction of motion."
             }
           ]
         },
@@ -164,44 +144,24 @@
           ],
           "practice": [
             {
-              "q": "Define work done by a force and give its SI unit.",
-              "a": "Work is said to be done when a force applied on an object causes displacement of the object.<br>Work = Force × displacement in the direction of the force (W = F × s).<br>The SI unit of work is the joule (J);<br>1 joule of work is done when a force of 1 newton displaces an object through 1 metre in the direction of the force."
+              "q": "Write the formula for potential energy and explain each term.",
+              "a": "PE = mgh, where m = mass of object, g = acceleration due to gravity and h = height above the ground."
             },
             {
-              "q": "Define kinetic energy and write its formula.",
-              "a": "The energy possessed by an object due to its motion is called kinetic energy.<br>It equals the work done to bring the object from rest to its current velocity.<br>Kinetic energy, K.E. = ½mv², where m is the mass and v is the velocity of the object."
+              "q": "Under what conditions is work done equal to zero?",
+              "a": "Work is zero when there is no displacement, or when the force acts perpendicular to the direction of motion."
             },
             {
-              "q": "State the law of conservation of energy.",
-              "a": "The law of conservation of energy states that energy can neither be created nor destroyed;<br>it can only be converted from one form to another.<br>Thus, the total amount of energy in the universe remains constant."
+              "q": "What is the difference between positive work and negative work?",
+              "a": "Positive work is done when force and displacement are in the same direction. Negative work is done when force acts opposite to displacement (e.g. friction)."
             },
             {
-              "q": "Define power and state its SI unit.",
-              "a": "Power is the rate at which work is done, Power = Work done/Time taken (P = W/t).<br>The SI unit of power is the watt (W);<br>1 watt = 1 joule/1 second.<br>A larger commercial unit is the kilowatt-hour, used to measure electrical energy consumption."
+              "q": "Why is no machine 100% efficient?",
+              "a": "Because some energy is always lost as heat due to friction between the moving parts of the machine."
             },
             {
-              "q": "When is the work done by a force said to be zero?",
-              "a": "Work done by a force is zero when the applied force does not cause any displacement of the object, or when the force and displacement are perpendicular to each other (angle θ = 90°), since W = Fs cos θ and cos 90° = 0."
-            },
-            {
-              "q": "Derive the formula for potential energy of an object of mass m raised to a height h.",
-              "a": "To raise an object of mass m to a height h against gravity, a force equal to mg must be applied against the gravitational force.<br>The work done in raising the object, W = Force × displacement = mg × h = mgh.<br>Since this work gets stored in the object as potential energy due to its position, the potential energy P.E. = mgh."
-            },
-            {
-              "q": "Explain, with an example, how energy gets transformed from one form to another.",
-              "a": "Energy can change from one form into another while the total energy remains constant, according to the law of conservation of energy.<br>For example, in an electric fan, electrical energy is converted into mechanical (kinetic) energy of the rotating blades and some heat energy.<br>Similarly, when firecrackers explode, the chemical energy stored in them is converted into light, sound and heat energy.<br>Such transformation of energy takes place in most machines and natural processes."
-            },
-            {
-              "q": "Prove that the total energy of a freely falling object remains constant throughout its fall.",
-              "a": "Consider an object of mass m falling freely from height h.<br>At the top (point A), it is at rest so K.E. = 0 and P.E. = mgh;<br>total energy = mgh.<br>At an intermediate point B, having fallen a distance x, using v² = u² + 2as, velocity vB² = 2gx, so K.E. = mgx, and P.E. = mg(h-x);<br>total energy = mgx + mgh - mgx = mgh.<br>At the ground (point C), velocity vC² = 2gh, so K.E. = mgh and P.E. = 0 (height = 0);<br>total energy = mgh.<br>Thus, at all points A, B and C, the total energy (P.E. + K.E.) remains equal to mgh, proving that total mechanical energy is conserved during free fall."
-            },
-            {
-              "q": "Derive the expression for kinetic energy of an object of mass m moving with velocity v.",
-              "a": "Consider a stationary object of mass m (initial velocity u = 0) which starts moving due to an applied force F, producing acceleration a.<br>After time t, its velocity becomes v, and its displacement is s.<br>Work done on the object, W = F × s.<br>By Newton's second law, F = ma.<br>By the second equation of motion, since u = 0, s = ½at².<br>So W = ma × ½at² = ½m(at)².<br>By the first equation of motion, since u = 0, v = at, so v² = (at)².<br>Therefore W = ½mv².<br>Since the kinetic energy gained equals the work done on the object, K.E. = ½mv²."
-            },
-            {
-              "q": "Solve: Swaralee takes 20 s to carry a bag weighing 20 kg to a height of 5 m. How much power has she used? (g = 9.8 m/s²)",
-              "a": "Given: m = 20 kg, h = 5 m, t = 20 s, g = 9.8 m/s².<br>Force required, F = mg = 20 × 9.8 = 196 N.<br>Work done, W = F × s = 196 × 5 = 980 J.<br>Power, P = W/t = 980/20 = 49 W.<br>Thus, Swaralee used 49 watts of power to carry the bag to the height of 5 m in 20 seconds."
+              "q": "A device does 500 J of work in 10 seconds. Calculate its power.",
+              "a": "P = W/t = 500 ÷ 10 = 50 Watts."
             }
           ]
         },
@@ -262,44 +222,24 @@
           ],
           "practice": [
             {
-              "q": "Define electric current and state its SI unit.",
-              "a": "Electric current is the rate of flow of charge through a conductor.<br>If charge Q flows through a conductor in time t, current I = Q/t.<br>The SI unit of current is the ampere (A);<br>one ampere current flows when one coulomb of charge passes through a conductor in one second."
+              "q": "What is the difference between a fuse and an MCB?",
+              "a": "A fuse melts and must be replaced after use. An MCB is an automatic device that can be reset and reused after tripping."
             },
             {
-              "q": "State Ohm's law.",
-              "a": "Ohm's law states that if the physical state of a conductor (length, area of cross-section, temperature and material) remains constant, the current (I) flowing through it is directly proportional to the potential difference (V) applied between its two ends.<br>Thus V = IR, where R is the resistance of the conductor."
+              "q": "Write Ohm's Law and state its condition.",
+              "a": "V = IR. Condition: The temperature of the conductor must remain constant."
             },
             {
-              "q": "Define resistance and state its unit.",
-              "a": "Resistance is the property of a conductor that opposes the flow of current through it, caused by collisions of moving electrons with atoms and ions in the conductor.<br>Its SI unit is the ohm (Ω);<br>a conductor has a resistance of one ohm if a current of one ampere flows through it when a potential difference of one volt is applied across its ends."
+              "q": "What is a short circuit and how does it occur?",
+              "a": "A short circuit occurs when the live wire comes into direct contact with the neutral wire, causing a sudden very large current that can damage appliances or cause fire."
             },
             {
-              "q": "Distinguish between conductors and insulators.",
-              "a": "Conductors are substances having very low resistance, through which current flows easily, e.g. copper, aluminium.<br>Insulators (or bad conductors) are substances having extremely high resistance, through which current cannot flow, e.g. rubber, glass, plastic."
+              "q": "Name three applications of the heating effect of electric current.",
+              "a": "Electric iron, electric heater and electric kettle."
             },
             {
-              "q": "What is the function of a fuse wire in a domestic electric circuit?",
-              "a": "A fuse wire is connected in series in a domestic circuit to protect appliances.<br>It is made of a material with a low melting point.<br>If the current increases excessively due to a fault, the fuse wire heats up and melts, breaking the circuit and stopping the flow of current, thereby protecting the appliances from damage."
-            },
-            {
-              "q": "Derive the formula for effective resistance when resistors are connected in series.",
-              "a": "When resistors R1, R2 and R3 are connected in series, the same current I flows through each.<br>If V1, V2, V3 are the potential differences across them, the total potential difference V = V1 + V2 + V3.<br>By Ohm's law, V1 = IR1, V2 = IR2, V3 = IR3, and if RS is the effective (series) resistance, V = IRS.<br>Substituting, IRS = IR1 + IR2 + IR3, so RS = R1 + R2 + R3.<br>In general, for n resistors in series, RS = R1 + R2 + ... + Rn."
-            },
-            {
-              "q": "Explain resistivity and state the factors on which the resistance of a conductor depends.",
-              "a": "The resistance R of a conductor at a given temperature depends directly on its length L and inversely on its area of cross-section A: R ∝ L/A, so R = ρL/A, where ρ (rho) is the constant of proportionality called resistivity.<br>Resistivity is a specific property of the material of the conductor (different materials have different resistivity) and does not depend on the conductor's dimensions.<br>The SI unit of resistivity is ohm-metre (Ω m)."
-            },
-            {
-              "q": "Explain, with reasoning, why domestic electrical appliances are connected in parallel rather than in series.",
-              "a": "In a domestic circuit, appliances are connected in parallel so that (1) the potential difference across each appliance remains the same (equal to the supply voltage, about 220 V), allowing each appliance to work at its rated voltage;<br>(2) if one appliance stops working or is switched off, the circuit for other appliances is not broken, since each has an independent path;<br>and (3) each appliance can be operated independently with its own switch.<br>If appliances were connected in series, all would need the same current, the voltage would be divided amongst them, and if one failed the entire circuit would break."
-            },
-            {
-              "q": "Derive the formula for effective resistance when resistors are connected in parallel.",
-              "a": "When resistors R1, R2 and R3 are connected in parallel between points C and D, the potential difference V across each is the same, but the currents through them, I1, I2, I3, may differ.<br>The total current I = I1 + I2 + I3.<br>By Ohm's law, I1 = V/R1, I2 = V/R2, I3 = V/R3, and I = V/RP, where RP is the effective (parallel) resistance.<br>Substituting, V/RP = V/R1 + V/R2 + V/R3, so 1/RP = 1/R1 + 1/R2 + 1/R3.<br>In general, for n resistors in parallel, 1/RP = 1/R1 + 1/R2 + ... + 1/Rn.<br>The effective resistance in parallel is always smaller than the smallest individual resistance."
-            },
-            {
-              "q": "Solve: Three resistors having resistances of 5 Ω, 10 Ω and 30 Ω are connected in parallel, and a potential difference of 12 V is applied across them. Find the current through each resistor, the total current, and the effective resistance of the circuit.",
-              "a": "Given: R1 = 5 Ω, R2 = 10 Ω, R3 = 30 Ω, V = 12 V.<br>Current through R1: I1 = V/R1 = 12/5 = 2.4 A Current through R2: I2 = V/R2 = 12/10 = 1.2 A Current through R3: I3 = V/R3 = 12/30 = 0.4 A Total current, I = I1 + I2 + I3 = 2.4 + 1.2 + 0.4 = 4.0 A Effective resistance: 1/RP = 1/5 + 1/10 + 1/30 = 6/30 + 3/30 + 1/30 = 10/30 = 1/3, so RP = 3 Ω. Thus, the currents are 2.4 A, 1.2 A and 0.4 A, the total current is 4 A, and the effective resistance is 3 Ω."
+              "q": "State Fleming's Right-Hand Thumb Rule.",
+              "a": "When the thumb of the right hand points in the direction of current, the curled fingers indicate the direction of the magnetic field around the conductor."
             }
           ]
         },
@@ -361,44 +301,24 @@
           ],
           "practice": [
             {
-              "q": "State the law of conservation of matter.",
-              "a": "The law of conservation of matter, given by Antoine Lavoisier in 1785, states that there is no rise or drop in the mass of matter during a chemical reaction;<br>the total mass of the reactants is equal to the total mass of the products formed."
+              "q": "A stone has a mass of 200 g and displaces 80 cm³ of water. Calculate its density.",
+              "a": "Density = Mass ÷ Volume = 200 ÷ 80 = 2.5 g/cm³."
             },
             {
-              "q": "State the law of constant proportion.",
-              "a": "The law of constant proportion, given by J.<br>L.<br>Proust in 1794, states that the proportion by mass of the constituent elements in different samples of a compound is always fixed, irrespective of the source or method of preparation of the compound.<br>For example, the ratio of hydrogen to oxygen by mass in water obtained from any source is always 1:8."
+              "q": "Differentiate between homogeneous and heterogeneous mixtures with examples.",
+              "a": "Homogeneous: uniform composition throughout. Example: salt solution. Heterogeneous: non-uniform composition. Example: sand and water."
             },
             {
-              "q": "What is meant by 'mole'? Give its SI unit.",
-              "a": "A mole is that quantity of a substance whose mass in grams is numerically equal to the molecular mass of that substance in Daltons (u).<br>Its SI unit is 'mol'. For example, since the molecular mass of oxygen is 32 u, one mole of oxygen has a mass of 32 g."
+              "q": "Why is intermolecular force strongest in solids?",
+              "a": "In solids, particles are very closely packed together, which results in very strong intermolecular forces of attraction."
             },
             {
-              "q": "Define valency of an element.",
-              "a": "Valency is the capacity of an element to combine with other elements, indicated by a specific number.<br>It is the number of electrons that an atom of an element gives away or takes up (or shares) while forming a chemical bond with another atom."
+              "q": "Name two measuring instruments and state what they measure.",
+              "a": "Metre scale — measures length. Measuring cylinder — measures volume of liquids."
             },
             {
-              "q": "What are radicals? Give one example each of a basic and an acidic radical.",
-              "a": "Radicals are the charged constituents (cations and anions) of an ionic compound that take part independently in chemical reactions.<br>Cations (positively charged) are called basic radicals, e.g.<br>Na⁺;<br>anions (negatively charged) are called acidic radicals, e.g.<br>Cl⁻."
-            },
-            {
-              "q": "Explain Avogadro's number with an example.",
-              "a": "The number of molecules present in one mole of any substance is a constant, called Avogadro's number, denoted NA, with a value of 6.022 × 10²³.<br>Just as a dozen means 12 items, a mole means 6.022 × 10²³ particles.<br>For example, one mole of water (18 g of water) contains 6.022 × 10²³ molecules of water;<br>similarly, 32 g of oxygen (one mole) also contains 6.022 × 10²³ molecules, even though the mass differs from that of water."
-            },
-            {
-              "q": "Explain with an example how the molecular mass of a compound is calculated.",
-              "a": "Molecular mass is the sum of the atomic masses of all the atoms present in one molecule of a substance, expressed in Dalton (u).<br>For example, for water (H2O): there are 2 hydrogen atoms (atomic mass 1 each) and 1 oxygen atom (atomic mass 16).<br>Molecular mass of H2O = (2 × 1) + (1 × 16) = 2 + 16 = 18 u."
-            },
-            {
-              "q": "Explain the steps for writing the chemical formula of a compound using the cross-multiplication method, with sodium sulphate as an example.",
-              "a": "Step 1: Write the symbols of the basic radical (cation) on the left and acidic radical (anion) on the right: Na, SO4.<br>Step 2: Write the valency of each radical below it: Na has valency 1, SO4 has valency 2.<br>Step 3: Cross-multiply the valencies, i.e. the valency of one radical becomes the subscript of the other.<br>Step 4: Write the resulting formula: Na2SO4 (sodium sulphate)."
-            },
-            {
-              "q": "Explain how the law of constant proportion was verified experimentally using copper oxide obtained from two different sources.",
-              "a": "Two samples of copper oxide (CuO) were prepared by different methods: one by decomposition of copper carbonate and another by decomposition of copper nitrate.<br>From each sample, 8 g of copper oxide was treated with hydrogen gas;<br>both samples gave 6.4 g of copper and 1.8 g of water.<br>Since water (H2O) has hydrogen and oxygen in the ratio 1:8 by mass, 1.8 g water contains (8×1.8)/9 = 1.6 g of oxygen.<br>This oxygen came from the 8 g copper oxide, so the 8 g copper oxide contained 6.4 g copper and 1.6 g oxygen, giving a mass ratio of Cu:O = 6.4:1.6 = 4:1.<br>This matches the ratio calculated from the molecular formula CuO using atomic masses (Cu = 63.5, O = 16), which gives 63.5:16 ≈ 4:1.<br>Since both samples, obtained differently, gave the same proportion, the law of constant proportion is verified."
-            },
-            {
-              "q": "Deduce the number of molecules present in 66 g of carbon dioxide (CO2). (Molecular mass of CO2 = 44, Avogadro's number = 6.022 × 10²³)",
-              "a": "Given: Mass of CO2 = 66 g, Molecular mass of CO2 = 44 u.<br>Number of moles, n = Mass in grams / Molecular mass = 66/44 = 1.5 mol.<br>Since 1 mole of any substance contains 6.022 × 10²³ molecules, Number of molecules in 1.5 mol CO2 = 1.5 × 6.022 × 10²³ = 9.033 × 10²³ molecules.<br>Thus, 66 g of CO2 contains 9.033 × 10²³ molecules."
+              "q": "What is the difference between organic and inorganic compounds?",
+              "a": "Organic compounds mainly contain carbon (e.g. glucose). Inorganic compounds do not mainly contain carbon (e.g. common salt, water)."
             }
           ]
         },
@@ -457,44 +377,24 @@
           ],
           "practice": [
             {
-              "q": "Define an acid and a base according to the Arrhenius theory.",
-              "a": "According to the Arrhenius theory, an acid is a substance which on dissolving in water gives rise to H⁺ ion as the only cation, e.g.<br>HCl.<br>A base is a substance which on dissolving in water gives rise to OH⁻ ion as the only anion, e.g.<br>NaOH."
+              "q": "Write the general equation for a neutralization reaction.",
+              "a": "Acid + Base → Salt + Water. Example: HCl + NaOH → NaCl + H₂O."
             },
             {
-              "q": "What is meant by the pH of a solution?",
-              "a": "pH (power of hydrogen) is a scale, ranging from 0 to 14, used to express the concentration of H⁺ ions in a solution.<br>Pure water has a pH of 7, indicating a neutral solution.<br>A pH less than 7 indicates an acidic solution, and a pH greater than 7 indicates a basic solution."
+              "q": "What colour does litmus paper show in an acidic and a basic solution?",
+              "a": "In acid: blue litmus turns red. In base: red litmus turns blue."
             },
             {
-              "q": "What is meant by neutralization reaction? Give one example.",
-              "a": "A neutralization reaction is a reaction between an acid and a base to form a salt and water.<br>For example: HCl + NaOH → NaCl + H2O, in which hydrochloric acid reacts with sodium hydroxide to form sodium chloride (salt) and water."
+              "q": "What is the colour change of phenolphthalein and methyl orange in acids and bases?",
+              "a": "Phenolphthalein: colourless in acid, pink in base. Methyl orange: red in acid, yellow in base."
             },
             {
-              "q": "What is water of crystallization? Give one example.",
-              "a": "Water of crystallization is the fixed number of water molecules chemically bound within the crystal structure of certain salts, present in a definite proportion in the chemical formula.<br>For example, blue vitriol (crystalline copper sulphate) is represented as CuSO4.5H2O, containing 5 molecules of water of crystallization."
+              "q": "Why are antacids used?",
+              "a": "Antacids contain weak bases that neutralize excess acid in the stomach, providing relief from acidity."
             },
             {
-              "q": "What is electrolysis?",
-              "a": "Electrolysis is the decomposition of a solute in a solution (or a molten compound) into its constituent ions/elements by passing an electric current through it.<br>It involves two processes occurring simultaneously: a cathode reaction and an anode reaction."
-            },
-            {
-              "q": "Distinguish between strong and weak acids with examples.",
-              "a": "A strong acid dissociates almost completely in its aqueous solution, giving a large concentration of H⁺ ions and the corresponding acidic radical, e.g.<br>HCl, HNO3, H2SO4.<br>A weak acid dissociates only partially in its aqueous solution;<br>it contains a small proportion of H⁺ ions along with a large proportion of undissociated acid molecules, e.g.<br>CH3COOH (acetic acid), carbonic acid (H2CO3)."
-            },
-            {
-              "q": "Explain the classification of salts into acidic, basic and neutral types based on the nature of the acid and base used to form them.",
-              "a": "A neutral salt is formed by the neutralization of a strong acid with a strong base;<br>its aqueous solution has a pH equal to 7, e.g.<br>NaCl (from HCl and NaOH).<br>An acidic salt is formed by the neutralization of a strong acid with a weak base;<br>its aqueous solution has a pH less than 7, e.g. ammonium chloride (from HCl and NH4OH).<br>A basic salt is formed by the neutralization of a weak acid with a strong base;<br>its aqueous solution has a pH greater than 7, e.g. sodium acetate (from acetic acid and NaOH)."
-            },
-            {
-              "q": "Explain electrolysis of water with the help of the electrode reactions.",
-              "a": "When electric current is passed through slightly acidified or salted water using two electrodes, gas bubbles form at both electrodes: hydrogen gas is released at the cathode and oxygen gas at the anode, in a volume ratio of 2:1 respectively.<br>The electrode reactions are: Cathode reaction: 2H2O(l) + 2e⁻ → H2(g) + 2OH⁻(aq);<br>Anode reaction: 2H2O(l) → O2(g) + 4H⁺(aq) + 4e⁻. This shows that pure water itself dissociates to a very small extent, but the presence of a small amount of salt or acid increases its conductivity enough to allow visible electrolysis of water into its constituent elements, hydrogen and oxygen."
-            },
-            {
-              "q": "Explain, with a chemical equation, what happens when dilute NaOH solution is added drop by drop to dilute HCl solution, and why the pH of the solution changes during this process.",
-              "a": "Both HCl and NaOH dissociate almost completely in their aqueous solutions: HCl → H⁺ + Cl⁻ and NaOH → Na⁺ + OH⁻. When NaOH solution is added drop by drop to the HCl solution, the added OH⁻ ions combine with the H⁺ ions present in excess to form un-ionized water molecules: H⁺ + OH⁻ → H2O.<br>Since water dissociates only to a very small extent, this removes H⁺ ions from solution, so the concentration of H⁺ ions keeps decreasing and the pH of the solution keeps increasing (moving from acidic towards neutral, pH 7).<br>The overall reaction is HCl + NaOH → NaCl + H2O.<br>When just enough NaOH has been added to react completely with all the HCl, the resulting solution contains only Na⁺ and Cl⁻ ions (i.e. the neutral salt NaCl) and water;<br>this stage, where the pH becomes 7, is called the neutralization point.<br>This is why the process is called a neutralization reaction."
-            },
-            {
-              "q": "Describe, with the help of a labelled activity, how you would verify experimentally whether a given salt solution is acidic, basic or neutral, and classify sodium chloride, ammonium chloride and sodium bicarbonate accordingly.",
-              "a": "Apparatus/Materials: Beakers, sodium chloride, ammonium chloride, sodium bicarbonate, distilled water, pH paper (or universal indicator solution), glass rod.<br>Procedure: Prepare separate 10 mL aqueous solutions of 1 g each of sodium chloride, ammonium chloride and sodium bicarbonate in water.<br>Using a glass rod, place a drop of each solution on a separate strip of pH paper and compare the colour developed with the standard pH colour chart to note the pH value of each.<br>Observation and Classification: Sodium chloride (NaCl) is formed from a strong acid (HCl) and a strong base (NaOH);<br>its solution shows a pH of about 7, so it is a neutral salt.<br>Ammonium chloride (NH4Cl) is formed from a strong acid (HCl) and a weak base (NH4OH);<br>its solution shows a pH less than 7, so it is an acidic salt.<br>Sodium bicarbonate (NaHCO3) is formed from a weak acid (H2CO3) and a strong base (NaOH);<br>its solution shows a pH greater than 7, so it is a basic salt.<br>Conclusion: The nature (acidic/basic/neutral) of a salt's aqueous solution depends on the relative strengths of the acid and base from which the salt is formed."
+              "q": "How does lime help acidic soil?",
+              "a": "Lime (calcium hydroxide) is a base that neutralizes excess acid in the soil, making it suitable for farming."
             }
           ]
         },
@@ -554,44 +454,24 @@
           ],
           "practice": [
             {
-              "q": "What is the basis for classification of plants into cryptogams and phanerogams?",
-              "a": "Plants are classified as cryptogams or phanerogams depending on the presence or absence of flowers, fruits and seeds.<br>Cryptogams (Thallophyta, Bryophyta, Pteridophyta) reproduce by spores and their reproductive organs are not visible.<br>Phanerogams have visible reproductive structures and produce seeds."
+              "q": "List the main groups of cryptogams and give one example of each.",
+              "a": "Thallophyta (e.g. algae), Bryophyta (e.g. moss), Pteridophyta (e.g. fern)."
             },
             {
-              "q": "Give two characteristics and two examples of Bryophyta.",
-              "a": "Bryophytes grow in moist soil but need water for reproduction, hence called the 'amphibians' of the plant kingdom;<br>they are thalloid, multicellular, autotrophic, and lack true roots, stem and leaves.<br>Examples: Moss (Funaria), Marchantia."
+              "q": "What is the difference between gymnosperms and angiosperms?",
+              "a": "Gymnosperms have seeds not enclosed in fruits (e.g. pine). Angiosperms have seeds enclosed in fruits (e.g. mango)."
             },
             {
-              "q": "Distinguish between gymnosperms and angiosperms (any two points).",
-              "a": "Gymnosperms bear seeds that are not enclosed in a fruit (naked seeds), e.g.<br>Cycas, Pinus.<br>Angiosperms bear flowers which develop into fruits, and their seeds are enclosed within the fruit, e.g. mango, mustard."
+              "q": "What is the function of phloem?",
+              "a": "Phloem transports food (glucose) prepared in leaves to all other parts of the plant."
             },
             {
-              "q": "What are algae? Give two examples.",
-              "a": "Algae are plants of division Thallophyta that grow mainly in water, lack specific parts like root-stem-leaves-flowers, but are autotrophic due to chlorophyll.<br>Examples: Spirogyra, Ulothrix."
+              "q": "How do monocots and dicots differ in root type and leaf venation?",
+              "a": "Monocots have fibrous roots and parallel venation. Dicots have tap roots and reticulate venation."
             },
             {
-              "q": "Distinguish between monocotyledonous and dicotyledonous plants (any two points).",
-              "a": "Dicotyledonous plants have seeds with two cotyledons, a well-developed tap root system, and reticulate leaf venation, e.g. banyan tree.<br>Monocotyledonous plants have seeds with a single cotyledon, fibrous roots, and parallel leaf venation, e.g. maize."
-            },
-            {
-              "q": "Explain the characteristics of Pteridophyta with examples.",
-              "a": "Plants of division Pteridophyta have well-developed roots, stem and leaves, with separate conducting tissues for water and food, but they do not bear flowers or fruits.<br>They reproduce with spores formed on the back surface of their leaves (asexually) and by zygote formation (sexually), and have a well-developed conducting system.<br>Examples include ferns like Nephrolepis, Marsilea, Pteris and Adiantum."
-            },
-            {
-              "q": "Give the criteria used for classification of the plant kingdom, explaining each briefly.",
-              "a": "Plants are classified based on several criteria: (1) presence or absence of specialized organs like root-stem-leaves;<br>(2) presence or absence of separate conducting tissues (xylem and phloem) for water and food;<br>(3) whether the plant bears seeds, and if so, whether the seeds are enclosed within a fruit (angiosperms) or not (gymnosperms);<br>and (4) the number of cotyledons present in the seed, which further divides angiosperms into monocotyledonous and dicotyledonous plants."
-            },
-            {
-              "q": "Write the characteristics of the subkingdom Phanerogams.",
-              "a": "Phanerogams are plants that possess special structures (flowers) for reproduction and produce seeds.<br>After reproduction, seeds containing an embryo and stored food are formed, and this stored food nourishes the embryo during germination.<br>Depending on whether the seeds are enclosed in a fruit or not, phanerogams are further classified into gymnosperms (seeds not covered, e.g.<br>Cycas, Pinus) and angiosperms (seeds covered within fruit, e.g. mustard, mango), the latter being further divided into monocotyledons and dicotyledons."
-            },
-            {
-              "q": "Describe the classification of the Kingdom Plantae with a labelled flow chart, explaining each division briefly.",
-              "a": "Kingdom Plantae is first divided into Cryptogams (reproduce by spores) and Phanerogams (produce seeds).<br>Cryptogams are further divided into: (1) Thallophyta – plants without differentiated root-stem-leaf, mainly aquatic, e.g.<br>Spirogyra, algae;<br>(2) Bryophyta – 'amphibians of the plant kingdom', need water for reproduction, e.g.<br>Moss, Marchantia;<br>(3) Pteridophyta – have well-developed roots, stem, leaves and conducting tissue but no flowers/fruits, reproduce by spores, e.g. ferns.<br>Phanerogams are divided into: (1) Gymnosperms – seeds not enclosed in fruit, e.g.<br>Cycas, Pinus;<br>(2) Angiosperms – seeds enclosed in fruit, further divided into Dicotyledons (two cotyledons, tap root, reticulate venation, e.g. mustard) and Monocotyledons (one cotyledon, fibrous root, parallel venation, e.g. maize).<br>This classification is based on presence of specialized tissues, seed formation, and the covering and number of cotyledons in seeds."
-            },
-            {
-              "q": "Sketch and describe the plant Spirogyra, mentioning its classification, habitat and reproduction.",
-              "a": "Spirogyra is a green alga belonging to division Thallophyta of the plant kingdom.<br>It is a filamentous, multicellular, autotrophic plant found commonly in fresh, stagnant water such as ponds.<br>Its cells are cylindrical and arranged end to end to form long unbranched filaments.<br>Each cell has a cell wall, cytoplasm, and one or more spirally arranged ribbon-like chloroplasts (which give the plant its characteristic spiral appearance under the microscope), along with pyrenoids (starch-storing bodies) and a nucleus.<br>Spirogyra lacks true root, stem and leaves, and does not have specialised conducting tissue.<br>It reproduces asexually by fragmentation of the filament and sexually by a process called conjugation, in which the contents of two cells from adjacent filaments fuse to form a zygospore.<br>Being a member of Thallophyta, it is classified among the cryptogams as its reproductive structures are not visibly differentiated."
+              "q": "Why are pteridophytes called the first vascular plants?",
+              "a": "Because they are the first group of plants to have xylem and phloem for transporting water and food."
             }
           ]
         },
@@ -651,44 +531,24 @@
           ],
           "practice": [
             {
-              "q": "What is a food chain?",
-              "a": "A food chain is the definite sequence of interactions between producers, consumers and saprophytes/decomposers in an ecosystem, showing the transfer of food energy from one organism to another, e.g. grass → grasshopper → frog → snake."
+              "q": "Give an example of a food chain with four trophic levels.",
+              "a": "Grass → Grasshopper → Frog → Snake. (Grass is the producer; grasshopper is primary consumer; frog is secondary; snake is tertiary.)"
             },
             {
-              "q": "What is meant by a trophic level?",
-              "a": "A trophic level is the step or stage at which an organism obtains its food in a food chain.<br>Producers form the first trophic level, herbivores the second, carnivores the third, and so on;<br>the amount of energy decreases at each successive trophic level."
+              "q": "Explain why energy decreases at each trophic level.",
+              "a": "At each trophic level, most energy (about 90%) is lost as heat during life processes. Only 10% is available to the next level."
             },
             {
-              "q": "Define the bio-geo-chemical cycle.",
-              "a": "The cyclical flow of nutrients between biotic (living) and abiotic (non-living) components of an ecosystem, through the biosphere formed by the lithosphere, atmosphere and hydrosphere, is called the bio-geo-chemical cycle.<br>Examples include the carbon cycle, oxygen cycle and nitrogen cycle."
+              "q": "What is the difference between a food chain and a food web?",
+              "a": "A food chain is a single sequence of energy flow. A food web is a network of multiple interconnected food chains."
             },
             {
-              "q": "Why is the flow of energy in an ecosystem said to be 'one way'?",
-              "a": "Energy flows from the sun to producers (plants), then to herbivores, carnivores and decomposers, and is dissipated as heat at each step;<br>no part of this energy is ever returned back to the sun.<br>Hence, unlike nutrients (which cycle), energy flow through an ecosystem is unidirectional, or 'one way'."
+              "q": "Why is the pyramid of energy always upright?",
+              "a": "Because energy always decreases as it moves from one trophic level to the next, giving a pyramid shape that narrows upward."
             },
             {
-              "q": "What is meant by nitrogen fixation?",
-              "a": "Nitrogen fixation is the process of converting atmospheric (free) nitrogen gas into usable compounds like nitrates and nitrites, through atmospheric, industrial or biological processes (such as the action of nitrogen-fixing bacteria)."
-            },
-            {
-              "q": "Explain the difference between a food chain and a food web.",
-              "a": "A food chain is a single, linear sequence showing the transfer of food energy from producers through various levels of consumers, e.g. grass → deer → tiger.<br>A food web is formed when many interconnected food chains overlap in an ecosystem, since an organism may be the prey of, or feed on, several different organisms;<br>hence a food web is a complex, interlinked network rather than a single straight line, and it is more commonly found in nature since organisms usually have multiple food sources."
-            },
-            {
-              "q": "Explain the pyramid of energy in an ecosystem.",
-              "a": "The pyramid of energy represents the amount of energy present at each trophic level of a food chain, with producers at the base and top (apex) consumers at the peak.<br>The quantity of energy (and the number of organisms) decreases progressively from the producer level to the top consumer level, because energy is lost as heat during metabolic processes at each transfer.<br>This pattern of decreasing energy transfer through successive trophic levels is called the pyramid of energy, first proposed by the British scientist Charles Elton in 1927 (hence also called the Eltonian pyramid)."
-            },
-            {
-              "q": "Explain any three important processes involved in the nitrogen cycle.",
-              "a": "1.<br>Nitrogen fixation: conversion of atmospheric nitrogen gas into nitrates and nitrites through atmospheric, industrial or biological processes (e.g. by nitrogen-fixing bacteria). 2.<br>Ammonification: release of ammonia through the decomposition of dead organisms and excretory wastes by decomposer microbes. 3.<br>Nitrification: conversion of ammonia into nitrites and then into nitrates by nitrifying bacteria, making nitrogen available for absorption by plants."
-            },
-            {
-              "q": "Explain the carbon cycle in detail with the help of a diagram/description, mentioning the main biotic and abiotic processes involved.",
-              "a": "The carbon cycle is the continuous circulation and recycling of carbon between the atmosphere and living organisms, and back to the atmosphere after their death.<br>Plants absorb carbon dioxide from the atmosphere and convert it into carbohydrates and other carbon compounds (proteins, fats) through photosynthesis (6CO2 + 12H2O → C6H12O6 + 6H2O + 6O2, using sunlight and chlorophyll).<br>Herbivores obtain this biotic carbon by feeding on plants, and carnivores obtain it by feeding on herbivores, thus passing carbon along the food chain up to apex consumers.<br>All organisms release carbon dioxide back into the atmosphere through respiration (C6H12O6 + 6O2 → 6CO2 + 6H2O + Energy).<br>After death, decomposers (bacteria and fungi) break down the bodies of all organisms, releasing carbon dioxide back into the atmosphere for reuse by plants.<br>Abiotic processes such as combustion of fossil fuels and wood, forest fires, and volcanic activity also release carbon dioxide into the atmosphere.<br>Since carbon moves rapidly between the atmosphere and living organisms compared to its long-term storage in coal, limestone, or petroleum, the carbon cycle is one of the fastest and most important bio-geo-chemical cycles, and its balance is essential for maintaining stable atmospheric carbon dioxide levels."
-            },
-            {
-              "q": "Explain the inter-relationship between the food chain and food web, and discuss why equilibrium is necessary in a food web.",
-              "a": "A food chain is a single sequence of feeding relationships (producer → primary consumer → secondary consumer → apex consumer), while in nature, an ecosystem contains many interconnected food chains, since most organisms feed on more than one type of food source and are, in turn, eaten by more than one predator.<br>When such multiple, interlinked food chains are combined, they form an intricate network called a food web.<br>Thus, a food web can be thought of as a combination of many overlapping food chains, and understanding food webs gives a more realistic picture of energy and matter flow in an ecosystem than a single food chain does.<br>Equilibrium (balance) is necessary in a food web because if the population of any one organism (say, a producer or a particular consumer) increases or decreases drastically, it disturbs the food supply and population of all the organisms dependent on it at other trophic levels, potentially causing a chain reaction that could destabilize the whole ecosystem.<br>For example, if herbivores are eliminated, carnivores dependent on them would starve, while if producers decline, the entire food web collapses.<br>Hence maintaining a balance between the various populations at different trophic levels within a food web is essential for the stability and survival of the ecosystem."
+              "q": "Why are decomposers important for ecological balance?",
+              "a": "Decomposers break down dead organic matter, recycle nutrients back into the soil and clean the environment, maintaining ecological balance."
             }
           ]
         },
@@ -749,44 +609,24 @@
           ],
           "practice": [
             {
-              "q": "What is fermentation? Give one example.",
-              "a": "Fermentation is a process brought about by microbes (such as bacteria or yeast) in which they convert sugars into other substances, such as acids or alcohol, in order to obtain energy.<br>For example, lactobacilli convert lactose (milk sugar) into lactic acid, causing milk to turn into yoghurt."
+              "q": "Give two examples each of useful and harmful microorganisms.",
+              "a": "Useful: Lactobacillus (for curd), Penicillium (for penicillin). Harmful: Vibrio cholerae (cholera), Plasmodium (malaria)."
             },
             {
-              "q": "What is symbiosis? Give an example.",
-              "a": "Symbiosis is a relationship between two organisms in which both benefit from living together.<br>For example, Rhizobium bacteria living in the root nodules of leguminous plants supply the plant with nitrogenous compounds, while in return the plant supplies the bacteria with carbohydrates (energy)."
+              "q": "Name four methods of food preservation.",
+              "a": "Drying, refrigeration, salting and pasteurization."
             },
             {
-              "q": "What are antibiotics? Give one example.",
-              "a": "Antibiotics are substances obtained from certain bacteria and fungi that destroy or prevent the growth of harmful micro-organisms, mainly used to treat bacterial infections.<br>Example: Penicillin, obtained from the fungus Penicillium."
+              "q": "What role do bacteria play in the nitrogen cycle?",
+              "a": "Nitrogen-fixing bacteria convert atmospheric nitrogen into compounds that plants can absorb, enriching the soil."
             },
             {
-              "q": "Distinguish between broad-spectrum and narrow-spectrum antibiotics.",
-              "a": "Broad-spectrum antibiotics are effective against a wide variety of bacteria and are used when the specific pathogen causing a disease is not identified, e.g. ampicillin, tetracycline.<br>Narrow-spectrum antibiotics are used when the specific pathogen is definitely known, e.g. penicillin, gentamycin."
+              "q": "How can microbial diseases be prevented?",
+              "a": "By maintaining personal hygiene, drinking clean water, using proper sanitation and getting vaccinated."
             },
             {
-              "q": "What is budding? Name the organism which reproduces by this method.",
-              "a": "Budding is a method of asexual reproduction in which a small outgrowth (bud) develops on the parent cell and gradually separates to form a new daughter cell/organism.<br>Yeast, a unicellular fungus, reproduces by budding."
-            },
-            {
-              "q": "Explain the uses of Lactobacilli in daily life.",
-              "a": "Lactobacilli, anaerobic bacteria found in fermented milk products, convert lactose into lactic acid (fermentation), causing coagulation of milk proteins.<br>Their uses include: (1) production of various milk products like yoghurt, buttermilk, cheese and shrikhand;<br>(2) fermentation of vegetables for pickles and production of cider, cocoa;<br>(3) treatment of abdominal discomfort along with other useful microbes;<br>(4) preparation of leavened cattle fodder;<br>and (5) production of wine and certain types of bread."
-            },
-            {
-              "q": "Explain the role and importance of Rhizobium bacteria in agriculture.",
-              "a": "Rhizobium bacteria live symbiotically in the root nodules of leguminous plants (like beans, soyabean, groundnut) and fix atmospheric nitrogen into nitrates, nitrites and amino acids, which are supplied to the host plant;<br>in exchange, they receive carbohydrates (energy) from the plant.<br>Because of this nitrogen fixation, leguminous crops are rich in proteins.<br>The use of Rhizobium in agriculture reduces the need for chemical fertilizers, lowering costs for farmers and reducing the adverse environmental effects of excessive fertilizer use.<br>Nowadays, seeds are often coated with rhizobial solution/powder before sowing (rhizobial inoculation) to boost nitrogen supply not just for legumes but for other crops as well."
-            },
-            {
-              "q": "Explain the harmful effects of the bacterium Clostridium, and describe one preventive measure against food poisoning caused by it.",
-              "a": "Clostridium bacteria are rod-shaped, anaerobic bacteria (cannot survive in normal atmospheric oxygen levels) that spoil cooked food, especially during large gatherings/community feasts, causing food poisoning.<br>These bacteria produce bottle-shaped endospores under adverse conditions and release toxins in food that can cause serious illness if consumed.<br>Preventive measures include proper cooking and reheating of food at adequate temperatures, avoiding storage of cooked food for long periods at room temperature, maintaining hygiene while preparing and serving food, and ensuring food is not left exposed to contamination for long durations before consumption."
-            },
-            {
-              "q": "Describe how yeast is used industrially for the production of alcohol and bread, explaining the underlying biological process.",
-              "a": "Yeast (Saccharomyces species) is a unicellular, heterotrophic fungus that obtains nutrition from carbon compounds like sugars.<br>When yeast is grown in a sugar solution, it multiplies rapidly and converts the sugar (carbohydrates) present into ethanol (alcohol) and carbon dioxide gas, through the process called fermentation.<br>This is exploited industrially in two major ways: (1) In alcohol/wine production, molasses (a by-product rich in carbohydrates from sugarcane processing) or grape juice (containing glucose and fructose) is fermented using yeast, producing ethanol as the primary product, which can then be processed into spirits or used directly as wine;<br>ethanol is also used as a smokeless, high-quality fuel, and is blended with petrol/diesel in some countries. (2) In bread-making, yeast is mixed with flour dough containing sugar;<br>as the yeast ferments the sugars, it releases carbon dioxide gas, which gets trapped in the dough as small bubbles, causing the dough to rise and become light, spongy and porous when baked, unlike unleavened dough (like chapati dough) which lacks this fermentation step and therefore does not become spongy.<br>Yeast is thus of great commercial importance in the food, beverage and biofuel industries."
-            },
-            {
-              "q": "Discuss the importance of antibiotics in medicine, explaining the discovery of penicillin, and list precautions to be taken while using antibiotics.",
-              "a": "Antibiotics are carbon compounds obtained from certain bacteria and fungi that destroy or inhibit the growth of harmful micro-organisms, mainly bacteria.<br>Their discovery in the 20th century revolutionized medicine, helping to bring diseases like tuberculosis under control in many countries.<br>Penicillin, the first antibiotic, was discovered accidentally in 1928 by Alexander Fleming, a professor of microbiology at St Mary's Hospital.<br>While studying cultures of Staphylococci bacteria in Petri dishes, he noticed that in one dish, a fungal colony (later identified as Penicillium) had grown, and the area around it was clear of bacteria — the bacteria had been destroyed by a secretion from the fungus.<br>Further research confirmed this secretion (penicillin) killed the bacteria, laying the foundation for antibiotic-based treatment of previously incurable bacterial infections such as pneumonia, scarlet fever, and ear/throat/skin infections.<br>Precautions while using antibiotics: (1) take antibiotics only when prescribed by a doctor;<br>(2) never purchase or self-medicate with antibiotics without a prescription;<br>(3) do not use antibiotics for common viral illnesses like cold or influenza;<br>(4) always complete the full prescribed course, even if you feel better before finishing it, to prevent bacteria developing resistance;<br>(5) never share your prescribed antibiotics with others, since the same antibiotic may not suit their condition and misuse promotes antibiotic resistance."
+              "q": "Why do viruses require living host cells to reproduce?",
+              "a": "Viruses do not have their own cellular machinery for reproduction. They must enter living cells and use the host's cellular machinery to multiply."
             }
           ]
         },
@@ -847,44 +687,24 @@
           ],
           "practice": [
             {
-              "q": "Distinguish between weather and climate.",
-              "a": "Weather refers to the atmospheric conditions at a specific time and place, which can change quickly.<br>Climate is the average of weather-related parameters recorded over many years for a region;<br>it represents the long-term predominant atmospheric condition and changes only slowly."
+              "q": "Name the four main types of pollution and one cause of each.",
+              "a": "Air — vehicle exhaust. Water — industrial waste. Soil — excessive pesticide use. Noise — loudspeakers and traffic."
             },
             {
-              "q": "What is meant by meteorology?",
-              "a": "Meteorology is the science that studies the inter-relationships between the various components of air, natural cycles, geological movements of the earth, and climate.<br>It includes the study of storms, clouds, rainfall, thunder and lightning, and is used to make weather forecasts."
+              "q": "Why is waste segregation important?",
+              "a": "Separating biodegradable and non-biodegradable waste makes recycling more efficient and reduces pollution."
             },
             {
-              "q": "Distinguish between biodegradable and non-biodegradable waste.",
-              "a": "Biodegradable (wet) waste is easily degraded by microbes, e.g. kitchen waste, fruit and vegetable peels, dung;<br>it can be composted to produce manure or biofuel.<br>Non-biodegradable (dry) waste is not easily degraded and requires a long time and special techniques for disposal, e.g. plastic, metal."
+              "q": "How does deforestation contribute to climate change?",
+              "a": "Forests absorb CO₂. When trees are cut, CO₂ levels rise, increasing the greenhouse effect and causing global warming."
             },
             {
-              "q": "State any two principles of solid waste management.",
-              "a": "Reduce: restricting the use of resources to avoid wastage of materials.<br>Reuse: using materials again for the same or a different purpose after their first use, instead of discarding them. (Other principles include Recycle, Refuse, Rethink, Research, Regulation.)"
+              "q": "What is the difference between biodegradable and non-biodegradable waste?",
+              "a": "Biodegradable waste decomposes naturally (food waste, paper). Non-biodegradable waste does not decompose naturally (plastic, glass)."
             },
             {
-              "q": "What is the main objective of first aid?",
-              "a": "The main objective of first aid is to prevent death, prevent deterioration of the victim's health, and begin the process of rehabilitation, by providing immediate emergency care to a disaster/accident victim before professional medical help is available."
-            },
-            {
-              "q": "Explain the importance of weather and climate in our daily life (any three points).",
-              "a": "1.<br>Climate directly influences our basic needs — food, clothing and shelter, as well as occupations of people in a region (e.g. distinct lifestyles of Kashmiri and Rajasthani people). 2.<br>Climatic factors like wind speed/direction and temperature must be considered while constructing runways, seaports, bridges and skyscrapers. 3.<br>Weather and climate influence agricultural production, which is why meteorological study is especially important for an agrarian country like India, helping farmers plan sowing and harvesting."
-            },
-            {
-              "q": "Explain the classification of solid waste with examples of any three categories.",
-              "a": "Solid waste is classified based on its source: (1) Domestic waste – waste food, paper, plastic bags, vegetable peels generated from households;<br>(2) Industrial waste – chemicals, pigments, sludge, ash, metals generated from factories;<br>(3) Biomedical waste – bandages, needles, gloves, expired medicines from hospitals and clinics;<br>other categories include hazardous waste, farm waste, electronic waste, and radioactive waste, each requiring specific disposal methods due to differing environmental and health hazards."
-            },
-            {
-              "q": "Describe the basic principles of first aid represented by the term 'ABC'.",
-              "a": "A – Airway: if the victim has difficulty breathing, tilt the head backward or raise the chin to keep the respiratory passage open.<br>B – Breathing: if breathing has stopped, give artificial ventilation through mouth-to-mouth resuscitation.<br>C – Circulation: if the victim is unconscious, after giving mouth-to-mouth respiration twice, press down hard on the chest with both palms about 15 times, repeating this cycle;<br>this is called cardio-pulmonary resuscitation (CPR) and helps restore blood circulation."
-            },
-            {
-              "q": "Explain in detail the necessity of solid waste management and describe any four of the '7 principles of solid waste management' (7 R's).",
-              "a": "Solid waste management is essential because: (1) it prevents environmental pollution (air, water and soil) and keeps surroundings clean and healthy;<br>(2) it can generate energy (biogas, bioelectricity) and fertilizer (compost) from waste, creating employment opportunities;<br>(3) it reduces the strain on natural resources by promoting recycling and reuse;<br>(4) it improves public health and quality of life and helps maintain ecological balance;<br>improperly managed solid waste has caused calamities (e.g. contributing to the 2005 Mumbai flood).<br>The 7 principles are: Refuse – refusing to use non-degradable materials like plastic and thermocol;<br>Reduce – restricting use of resources and avoiding 'use and throw' items;<br>Reuse – using materials again for the same or another purpose instead of discarding them;<br>Recycle – converting waste materials like paper and glass into new useful products;<br>Rethink – reconsidering our habits and their environmental consequences;<br>Research – researching new ways to reuse materials that are temporarily unused;<br>and Regulation – following laws related to waste management and encouraging others to do so.<br>Following these principles collectively reduces the volume of waste generated, promotes resource conservation, and helps build sustainable communities."
-            },
-            {
-              "q": "Explain the relationship between weather forecasting and disaster management, describing the role of the India Meteorological Department.",
-              "a": "Weather forecasting and disaster management are closely related because accurate, timely predictions of weather events (like cyclones, heavy rainfall, dust storms, heat/cold waves, tsunamis) allow authorities and citizens to take precautionary and preventive measures well in advance, thereby reducing loss of life and property.<br>The India Meteorological Department (IMD), founded in 1875, prepares daily weather maps (published twice every 24 hours) and conducts research on climate instruments, radar and satellite-based predictions, and seismology-related forecasting.<br>IMD communicates crucial predictions about calamities like heavy rainfall, hot/cold waves, dust storms, and tsunamis to various government departments, mass media, and citizens, enabling early warnings and evacuation if needed.<br>It also provides essential weather information to sectors such as aviation, shipping, agriculture, irrigation and marine exploration, whose operations depend heavily on weather conditions.<br>Modern forecasting uses mathematical (dynamic) models analysed by supercomputers, statistical models comparing current data with historical patterns, and a holistic model combining the best-performing parameters from various models, to make monsoon and other predictions as reliable as possible.<br>Thus, meteorology (weather science) forms the scientific backbone of effective disaster preparedness and management, helping minimize the impact of natural calamities on society."
+              "q": "Suggest three ways an individual can help protect the environment.",
+              "a": "Use cloth bags, conserve electricity and properly dispose of waste in segregated bins."
             }
           ]
         },
@@ -944,44 +764,24 @@
           ],
           "practice": [
             {
-              "q": "What is meant by Information Communication Technology (ICT)?",
-              "a": "ICT refers to communication devices and their use, as well as the services provided with their help, for producing, sharing, classifying, storing and managing information.<br>Examples of ICT devices include computers, mobile phones, radio and television."
+              "q": "Give two advantages and two disadvantages of ICT.",
+              "a": "Advantages: saves time, improves communication. Disadvantages: risk of cybercrime, reduced physical activity."
             },
             {
-              "q": "State the two main components of a computer.",
-              "a": "The two main components of a computer are: (1) Hardware – all the electronic and mechanical parts of the computer;<br>(2) Software – the commands given to the computer, the input supplied to it, and the output (results) obtained from it."
+              "q": "Name three input and three output devices.",
+              "a": "Input: keyboard, mouse, scanner. Output: monitor, printer, speakers."
             },
             {
-              "q": "Distinguish between RAM and ROM.",
-              "a": "RAM (Random Access Memory) is created from electronic components and can function only as long as electricity is supplied to it (volatile memory);<br>data can be read from and written to it.<br>ROM (Read Only Memory) stores information that can only be read, and this information cannot be changed (non-volatile memory)."
+              "q": "What is cyber safety and why is it important?",
+              "a": "Cyber safety means using the Internet responsibly. It is important to protect personal data from hackers, cybercriminals and online fraud."
             },
             {
-              "q": "What is an operating system?",
-              "a": "An operating system is a program that provides a means of communication between the computer and the person working on it (e.g.<br>DOS – Disk Operating System).<br>A computer cannot be used without its operating system."
+              "q": "How has ICT changed education?",
+              "a": "ICT enables online learning, digital textbooks, video lessons and instant access to educational resources from anywhere."
             },
             {
-              "q": "Name any two application software used in science and technology and state their use.",
-              "a": "Microsoft Word – used to create documents and write equations/text material.<br>Microsoft Excel – used to enter numerical data in tabular form and draw various types of graphs based on that data for analysis."
-            },
-            {
-              "q": "Explain the working of a computer with reference to its three main units.",
-              "a": "A computer works using three main units: (1) Input unit – all data or information is entered into the computer through this unit, generally using a keyboard;<br>(2) Processing unit – consists of the memory unit (stores data and results), control unit (directs operations), and ALU or Arithmetic Logic Unit (performs calculations and logical operations) — together, this unit processes the input data;<br>(3) Output unit – the final result/solution is sent to this unit and displayed, generally through a screen/monitor or printed via a printer."
-            },
-            {
-              "q": "Explain the role and importance of information communication technology in science and technology.",
-              "a": "ICT plays a vital role in science and technology in several ways: (1) Demonstration – experiments and concepts (e.g. functioning of the nervous system) can be demonstrated effectively using simulation and animation software;<br>(2) Prediction – after compiling and processing large amounts of data, predictions can be made, e.g. in meteorology, weather forecasting relies heavily on ICT-based data analysis;<br>(3) Collecting scientific information – the internet, emails, video conferencing, and online databases (such as Wikipedia) allow scientists and students to access and share vast amounts of scientific information quickly and globally, keeping pace with the rapid explosion of scientific knowledge."
-            },
-            {
-              "q": "Explain any three job opportunities available in the field of computers.",
-              "a": "1.<br>Software field – includes application program development, software package development, operating system development and special-purpose scientific applications;<br>many companies offer jobs to develop such software. 2.<br>Hardware field – includes jobs in hardware designing, production, assembly, testing, and maintenance/repair of computers and related devices. 3.<br>Training – dedicated, competent teachers are needed to train new entrants for various computer-related jobs, making computer education/training itself a significant career field."
-            },
-            {
-              "q": "Explain the different generations of computers and how scientific developments have contributed to these changes.",
-              "a": "Computers have gone through five generations of development since their invention.<br>First generation computers (1946–1959) used large valves (vacuum tubes) for their construction;<br>these valves consumed a lot of electricity, generated excessive heat, and often caused the computers to shut down.<br>With advances in electronics, subsequent generations replaced valves with transistors (second generation), then integrated circuits (third generation), and later microprocessors (fourth generation), each innovation drastically reducing the size, heat generation and power consumption of computers while increasing their speed, reliability, and processing capability.<br>Today's computers belong to the fifth generation, characterized by extremely high processing speeds, artificial intelligence capabilities, and compact designs.<br>This rapid technological evolution — driven by advances in materials science, electronics and semiconductor technology — is what has enabled computers to enter virtually every field of work today, from scientific research to daily communication, education and industry, fundamentally transforming information communication technology."
-            },
-            {
-              "q": "Explain, with suitable examples, the various devices used for information communication and how they are useful in the context of science.",
-              "a": "Various devices are used for producing, sharing, storing and managing information as part of ICT.<br>The computer/laptop is the most versatile device, used for data processing, calculations, simulations, creating documents/presentations, and accessing the internet for scientific research;<br>it is essential in nearly every scientific field today.<br>The mobile phone allows instant communication, access to scientific apps, and mobile internet for information retrieval from any location.<br>Radio and television are used to broadcast scientific news, educational programmes, and weather forecasts to a wide audience, including in remote areas without internet access.<br>In science specifically: simulation and animation software (used via computers) help demonstrate complex scientific concepts like the functioning of the nervous system or planetary motion in a way that is difficult to show with physical models alone;<br>the internet, emails, video conferencing and online scientific databases/journals allow scientists across the world to collaborate, share research findings instantly, and access the latest information, preventing knowledge from becoming outdated given the rapid pace of scientific advancement.<br>Thus, these ICT devices collectively enhance the pace, accuracy, and reach of scientific work and communication."
+              "q": "What is the difference between system software and application software?",
+              "a": "System software controls the basic functions of a computer (e.g. operating system). Application software performs specific tasks for users (e.g. word processor)."
             }
           ]
         },
@@ -1040,44 +840,24 @@
           ],
           "practice": [
             {
-              "q": "Define the principal focus of a concave mirror.",
-              "a": "The principal focus of a concave mirror is the point on the principal axis where incident rays parallel to the principal axis meet after reflection from the mirror.<br>It is denoted by F, and the distance from the pole to this point is called the focal length (f)."
+              "q": "State the two laws of reflection.",
+              "a": "(1) Angle of incidence = angle of reflection. (2) The incident ray, reflected ray and normal all lie in the same plane."
             },
             {
-              "q": "State two uses of a concave mirror.",
-              "a": "1.<br>Used in shaving/dental mirrors, where placing the face between the pole and focus gives an erect, magnified, virtual image. 2.<br>Used in torches and vehicle headlamps, where the light source is placed at the focus to produce a parallel beam of light."
+              "q": "What is the difference between a concave and a convex mirror?",
+              "a": "A concave mirror has its reflecting surface curved inward and can form real images. A convex mirror has its surface curved outward and always forms virtual, erect, diminished images."
             },
             {
-              "q": "Why are convex mirrors used as rear-view/side mirrors in vehicles?",
-              "a": "Convex mirrors always form an erect, virtual, and diminished (smaller) image regardless of the object's distance, giving the driver a wider field of view of the traffic behind, which helps in seeing more of the surroundings in a small mirror."
+              "q": "Why does a word appear reversed when seen in a plane mirror?",
+              "a": "Due to lateral inversion — a plane mirror swaps the left and right sides of an image."
             },
             {
-              "q": "What is meant by lateral inversion?",
-              "a": "Lateral inversion is the phenomenon in which the image of an object formed by a plane mirror appears to be inverted from left to right (e.g. the letters of a word appear reversed), because the image of each point is formed behind the mirror at the same perpendicular distance from the mirror as the object."
+              "q": "What is multiple reflection? Name two devices that use it.",
+              "a": "Multiple reflection occurs when light reflects several times between two mirrors. Devices: kaleidoscope and periscope."
             },
             {
-              "q": "State the mirror formula and explain the terms used.",
-              "a": "The mirror formula is 1/v + 1/u = 1/f, where v is the image distance from the pole, u is the object distance from the pole, and f is the focal length of the mirror.<br>This formula holds for all spherical mirrors, for all positions of the object."
-            },
-            {
-              "q": "State the rules used for drawing ray diagrams for spherical mirrors.",
-              "a": "Rule 1: An incident ray parallel to the principal axis, after reflection, passes through the principal focus.<br>Rule 2: An incident ray passing through the principal focus, after reflection, becomes parallel to the principal axis.<br>Rule 3: An incident ray passing through the centre of curvature, after reflection, retraces its own path back along the same line."
-            },
-            {
-              "q": "Explain the nature, position and size of the image formed by a concave mirror when the object is placed between the pole and focus.",
-              "a": "When an object is placed between the pole and the focus of a concave mirror, the image formed is located behind the mirror.<br>The image is virtual (since reflected rays only appear to meet, they do not actually converge), erect, and magnified (larger than the object).<br>This is the principle used in shaving mirrors and dental mirrors, where the object (face/tooth) is held close to the mirror, within its focal length."
-            },
-            {
-              "q": "Explain divergence and convergence of light with reference to concave and convex mirrors.",
-              "a": "A concave mirror is called a focusing/converging mirror because parallel incident rays, after reflection, converge (come together) at the principal focus;<br>the size of the image produced can be larger or smaller than the object depending on the object's distance from the mirror.<br>A convex mirror is called a dispersing/diverging mirror because parallel incident rays, after reflection, spread out (diverge) as if coming from a point behind the mirror;<br>images produced by a convex mirror are always smaller (diminished) than the object."
-            },
-            {
-              "q": "Draw ray diagrams and describe the nature, size and position of images formed by a concave mirror for an object placed at: (1) the focus, (2) the centre of curvature, and (3) beyond the centre of curvature.",
-              "a": "(1) Object at focus: Incident rays from the object, after reflection from the concave mirror, become parallel to each other (since a ray through the focus becomes parallel to the axis after reflection).<br>Since the reflected rays never meet, the image is formed at infinity;<br>it is real, inverted, and highly magnified (very large). (2) Object at the centre of curvature: The image is also formed at the centre of curvature itself.<br>It is real, inverted, and of the same size as the object, because rays reflected from the pole and passing through the centre of curvature retrace their path, converging exactly where the object is placed. (3) Object beyond the centre of curvature: The image is formed between the focus and the centre of curvature, on the same side as the object (in front of the mirror).<br>It is real, inverted, and diminished (smaller than the object).<br>As the object is moved further away (towards infinity), the image moves closer to the focus and becomes progressively smaller, approaching a point image at the focus when the object is at infinity.<br>In all three cases, since the reflected rays actually converge to form the image, it can be obtained on a screen (real image), unlike the virtual images formed when the object is placed between the pole and focus."
-            },
-            {
-              "q": "Solve: An object of height 7 cm is kept at a distance of 25 cm in front of a concave mirror of focal length 15 cm. At what distance from the mirror should a screen be kept to obtain a clear image? What will be the size and nature of the image?",
-              "a": "Given: height of object h1 = 7 cm, object distance u = -25 cm, focal length f = -15 cm.<br>Using the mirror formula: 1/v + 1/u = 1/f 1/v = 1/f - 1/u = 1/(-15) - 1/(-25) = -1/15 + 1/25 Taking LCM of 15 and 25 (=75): -5/75 + 3/75 = -2/75 So 1/v = -2/75, therefore v = -37.5 cm.<br>The screen should be placed 37.5 cm in front of the mirror (on the same side as the object) to obtain a clear image.<br>Magnification, M = -v/u = -(-37.5)/(-25) = -1.5 Height of image, h2 = M × h1 = -1.5 × 7 = -10.5 cm.<br>Since the image height is negative and the magnification is negative, the image is real, inverted, and magnified, with a height of 10.5 cm, formed at a distance of 37.5 cm from the mirror."
+              "q": "A concave mirror is used in a solar cooker. Why?",
+              "a": "A concave mirror converges parallel rays of sunlight to a focus, producing intense heat that can be used for cooking."
             }
           ]
         },
@@ -1137,44 +917,24 @@
           ],
           "practice": [
             {
-              "q": "Define an echo.",
-              "a": "An echo is the repetition of the original sound heard by us due to its reflection from a hard, distant surface such as a wall, cliff or building.<br>To hear a distinct echo, the reflecting surface must be at a minimum distance of about 17.2 m from the source (at 22°C)."
+              "q": "What is the audible range of the human ear?",
+              "a": "20 Hz to 20,000 Hz."
             },
             {
-              "q": "What is meant by reverberation?",
-              "a": "Reverberation is the phenomenon in which sound waves reflect multiple times from the walls, roof, and floor of a closed room/hall, causing the sound to persist and mix together, producing a continuous, often unclear sound.<br>This is why some auditoriums need special sound-absorbing arrangements."
+              "q": "In which medium does sound travel fastest and why?",
+              "a": "Sound travels fastest in solids because the particles are closely packed and transmit vibrations more quickly."
             },
             {
-              "q": "What is SONAR? State one of its uses.",
-              "a": "SONAR (Sound Navigation and Ranging) is a technique used to determine the direction, distance and speed of underwater objects using ultrasonic sound waves, using a transmitter and receiver fitted on ships.<br>It is used to determine the depth of the sea and to detect submarines, sunken ships and icebergs."
+              "q": "What is the difference between echo and reverberation?",
+              "a": "An echo is a reflected sound heard after a distinct interval. Reverberation is the persistence of sound due to multiple rapid reflections within a closed space."
             },
             {
-              "q": "Distinguish between infrasound and ultrasound.",
-              "a": "Infrasound is sound with a frequency lower than 20 Hz (below the audible range), e.g. sound produced by earthquakes or a pendulum.<br>Ultrasound is sound with a frequency greater than 20,000 Hz (20 kHz, above the audible range), e.g. sound produced/heard by bats and dolphins."
+              "q": "Why can sound not travel in a vacuum?",
+              "a": "Sound is a mechanical wave that requires particles of matter to propagate. In a vacuum, there are no particles to carry the vibrations."
             },
             {
-              "q": "Name the three main parts of the human ear.",
-              "a": "The human ear has three main parts: (1) Outer ear (Pinna), which collects sound waves;<br>(2) Middle ear, which contains the eardrum that vibrates due to sound waves;<br>(3) Inner ear, which contains the cochlea that converts vibrations into electrical signals sent to the brain."
-            },
-            {
-              "q": "Explain why the roof of a movie theatre or conference hall is curved.",
-              "a": "The curved roof of a movie theatre or conference hall is designed based on the principles of reflection of sound.<br>The curved shape (usually concave) is engineered so that sound waves reflecting off it get distributed evenly throughout the hall rather than concentrating reverberations at particular points, ensuring that sound reaches all corners of the hall with good clarity and reducing problems like excessive reverberation or dead spots (areas of poor sound reception)."
-            },
-            {
-              "q": "On what factors does the velocity of sound in a gaseous medium depend? Explain briefly.",
-              "a": "The velocity of sound in a gas depends on: (1) Temperature (T) – velocity is directly proportional to the square root of temperature, so increasing temperature increases the velocity of sound;<br>(2) Density (ρ) of the gas – velocity is inversely proportional to the square root of density, so a denser gas has a lower velocity of sound;<br>(3) Molecular weight (M) of the gas – velocity is inversely proportional to the square root of molecular weight, so a gas with lower molecular weight (like hydrogen) has a higher velocity of sound than one with higher molecular weight (like oxygen), under the same conditions."
-            },
-            {
-              "q": "Describe the structure and function of the middle ear.",
-              "a": "The middle ear is a cavity containing a thin membrane called the eardrum (tympanic membrane).<br>When compressions in a sound wave reach the eardrum, the increased outside pressure pushes it inward;<br>when rarefactions reach it, the decreased pressure pulls it outward.<br>This continuous push-pull action causes the eardrum to vibrate in accordance with the sound wave.<br>These vibrations are then transmitted, via a chain of small bones, from the middle ear towards the inner ear for further processing into electrical signals."
-            },
-            {
-              "q": "Explain the working of the SONAR technique with a labelled description, and describe two important uses of ultrasonic sound.",
-              "a": "SONAR (Sound Navigation and Ranging) is a technique that uses ultrasonic sound waves to determine the direction, distance and speed of underwater objects.<br>It consists of a transmitter and a receiver, both fitted on a ship or boat.<br>The transmitter produces and sends ultrasonic sound waves into the water;<br>these waves travel through water, strike underwater objects (like the seabed, submarines or sunken ships), and get reflected back.<br>The reflected waves are picked up by the receiver, which converts the ultrasonic sound into electrical signals;<br>these signals are then analysed, and the time difference between transmission and reception of the wave is measured.<br>Using this time difference and the known velocity of sound in water, the distance of the reflecting object from the ship can be calculated (distance = velocity × time/2, since the wave travels to the object and back).<br>SONAR is used to determine the depth of the sea, and to locate underwater hills, valleys, submarines, icebergs and sunken ships.<br>Two important uses of ultrasonic sound: (1) Sonography – ultrasonic waves are used to generate images of internal organs of the human body, useful for diagnosing the cause of pain, swelling or infection, studying the condition of the heart, and monitoring the growth of a foetus in a pregnant woman, all without invasive surgery. (2) Sterilization and cleaning – ultrasonic sound is used to sterilize liquids like milk by killing bacteria (extending shelf life), and in industry, to clean intricate machine parts that are otherwise inaccessible to hands, as well as to detect cracks and faults in metal blocks."
-            },
-            {
-              "q": "Solve: Sunil is standing between two parallel walls. The wall closest to him is at a distance of 660 m. If he shouts, he hears the first echo after 4 seconds and another echo after 2 more seconds. Find (a) the velocity of sound in air and (b) the distance between the two walls.",
-              "a": "Given: Distance to nearer wall = 660 m, time for first echo = 4 s. (a) The sound travels to the nearer wall and back (a total distance of 2 × 660 = 1320 m) in 4 seconds.<br>Velocity = Distance/Time = 1320/4 = 330 m/s. (b) The second echo is heard after a further 2 seconds, i.e. at a total time of 4 + 2 = 6 s from the shout, and this echo is from the farther wall.<br>Total distance travelled by sound to reach the farther wall and return = velocity × total time = 330 × 6 = 1980 m.<br>So the distance to the farther wall = 1980/2 = 990 m.<br>Distance between the two walls = distance to farther wall - distance to nearer wall would only apply if both walls were on the same side;<br>here Sunil stands between them, so distance between the two walls = 660 + 990 = 1650 m.<br>Thus, the velocity of sound in air is 330 m/s, and the distance between the two walls is 1650 m."
+              "q": "How is infrasonic sound different from ultrasonic sound?",
+              "a": "Infrasonic: frequency below 20 Hz, produced naturally. Ultrasonic: frequency above 20,000 Hz, used in medicine and industry."
             }
           ]
         },
@@ -1233,44 +993,24 @@
           ],
           "practice": [
             {
-              "q": "What is allotropy? Name the three crystalline allotropes of carbon.",
-              "a": "Allotropy is the property by which an element occurs in more than one form in nature, with the same chemical properties but different physical properties.<br>The three crystalline allotropes of carbon are diamond, graphite and fullerene."
+              "q": "What are the properties of diamond that make it useful?",
+              "a": "Diamond is the hardest natural substance, making it useful for cutting and drilling tools and for jewellery."
             },
             {
-              "q": "Give two uses of graphite.",
-              "a": "1.<br>Graphite is used in pencils for writing (as 'pencil lead', mixed with clay). 2.<br>Graphite is used to make carbon electrodes and lubricants, since it is a good conductor of electricity and has a slippery, layered structure."
+              "q": "How is graphite different from diamond, even though both are allotropes of carbon?",
+              "a": "Diamond is the hardest substance and does not conduct electricity. Graphite is soft, slippery and a good conductor of electricity."
             },
             {
-              "q": "Define saturated and unsaturated hydrocarbons with one example each.",
-              "a": "Saturated hydrocarbons have only single covalent bonds between carbon atoms, e.g. ethane (C2H6).<br>Unsaturated hydrocarbons have at least one multiple (double or triple) bond between carbon atoms, e.g. ethene (H2C=CH2, a double bond) or ethyne (HC≡CH, a triple bond)."
+              "q": "Why do carbon compounds form such a large variety?",
+              "a": "Because of catenation (carbon-carbon bonding) and tetravalency (four bonds possible), allowing chains, branches and rings of different lengths."
             },
             {
-              "q": "State any two uses of carbon dioxide.",
-              "a": "1.<br>Carbon dioxide is used to make aerated (carbonated) soft drinks. 2.<br>Solid carbon dioxide (dry ice) is used in cold storage to keep perishable items cool during transport, and CO2-based fire extinguishers are used to put out small fires, especially involving electrical equipment, since CO2 is a non-conductor."
+              "q": "What are fossil fuels? Give two examples.",
+              "a": "Fossil fuels are formed from ancient plant and animal remains. Examples: coal and petroleum."
             },
             {
-              "q": "What is biogas? State its main constituent.",
-              "a": "Biogas is a fuel gas produced by the anaerobic (without air) decomposition of organic waste such as animal dung, dry leaves and wet garbage, by microbes in a biogas plant.<br>Its main constituent is methane (55-60%), with the rest mostly being carbon dioxide."
-            },
-            {
-              "q": "Explain the difference between diamond and graphite in terms of structure and properties.",
-              "a": "In diamond, each carbon atom is bonded to four neighbouring carbon atoms by strong covalent bonds arranged in a rigid three-dimensional structure, making diamond extremely hard, a poor conductor of electricity (no free electrons), and giving it a very high melting point.<br>In graphite, each carbon atom is bonded to only three other carbon atoms, forming flat hexagonal layers (sheets);<br>these layers can slip over each other easily (since they are held together by weak forces), making graphite soft, slippery, and a good conductor of electricity, because free electrons can move within each layer."
-            },
-            {
-              "q": "Explain the different types of coal based on their formation and carbon content.",
-              "a": "Coal, a fossil fuel, is formed in four progressive stages with increasing carbon content: (1) Peat – the first stage, with a high water content and less than 60% carbon, providing little heat on burning;<br>(2) Lignite – formed from peat under increased pressure and temperature, containing 60-70% carbon;<br>(3) Bituminous coal – the third stage, containing 70-90% carbon;<br>(4) Anthracite – the purest and hardest form of coal, containing about 95% carbon, and giving the maximum heat on combustion."
-            },
-            {
-              "q": "Explain why biogas is considered an eco-friendly fuel, describing the two stages of its production.",
-              "a": "Biogas is considered eco-friendly because it is produced from organic waste materials (animal dung, dry leaves, wet garbage) that would otherwise pollute the environment, and it also yields good quality manure as a by-product, reducing the need for chemical fertilizers;<br>being a cheap, renewable fuel, it reduces dependence on fossil fuels.<br>Biogas production is an anaerobic process occurring in two stages: (1) Production of acids – microbes act on the biodegradable complex organic compounds and convert them into organic acids;<br>(2) Methane gas production – methanogenic bacteria act on these organic acids to produce methane gas along with carbon dioxide (e.g.<br>CH3COOH → CH4 + CO2)."
-            },
-            {
-              "q": "Explain the various allotropes of carbon (crystalline and non-crystalline), giving the structure, properties and one use of each.",
-              "a": "Carbon exhibits allotropy, occurring in several forms with the same chemical composition but different physical properties.<br>Crystalline allotropes have a regular, definite arrangement of atoms and high melting/boiling points: (1) Diamond – each carbon atom is bonded to four others by strong covalent bonds in a rigid 3D structure, making it the hardest natural substance, a bad conductor of electricity, and used in glass-cutting tools, rock-drilling machines and jewellery. (2) Graphite – each carbon atom bonds to three others, forming layered hexagonal sheets that can slip over each other, making it soft, slippery, and a good conductor of electricity (used in pencils, electrodes, and lubricants). (3) Fullerene – a rare allotrope with molecules like C60 (buckminsterfullerene), consisting of 30 to 900 carbon atoms arranged in ball-like (buckyball) or tube-like (buckytube) structures;<br>it is used as an insulator, as a catalyst in water purification, and exhibits superconductivity at certain temperatures.<br>Non-crystalline (amorphous) allotropes lack a regular atomic arrangement: coal (in its various forms — peat, lignite, bituminous coal, anthracite) and coke (obtained after removing coal gas from coal) are used as domestic and industrial fuels and as reducing agents.<br>Thus, despite being made of the same element, these allotropes show widely differing physical properties due to differences in their internal atomic arrangement."
-            },
-            {
-              "q": "Describe the preparation, physical and chemical properties of carbon dioxide, and explain two of its important industrial/practical uses.",
-              "a": "Preparation: Carbon dioxide can be prepared in the laboratory by reacting a metal carbonate (such as calcium carbonate, e.g. marble or limestone pieces) with dilute hydrochloric acid: CaCO3 + 2HCl → CaCl2 + H2O + CO2.<br>The gas evolved is collected by upward displacement of air, since CO2 is denser than air.<br>Physical properties: Carbon dioxide is a colourless, odourless gas, denser than air, and its molecular mass is 44 u;<br>its melting point is -56.6°C.<br>Chemical properties: It does not support combustion (a burning candle placed in it is extinguished);<br>it turns limewater milky due to the formation of insoluble calcium carbonate (Ca(OH)2 + CO2 → CaCO3 + H2O);<br>it dissolves in water to form a weak acid, carbonic acid, which turns blue litmus faintly red;<br>and it reacts with NaOH solution to form sodium carbonate (2NaOH + CO2 → Na2CO3 + H2O).<br>Uses: (1) Carbon dioxide is used to manufacture aerated (carbonated) drinks, as it is dissolved under pressure to give the characteristic fizz. (2) It is used in fire extinguishers — a CO2-based fire extinguisher contains sodium bicarbonate powder and dilute sulphuric acid in a glass capsule;<br>when the capsule is broken (by pressing the knob), the acid reacts with the bicarbonate to release CO2 gas forcefully (2NaHCO3 + H2SO4 → Na2SO4 + 2H2O + 2CO2), which smothers the fire by cutting off its oxygen supply;<br>such extinguishers are especially useful for electrical fires since CO2 does not conduct electricity and causes no corrosion.<br>Other uses include cold storage/refrigeration (dry ice) and as a solvent in eco-friendly dry cleaning."
+              "q": "How does burning fossil fuels affect the environment?",
+              "a": "It releases CO₂ and other pollutants, causing air pollution, acid rain and contributing to global warming."
             }
           ]
         },
@@ -1330,44 +1070,24 @@
           ],
           "practice": [
             {
-              "q": "State two properties and uses of sodium chloride (common salt).",
-              "a": "Sodium chloride is a colourless, crystalline, neutral salt (pH 7), salty in taste, with no water of crystallization.<br>It is used for the production of other salts like Na2CO3 and NaHCO3, and its aqueous solution (brine) is electrolysed to produce chlorine gas, hydrogen gas, and sodium hydroxide."
+              "q": "Name two uses each of baking soda and washing soda.",
+              "a": "Baking soda: baking bread, neutralizing stomach acid. Washing soda: cleaning clothes, softening hard water."
             },
             {
-              "q": "Give two uses of sodium bicarbonate (baking soda).",
-              "a": "1.<br>It is used in baking to make bread, cake and dhokla porous and spongy, since it is basic in nature and releases CO2 gas on heating/reacting. 2.<br>Being basic, it is used to reduce acidity in the stomach;<br>it is also used to make the CO2 required in fire extinguishers."
+              "q": "Why is soap less effective in hard water?",
+              "a": "Hard water contains Ca²⁺ and Mg²⁺ ions that react with soap to form insoluble scum instead of lather, reducing its cleaning action."
             },
             {
-              "q": "What is bleaching powder? State its chemical name and one use.",
-              "a": "Bleaching powder is a yellowish-white solid compound with the chemical name calcium oxychloride (CaOCl2), which releases chlorine gas on reaction with carbon dioxide or dilute acids, giving it disinfecting and bleaching properties.<br>It is used to disinfect drinking water at water works and swimming pools."
+              "q": "What are synthetic fibres? Give two examples.",
+              "a": "Man-made fibres produced from chemicals. Examples: nylon and polyester."
             },
             {
-              "q": "Name the three types of radiation emitted by radioactive substances.",
-              "a": "Radioactive substances emit three types of radiation: alpha (α) rays (positively charged, current of helium nuclei), beta (β) rays (negatively charged, current of electrons), and gamma (γ) rays (electrically neutral, electromagnetic radiation with the highest penetrating power)."
+              "q": "Why do synthetic materials raise environmental concerns?",
+              "a": "Most synthetic materials like plastic are non-biodegradable. They remain in the environment for hundreds of years and pollute land, water and air."
             },
             {
-              "q": "What is Teflon? State one property and one use.",
-              "a": "Teflon is the polymer of tetrafluoroethylene (polytetrafluoroethene), discovered by Roy J.<br>Plunkett in 1938.<br>Neither water nor oil sticks to Teflon-coated surfaces, and it is unaffected by high temperatures (melting point 327°C);<br>it is used for making non-stick cookware."
-            },
-            {
-              "q": "Explain the properties and uses of washing soda (Na2CO3).",
-              "a": "Washing soda (crystalline sodium carbonate, Na2CO3.10H2O) is a whitish, odourless, hygroscopic (moisture-absorbing) compound whose aqueous solution turns litmus blue (basic in nature).<br>It softens hard water by converting the soluble calcium and magnesium chloride/sulphate salts present in hard water into insoluble carbonate precipitates (e.g.<br>MgCl2 + Na2CO3 → MgCO3 + 2NaCl), allowing soap to lather properly.<br>It is mainly used for washing clothes, and also in the glass industry, paper industry, and petroleum refining."
-            },
-            {
-              "q": "Explain the uses and hazards of radioactive isotopes with two examples each from medicine and industry.",
-              "a": "Radioactive isotopes have many beneficial uses: In medicine, phosphorus-32 is used to treat polycythemia (excess red blood cells);<br>iodine-123 is used to treat hyperthyroidism;<br>cobalt-60, boron-10 and iodine-131 are used in tumour detection and treatment.<br>In industry, cobalt-60 and iridium-192 are used in radiography to detect internal cracks in metal castings;<br>radioactive isotopes are used to measure thickness, density and levels of materials during manufacturing.<br>However, radioactive radiation is also hazardous: it can damage the central nervous system, cause hereditary defects by affecting DNA, cause skin cancer and leukaemia on prolonged exposure, and radioactive pollutants released into water/air can enter the food chain (e.g. through fish or milk) and accumulate in the human body, causing serious diseases."
-            },
-            {
-              "q": "Explain the harmful effects of artificial food colours and dyes on human health.",
-              "a": "Artificial food colours, often added to sweets, pickles, jams, sauces and soft drinks to make them attractive, sometimes contain small quantities of harmful substances like lead and mercury, which can be detrimental to health if consumed regularly.<br>Excessive consumption of foods with artificial colours has also been linked to conditions like ADHD (Attention Deficit Hyperactivity Disorder) in children.<br>Similarly, artificial dyes, such as those used in hair colouring or the mercury-based red colour used during festivals like Rang Panchami, can cause hair fall, skin burns, eye damage, blindness, skin cancer, asthma and permanent blocking of sweat pores;<br>hence, natural alternatives are recommended wherever possible."
-            },
-            {
-              "q": "Describe alpha, beta and gamma rays with reference to their nature, charge, penetrating power and behaviour in an electric field, and explain how these rays were discovered/differentiated by Rutherford and Willard.",
-              "a": "Radioactive substances spontaneously emit three types of radiation: Alpha (α) rays are a stream of alpha particles (helium nuclei, He++), have a mass of about 4.0028 u, carry a charge of +2, travel at 1/5 to 1/20 the speed of light, and are deflected towards the negatively charged plate in an electric field;<br>they have very high ionizing power but very low penetrating power (stopped by an aluminium sheet less than 0.02 mm thick, or even a sheet of paper).<br>Beta (β) rays are a stream of high-speed electrons, have negligible mass (0.000548 u), carry a charge of -1, travel at 1/5 to 9/10 the speed of light, and are deflected towards the positively charged plate;<br>they have moderate penetrating power (can pass through an aluminium sheet about 2 mm thick, 100 times more penetrating than alpha rays) and lower ionizing power than alpha rays.<br>Gamma (γ) rays are electromagnetic radiation (like X-rays but of higher energy), have no mass and no charge, travel at the speed of light, and are not deflected at all in an electric field;<br>they have the highest penetrating power (can pass through a 15 cm thick lead screen, about 10,000 times the penetrating power of alpha rays) but the lowest ionizing power of the three.<br>These three types were differentiated by passing the radiation emitted by a radioactive substance through a strong electric field created between two oppositely charged plates, with a photographic plate placed to record where the rays landed.<br>Rutherford (in 1889/1902) discovered that the emitted radiation split into two types under the electric field — one deviating slightly towards the negative plate (named alpha rays) and another deviating substantially towards the positive plate (named beta rays);<br>Willard later discovered a third type that showed no deviation at all in the electric field (named gamma rays).<br>This experiment conclusively proved that radioactive substances emit three physically and chemically distinct types of radiation, differing in charge, mass and penetrating ability."
-            },
-            {
-              "q": "Explain in detail the properties, uses and manufacturing process of ceramics, including porcelain, with suitable examples.",
-              "a": "Ceramic is a heat-resistant substance made by kneading an inorganic material (such as clay) with water, shaping it, and then hardening it by firing (heating) at a high temperature.<br>The process involves: kneading clay in water, shaping the object as desired, and firing it in a kiln at 1000-1150°C, which produces a porous ceramic object.<br>To eliminate this porosity and give a shiny finish, the fired object is coated with a glaze (finely ground glass powder suspended in water) and fired again;<br>this makes the surface shiny and non-porous.<br>Common examples of ceramic articles include earthenware pots made by potters, roofing tiles, construction bricks, and terracotta articles.<br>Porcelain is a special, hard, translucent, white ceramic made using a special white clay called kaolin (found in China), mixed with glass, granite and feldspar, then kneaded with water, shaped, and fired at a higher temperature of 1200-1450°C;<br>after glazing and refiring, beautiful, shiny porcelain articles are obtained, which are used to make laboratory vessels and fine crockery.<br>Bone china, a variant of porcelain, is made by adding animal bone ash to the china clay-feldspar-silica mixture, producing a ceramic harder than ordinary porcelain.<br>Advanced ceramics use oxides such as alumina (Al2O3), zirconia (ZrO2) and silica (SiO2), along with compounds like silicon carbide, instead of clay, and require much higher firing temperatures (1600-1800°C) in an oxygen-free atmosphere (a process called sintering);<br>such advanced ceramics can withstand extremely high temperatures, are brittle but water-resistant and electrically insulating, and are used in electrical instruments, jet engine blades, kiln linings, ship exteriors, and even the outer heat-shield tiles of space shuttles, since ceramics do not decompose even under extreme thermal stress."
+              "q": "What is bleaching powder used for?",
+              "a": "Bleaching powder is used to disinfect drinking water, bleach cotton and paper and as a germicide."
             }
           ]
         },
@@ -1426,44 +1146,24 @@
           ],
           "practice": [
             {
-              "q": "What is transpiration? Name the structures through which it occurs.",
-              "a": "Transpiration is the process by which plants release excess water in the form of vapour into the atmosphere, mainly through small pores called stomata present on their leaves.<br>This helps in the upward movement of water and minerals through the plant and cools the plant."
+              "q": "Write the equation for photosynthesis.",
+              "a": "Carbon dioxide + Water → Glucose + Oxygen (in the presence of sunlight and chlorophyll)."
             },
             {
-              "q": "Define excretion.",
-              "a": "Excretion is the process of removal of harmful and waste substances (such as urea, uric acid, ammonia) produced during the metabolic activities of an organism, from its body.<br>Failure to remove such wastes can lead to serious harm or even death."
+              "q": "What are the components of the human excretory system?",
+              "a": "Kidneys, ureters, urinary bladder and urethra."
             },
             {
-              "q": "What is the functional unit of the kidney called? Name its important part.",
-              "a": "The functional unit of the kidney is called a nephron;<br>each kidney contains about 10 lakh (1 million) nephrons.<br>Its important part, the cup-shaped Bowman's capsule, along with the network of capillaries within it called the glomerulus, performs the basic function of filtration of blood."
+              "q": "How does transpiration help plants?",
+              "a": "Transpiration cools the plant and helps draw water and minerals up from the roots to leaves."
             },
             {
-              "q": "What is a reflex action? Give one example.",
-              "a": "A reflex action is an immediate, involuntary response given by the body to a stimulus from the environment, without conscious control by the brain.<br>Example: withdrawing the hand immediately upon accidentally touching a hot object."
+              "q": "Distinguish between autotrophic and heterotrophic nutrition.",
+              "a": "Autotrophs prepare their own food using sunlight (e.g. plants). Heterotrophs depend on other organisms for food (e.g. animals)."
             },
             {
-              "q": "What is meant by 'tropism' or tropic movement in plants?",
-              "a": "Tropism (tropic movement) is the movement or growth of any part of a plant in response to an external stimulus, such as light (phototropism), gravity (gravitropism), water (hydrotropism), or specific chemicals (chemotropism)."
-            },
-            {
-              "q": "Explain the process of transportation of water in plants with reference to root pressure and transpiration pull.",
-              "a": "Water and minerals from the soil enter root hair cells due to a difference in concentration, causing these cells to become turgid and exert pressure on adjacent cells;<br>this is called root pressure, and it pushes water up into the xylem, especially helping water rise during the night.<br>During the day, water evaporates from leaf surfaces through stomata (transpiration);<br>as water is lost, it creates a 'pull' that draws more water upward through the xylem from the roots to replace the lost water — this is called transpiration pull.<br>Together, root pressure and transpiration pull are responsible for the continuous upward movement of water and dissolved minerals throughout the plant."
-            },
-            {
-              "q": "Explain the process of urine formation in the human nephron.",
-              "a": "Blood containing urea (produced in the liver) enters the glomerulus (a network of capillaries within the Bowman's capsule) of the nephron under pressure, where it is filtered through the capillary walls;<br>water and small molecules pass through the semi-permeable membrane into the cavity of Bowman's capsule, while blood cells and large proteins are retained in the blood.<br>This filtered fluid then passes through the tubular part of the nephron, where useful substances (like glucose, some water, and salts) are selectively reabsorbed back into the blood.<br>The remaining fluid, containing waste materials like urea, forms urine, which passes through the collecting duct into the ureter, then to the urinary bladder for temporary storage, before being expelled via the urethra."
-            },
-            {
-              "q": "Explain co-ordination in plants with examples of phototropic, gravitropic and chemotropic movements.",
-              "a": "Since plants lack a nervous system, they show co-ordination mainly through tropic (growth-related) movements in response to external stimuli.<br>Phototropic movement is the growth of the shoot system towards the source of light (positive phototropism), helping the plant maximize photosynthesis.<br>Gravitropic movement is the growth of the root system in response to gravity (usually growing downward, positive gravitropism), anchoring the plant and helping roots reach water and minerals in the soil.<br>Chemotropic movement is the growth of a plant part in response to a specific chemical stimulus, e.g. the growth of the pollen tube towards the ovule, guided by chemical signals released by the ovule, which is essential for fertilization."
-            },
-            {
-              "q": "Describe the structure and function of a neuron (nerve cell), and explain how a nerve impulse is transmitted from one neuron to another through a synapse.",
-              "a": "A neuron (nerve cell) is the structural and functional unit of the nervous system, specially adapted to generate and conduct electro-chemical impulses.<br>It consists of: a cell body containing the nucleus and cytoplasm;<br>dendrites, numerous small branched fibres arising from the cell body that receive information/impulses from the surroundings or other neurons;<br>and an axon, a single long fibre (sometimes up to a metre in length) that carries the impulse away from the cell body towards its terminal end, often covered by a protective myelin sheath (formed by Schwann cells) with gaps called nodes of Ranvier that speed up impulse conduction.<br>When a stimulus is received at the dendrite endings, a chemical process is triggered that generates an electrical impulse;<br>this impulse travels from the dendrites to the cell body, then along the axon to its terminal (the axon terminal or pre-synaptic terminal).<br>Since neurons are not physically continuous with each other, there is a minute gap between the axon terminal of one neuron and the dendrite of the next neuron, called the synapse (synaptic cleft).<br>When the impulse reaches the axon terminal, it stimulates the release of certain chemical substances (neurotransmitters) stored in synaptic vesicles;<br>these chemicals diffuse across the synaptic cleft and bind to receptors on the post-synaptic membrane of the next neuron's dendrite, generating a new electrical impulse in that neuron.<br>This process repeats along a chain of neurons, ultimately conveying the impulse to muscle cells or glands, enabling a co-ordinated response.<br>This mechanism allows for fast but short-lived transmission of information throughout the nervous system, working alongside the slower but longer-lasting hormonal (chemical) control system to maintain overall co-ordination in the body."
-            },
-            {
-              "q": "Explain chemical co-ordination (the endocrine system) in the human body, naming at least four endocrine glands, their hormones, and functions.",
-              "a": "Chemical co-ordination in the human body is brought about by hormones, which are chemical substances secreted directly into the bloodstream by ductless (endocrine) glands, without any separate duct system;<br>since hormones travel via blood, their action is slower but longer-lasting compared to the fast, short-lived electrical impulses of the nervous system, and both systems work together to maintain the body's internal balance (homeostasis).<br>Some important endocrine glands are: (1) Pituitary gland, located at the base of the brain, considered the 'master gland' as it secretes hormones controlling other glands;<br>it secretes growth hormone (stimulates bone growth), thyroid stimulating hormone (stimulates the thyroid gland), and antidiuretic hormone (regulates water balance in the body), among others. (2) Thyroid gland, located in the neck, secretes thyroxine, which controls the body's growth and metabolic rate, and calcitonin, which regulates calcium levels in the blood. (3) Pancreas, located behind the stomach, secretes insulin (from beta cells), which lowers blood glucose by stimulating the liver to convert excess glucose into glycogen, and glucagon (from alpha cells), which raises blood glucose by converting glycogen back to glucose;<br>an imbalance in insulin secretion can cause diabetes. (4) Adrenal glands, located above each kidney, secrete adrenaline and nor-adrenaline, which prepare the body to respond to stress or emergency situations (the 'fight or flight' response) by stimulating the heart and increasing metabolic activity.<br>Thus, through the coordinated secretion of these various hormones, the endocrine system regulates vital processes such as growth, metabolism, reproduction, and the body's response to stress, working in tandem with the nervous system for overall bodily coordination."
+              "q": "What is the role of the heart in transportation?",
+              "a": "The heart pumps blood throughout the body, ensuring continuous circulation of oxygen, nutrients and waste materials."
             }
           ]
         },
@@ -1522,44 +1222,24 @@
           ],
           "practice": [
             {
-              "q": "Define heredity.",
-              "a": "Heredity is the transfer of characteristics (traits) from parents to their offspring, which is why offspring resemble their parents in many respects, e.g. puppies resembling dogs, or children resembling their parents."
+              "q": "What is a monohybrid cross? What ratio did Mendel observe in F₂?",
+              "a": "A cross involving one pair of contrasting traits. Mendel observed a 3:1 ratio of dominant to recessive traits in the F₂ generation."
             },
             {
-              "q": "What is a gene?",
-              "a": "A gene is the segment of the DNA molecule that contains all the coded information necessary for the synthesis of a particular protein.<br>Genes are the functional units of heredity, carrying hereditary characteristics from parents to offspring."
+              "q": "What is the role of chromosomes in heredity?",
+              "a": "Chromosomes carry genes (made of DNA) that contain hereditary information passed from parents to offspring during reproduction."
             },
             {
-              "q": "Distinguish between dominant and recessive characteristics, with one example.",
-              "a": "A dominant characteristic is one that expresses itself in the offspring even if only one copy of its gene is present (masking the recessive trait), e.g. tallness in pea plants (T).<br>A recessive characteristic is one that expresses itself only when both copies of the gene for it are present (in the absence of the dominant gene), e.g. dwarfness in pea plants (t)."
+              "q": "How is adaptation related to natural selection?",
+              "a": "Organisms with adaptations (favourable traits) survive and reproduce better. Over time, natural selection preserves these traits in the population."
             },
             {
-              "q": "What is Down syndrome? State its cause.",
-              "a": "Down syndrome is a genetic disorder caused by trisomy (an extra copy) of chromosome number 21, resulting in a total of 47 chromosomes instead of the normal 46.<br>It is characterized by mental retardation, short stature, a short wide neck, and a shortened lifespan."
+              "q": "Why is DNA called the genetic material?",
+              "a": "DNA stores all hereditary information and controls the development, functioning and characteristics of living organisms."
             },
             {
-              "q": "Name the two types of persons affected in sickle-cell anaemia based on genotype.",
-              "a": "1.<br>Sickle-cell carrier (genotype AS) – carries the gene but does not show full symptoms. 2.<br>Sickle-cell sufferer (genotype SS) – shows the full symptoms of the disease, as red blood cells become sickle-shaped due to abnormal haemoglobin."
-            },
-            {
-              "q": "Explain the structure of the DNA molecule.",
-              "a": "DNA (deoxyribonucleic acid) has a double helix structure, discovered by Watson and Crick in 1953, resembling a twisted (coiled) ladder.<br>Each strand of the DNA molecule is made up of repeating units called nucleotides, each consisting of a sugar molecule, a phosphate group, and one of four nitrogenous bases — adenine, guanine, cytosine, and thymine.<br>The two strands (rails of the ladder) are made of alternating sugar and phosphate molecules, while the rungs of the ladder are formed by pairs of nitrogenous bases joined by hydrogen bonds — adenine always pairs with thymine, and cytosine always pairs with guanine."
-            },
-            {
-              "q": "Explain Mendel's monohybrid cross using the example of plant height (tall × dwarf pea plants), stating the phenotypic ratio obtained in the F2 generation.",
-              "a": "Mendel crossed pure-breeding tall pea plants (genotype TT) with pure-breeding dwarf pea plants (genotype tt) as the parental (P1) generation.<br>All the resulting F1 generation plants were tall (genotype Tt), showing that tallness (T) is dominant over dwarfness (t), which remained hidden/recessive.<br>When these F1 plants were self-fertilized, the F2 generation showed both tall and dwarf plants in a phenotypic ratio of 3 (tall) : 1 (dwarf), and a genotypic ratio of 1 (TT) : 2 (Tt) : 1 (tt).<br>This experiment demonstrated that hereditary factors (genes) occur in pairs, segregate during gamete formation, and combine randomly during fertilization, forming the basis of Mendel's principles of inheritance."
-            },
-            {
-              "q": "Explain sickle-cell anaemia, describing its cause and symptoms.",
-              "a": "Sickle-cell anaemia is a hereditary genetic disorder caused by a change in a single gene, in which the amino acid glutamic acid (normally the 6th amino acid in the haemoglobin molecule) is replaced by valine.<br>This alters the molecular structure of haemoglobin, causing the normally biconcave-shaped red blood cells (erythrocytes) to become sickle (crescent) shaped, especially when oxygen levels are low.<br>Sickle-shaped cells have a much lower oxygen-carrying capacity, tend to clump together and get destroyed easily, and can obstruct blood vessels, damaging organs like the brain, lungs, and kidneys.<br>Symptoms include swelling of hands and legs, joint pain, frequent colds and cough, persistent low-grade fever, exhaustion, pale face, and low haemoglobin levels.<br>It is inherited when both parents are carriers or sufferers, hence marriage between two carriers/sufferers of sickle-cell anaemia is discouraged."
-            },
-            {
-              "q": "Explain Mendel's dihybrid cross using the cross between round-yellow seeded and wrinkled-green seeded pea plants, and state the phenotypic ratio obtained in the F2 generation.",
-              "a": "Mendel crossed pure-breeding pea plants producing round, yellow seeds (genotype RRYY) with pure-breeding plants producing wrinkled, green seeds (genotype rryy), considering two pairs of contrasting characteristics simultaneously — seed shape (round R dominant over wrinkled r) and seed colour (yellow Y dominant over green y).<br>The parental plants produced gametes RY and ry respectively.<br>The resulting F1 generation plants were all round-yellow seeded (genotype RrYy), since round and yellow are both dominant traits, showing that this cross followed the same principle of dominance as seen in the monohybrid cross.<br>When these F1 (RrYy) plants were self-fertilized, each parent produced four types of gametes (RY, Ry, rY, ry) due to independent assortment of the two gene pairs during gamete formation.<br>Using a Punnett square (16 possible combinations of these gametes), the F2 generation showed four different phenotypes in the ratio 9 (round-yellow) : 3 (round-green) : 3 (wrinkled-yellow) : 1 (wrinkled-green).<br>This experiment led Mendel to formulate the principle of independent assortment, which states that different pairs of genes (factors) for different traits are inherited independently of one another during gamete formation, as long as they are located on different chromosomes."
-            },
-            {
-              "q": "Explain the different categories of genetic disorders (chromosomal, monogenic, mitochondrial and polygenic) with one example of each.",
-              "a": "Genetic disorders arise due to abnormalities in chromosome number/structure or mutations in genes, and are classified into several categories: (1) Chromosomal disorders result from numerical or structural abnormalities in chromosomes;<br>for example, Down syndrome is caused by trisomy of chromosome 21 (47 chromosomes instead of 46), leading to mental retardation and characteristic physical features, while Turner syndrome (44+X, monosomy of the X chromosome) and Klinefelter syndrome (44+XXY) are examples of sex chromosome abnormalities causing sterility. (2) Monogenic disorders are caused by a mutation in a single gene;<br>for example, sickle-cell anaemia results from a single amino acid change in the haemoglobin gene, causing red blood cells to become sickle-shaped;<br>other examples include albinism (inability to produce the pigment melanin, causing pale skin, white hair, and pink eyes) and haemophilia. (3) Mitochondrial disorders are caused by mutations in mitochondrial DNA, which is inherited only from the mother (since mitochondria are contributed by the egg cell alone during fertilization);<br>an example is Leber hereditary optic neuropathy, which affects vision. (4) Polygenic disorders arise from mutations in multiple genes, often combined with environmental influences on the developing foetus, and do not strictly follow Mendel's simple ratios;<br>examples include cleft lip, cleft palate, spina bifida, and later-life conditions like diabetes, hypertension and obesity.<br>Understanding these categories helps in diagnosing genetic disorders, counselling at-risk couples (e.g. through premarital blood testing for sickle-cell anaemia), and developing appropriate treatments or management strategies."
+              "q": "How is knowledge of heredity useful in agriculture?",
+              "a": "It helps develop high-yielding, disease-resistant crop varieties through selective breeding and genetic engineering."
             }
           ]
         },
@@ -1617,44 +1297,24 @@
           ],
           "practice": [
             {
-              "q": "Define tissue.",
-              "a": "A tissue is a group of cells having the same origin, structure and function, working together to perform a specific role in the body of a multicellular organism.<br>Example: muscular tissue, which performs contraction and relaxation for movement."
+              "q": "What is recombinant DNA technology? Give one application.",
+              "a": "It involves combining DNA from different organisms. Application: production of human insulin using bacteria."
             },
             {
-              "q": "Distinguish between simple and complex tissues, with one example each.",
-              "a": "Simple tissue is made up of only one type of cell, e.g. epithelial tissue in animals, meristematic tissue in plants.<br>Complex tissue is made up of more than one type of cell, e.g. blood in animals, and xylem/phloem in plants."
+              "q": "What are the advantages of tissue culture?",
+              "a": "It allows rapid production of many identical, healthy, disease-free plants from a single parent plant."
             },
             {
-              "q": "What is tissue culture?",
-              "a": "Tissue culture is the technique of growing cells or tissues outside the body (ex vivo) in an aseptic, nutrient-rich medium, allowing a complete new organism to be developed from a single cell or a small piece of tissue."
+              "q": "How does biotechnology help in agriculture?",
+              "a": "It develops high-yielding, pest-resistant and drought-resistant crop varieties, improving productivity and reducing crop losses."
             },
             {
-              "q": "Name the three types of meristematic tissue in plants based on location.",
-              "a": "1.<br>Apical meristem – present at the tip of the root and stem, increases the length of the plant. 2.<br>Intercalary meristem – present at the base of the petiole/branches, involved in growth of branches, leaves and flowers. 3.<br>Lateral meristem – present on the lateral sides of root and stem, increases the girth (diameter) of the plant."
+              "q": "What are biopesticides? Why are they preferred over chemical pesticides?",
+              "a": "Biopesticides are biological agents used to control pests. They are preferred because they are eco-friendly and do not harm the environment."
             },
             {
-              "q": "What is agritourism?",
-              "a": "Agritourism is an emerging business/tourism model in which agricultural land is developed with fruit trees, ornamental and medicinal plants (often produced via tissue culture), organic vegetable/fruit gardens and related attractions, drawing visitors who can also purchase plantlets, fruits and vegetables from the centre."
-            },
-            {
-              "q": "Explain the structure and function of xylem tissue.",
-              "a": "Xylem is a complex permanent plant tissue made up of dead, thick-walled cells (tracheids, vessels, and xylem fibres) as well as some living xylem parenchyma cells.<br>Its cells are structured like interconnected tubes, forming a continuous conducting pathway.<br>Xylem conducts water and dissolved minerals from the roots to all parts of the plant only in the upward direction, and also provides mechanical support to the plant body."
-            },
-            {
-              "q": "Explain any three uses of tissue culture technique in agriculture/floriculture.",
-              "a": "1.<br>Tissue culture allows plants that bear flowers or fruits of excellent quality to be grown/multiplied on a large scale in a relatively short time. 2.<br>It enables the production of disease-free (especially virus-free) plantlets, since plantlets grown from meristem tissue culture are typically free of viral infections present in the parent plant. 3.<br>It allows propagation of plants (such as orchids or the pitcher plant) that do not germinate easily from seeds, and helps preserve and protect rare or endangered plant species from extinction by growing them under controlled, sterile laboratory conditions."
-            },
-            {
-              "q": "Explain the classification and function of animal muscular tissue (striated, non-striated and cardiac).",
-              "a": "Striated (skeletal) muscles are long, cylindrical, multinucleate cells with alternate dark and light bands, attached to bones;<br>their movements are voluntary (under conscious control), enabling movements like running and speaking.<br>Non-striated (smooth) muscles are short, spindle-shaped, uninucleate cells without bands, found in the alimentary canal and blood vessels;<br>their movements are involuntary, controlling processes like digestion.<br>Cardiac muscles are cylindrical, uninucleate, branched cells with bands, found only in the heart;<br>their contraction and relaxation is rhythmic and involuntary, driving the heartbeat throughout life."
-            },
-            {
-              "q": "Explain, with examples, the impact of biotechnology on agricultural management, particularly the role of Genetically Modified (GM) crops.",
-              "a": "Biotechnology has significantly transformed agricultural management through techniques like genetic engineering and tissue culture, aimed at improving crop yield, quality and resilience.<br>Genetically Modified (GM) crops are produced by deliberately introducing changes into the DNA of natural crop varieties, creating new varieties not normally found in nature, with specific useful characteristics.<br>GM crops offer several agricultural benefits: (1) they can be engineered to withstand environmental stresses such as fluctuating temperatures, drought, or unfavourable climatic conditions, which naturally occurring varieties may not tolerate;<br>(2) many GM crops are resistant to insect pests, pathogens, and chemical weedicides, reducing the need for harmful pesticide use and its associated environmental damage;<br>(3) GM seeds often result in improved nutritive value of the produce and reduced crop losses due to pests or disease.<br>Examples of high-yielding GM crop varieties now cultivated worldwide include maize (MON 810, MON 863), potato (Amflora), rice (Golden Rice), soybean (Vistive Gold), tomato (Vaishali), and BT cotton (pest-resistant).<br>Due to these advantages, GM crop cultivation is expanding globally, contributing to what is described as a 'green evolution,' helping countries with large populations, such as India, produce sufficient food grains to meet the demands of their people.<br>Additionally, tissue culture techniques allow rapid, large-scale multiplication of high-quality, disease-free plantlets for nurseries, afforestation projects and floriculture, further supporting sustainable agricultural development."
-            },
-            {
-              "q": "Explain the four main types of animal epithelial tissue with their location and function, and state why epithelial tissue is considered a simple tissue.",
-              "a": "Epithelial tissue forms protective coverings in the body, with cells closely packed to form continuous layers, separated from underlying tissues by a fibrous membrane;<br>it is considered a simple tissue because it is made up of only one type of cell.<br>Types include: (1) Squamous epithelium – found lining the mouth, oesophagus, blood vessels and alveoli;<br>made of thin, flat cells forming a semi-permeable membrane, functioning in selective transport of substances. (2) Stratified epithelium – found in the outer layer of skin;<br>made of many layers of cells, functioning to prevent wear and protect underlying organs from damage, friction and pathogens. (3) Glandular epithelium – found in the inner layer of skin and various glands;<br>cells contain vesicles packed with secretory material, functioning in secretion of sweat, oil (sebum), mucus, and other substances. (4) Columnar epithelium – found lining the intestine and alimentary canal;<br>made of tall, column-like cells, often with folds to increase surface area, functioning in secretion of digestive juices and absorption of nutrients.<br>Other types include ciliated epithelium (in the respiratory tract, pushing mucus and air forward via hair-like projections) and cuboidal epithelium (in kidney tubules and salivary glands, involved in reabsorption and secretion).<br>Since each of these types is made of a single kind of cell performing a defined, uniform structural or functional role (unlike, say, blood, which contains multiple distinct cell types), epithelial tissue is classified as a simple tissue."
+              "q": "What ethical concerns are associated with biotechnology?",
+              "a": "Biotechnology may lead to misuse of genetic technology, unknown health risks from GMOs and environmental concerns from releasing modified organisms."
             }
           ]
         },
@@ -1713,44 +1373,24 @@
           ],
           "practice": [
             {
-              "q": "State the range of wavelengths of visible light.",
-              "a": "Visible light rays have wavelengths ranging from 400 nm to 800 nm.<br>Our eyes can detect only this range of the electromagnetic spectrum;<br>other radiations like radio waves, infrared, ultraviolet, X-rays and gamma rays are invisible to the naked eye."
+              "q": "Name three types of telescopes and state what each uses to collect light.",
+              "a": "Optical telescope — lenses or mirrors. Reflecting telescope — mirrors. Radio telescope — radio waves."
             },
             {
-              "q": "What is a refracting telescope? State one difficulty in using it.",
-              "a": "A refracting telescope is an optical telescope made using two or more lenses (an objective lens and an eyepiece);<br>light rays change direction (refract) as they pass through the lenses, hence the name.<br>Difficulty: it is very hard to make very large objective lenses, and large lenses are heavy and tend to get distorted, limiting the telescope's light-gathering power."
+              "q": "Why is a space telescope better than a ground-based telescope?",
+              "a": "Space telescopes are outside Earth's atmosphere, so they are not affected by atmospheric disturbances, pollution or weather, giving much clearer images."
             },
             {
-              "q": "Name the two main types of reflecting telescopes.",
-              "a": "The two main types of reflecting telescopes are the Newtonian telescope and the Cassegrain telescope.<br>Both use a large concave mirror to collect and focus light, avoiding the difficulties associated with large lenses in refracting telescopes."
+              "q": "Name three uses of artificial satellites.",
+              "a": "Communication, weather forecasting and GPS navigation."
             },
             {
-              "q": "What is a radio telescope used for?",
-              "a": "A radio telescope is used to receive radio waves emitted by heavenly objects (which cannot be seen with the eye), using large parabolic dishes that reflect and focus the incoming radio waves onto a receiver;<br>the collected data is analysed by a computer to construct an image or study the source, e.g.<br>GMRT near Pune."
+              "q": "What is the Milky Way?",
+              "a": "The Milky Way is the galaxy in which our Solar System is located. It is a vast collection of stars, planets, gas and dust held together by gravity."
             },
             {
-              "q": "Why are space telescopes like Hubble more effective than ground-based optical telescopes?",
-              "a": "Space telescopes, placed above the earth's atmosphere, avoid problems faced by ground-based telescopes such as absorption/scattering of light by the atmosphere, image-shaking turbulence caused by changes in atmospheric temperature/pressure, and interference from daylight, city lights, or cloudy weather, resulting in much brighter, clearer and steadier images."
-            },
-            {
-              "q": "Explain the difficulties faced while using ground-based (refracting) optical telescopes and how reflecting telescopes overcome some of these difficulties.",
-              "a": "Ground-based refracting telescopes face several difficulties: (1) very large objective lenses are difficult to manufacture, and being heavy, they tend to distort under their own weight;<br>(2) since the objective and eyepiece lie at opposite ends, increasing lens size increases the telescope's overall length, making it unwieldy;<br>(3) images formed by lenses suffer from chromatic aberration (colour errors).<br>Reflecting telescopes, which use large concave mirrors instead of lenses to collect light, overcome these problems because large mirrors are comparatively easier to manufacture (they can even be built by combining smaller pieces), are lighter than equivalently sized lenses, and produce images free from colour errors, since reflection (unlike refraction) does not depend on wavelength."
-            },
-            {
-              "q": "Explain the working of a Newtonian reflecting telescope.",
-              "a": "In a Newtonian telescope, incoming light rays from a distant celestial object are reflected by a large concave mirror at the base of the telescope tube.<br>Before these reflected rays can converge at the mirror's focus, they are intercepted and redirected by a small flat (plane) mirror placed at an angle inside the tube.<br>This deflected light is focused at a point on the side of the telescope tube, perpendicular to its main axis, where an eyepiece is fitted.<br>The eyepiece magnifies this focused image, allowing the observer to view a bright, magnified image of the celestial source."
-            },
-            {
-              "q": "Describe the Giant Meterwave Radio Telescope (GMRT) and explain why it is called a 'giant' telescope.",
-              "a": "The GMRT, located at Narayangaon near Pune, is a large radio telescope built by Indian scientists and engineers, used to study heavenly bodies (planets, stars, pulsars, supernovae, interstellar hydrogen clouds, etc.) by detecting radio waves of about a metre wavelength coming from them.<br>It consists of an array of 30 individual dish antennas, each 45 m in diameter, spread over an area up to 25 km across.<br>It is called a 'giant' telescope because, through careful arrangement and combination of signals from all 30 dishes, the telescope effectively performs like a single radio dish having a diameter of 25 km — something impossible to construct as one physical dish — giving astronomers data equivalent to that from an enormous single-dish telescope, at a fraction of the cost, making GMRT a world-class research facility."
-            },
-            {
-              "q": "Explain the various types of electromagnetic radiation on the basis of wavelength, and describe why different types of telescopes (optical, radio, X-ray) are needed to study heavenly bodies.",
-              "a": "Light is a form of electromagnetic wave, and the electromagnetic spectrum consists of a wide range of radiations differing in wavelength, most of which are invisible to the human eye.<br>In order of increasing wavelength: gamma rays (shorter than 3 pm), X-rays (3 pm to 300 pm), ultraviolet rays (300 pm to 400 nm), visible light (400 nm to 800 nm), infrared waves (800 nm to 0.3 mm), microwaves (0.3 mm to 20 cm), and radio waves (longer than about 20 cm).<br>Our eyes can detect only the visible light portion of this spectrum;<br>hence ordinary optical telescopes (refracting or reflecting, made of lenses or mirrors) can only detect and image this narrow band of radiation coming from stars, planets and galaxies.<br>However, many heavenly bodies emit large amounts of radiation outside the visible range — for example, radio waves from pulsars and interstellar gas clouds, X-rays from extremely hot regions near black holes or neutron stars, and gamma rays from highly energetic cosmic events.<br>To detect and study these other forms of radiation (which our eyes and ordinary optical telescopes cannot sense), scientists have developed specialized telescopes: radio telescopes, using large parabolic dishes to collect and focus radio waves onto a receiver (e.g.<br>GMRT);<br>X-ray telescopes, using specially designed mirrors capable of reflecting X-rays, since ordinary mirrors do not reflect X-rays effectively (e.g. the Chandra X-ray telescope);<br>and similarly dedicated instruments for gamma-ray or ultraviolet observations (e.g.<br>Astrosat).<br>Since each type of radiation carries different information about the physical processes occurring in celestial objects, using a combination of these various telescopes gives astronomers a much more complete picture of the universe than would be possible using only visible light."
-            },
-            {
-              "q": "Describe the achievements and importance of the Indian Space Research Organisation (ISRO), including its satellite programmes and the Astrosat mission.",
-              "a": "The Indian Space Research Organisation (ISRO), established in 1969 and headquartered in Bengaluru, was set up with the aim of developing technology for designing, building and launching artificial satellites, and has since become one of the most successful scientific programmes of independent India, playing a significant role in the nation's technological and social development.<br>ISRO has launched numerous satellites across several important series: the INSAT and GSAT series of satellites support India's telecommunication network, television broadcasting, and meteorological (weather-monitoring) services, making telephone, television and internet services accessible even in remote parts of the country;<br>the EDUSAT satellite, part of this series, is dedicated exclusively to supporting educational broadcasting and distance learning;<br>and the IRS (Indian Remote Sensing) satellite series is used for monitoring and management of natural resources, agriculture, and disaster management, providing critical data during floods, cyclones and other calamities.<br>In 2015, ISRO achieved a significant milestone by launching Astrosat, India's first dedicated multi-wavelength space observatory, equipped with ultraviolet and X-ray telescopes and detectors, most of whose components were indigenously manufactured.<br>Astrosat is unique in having different kinds of telescopes mounted on a single satellite platform, enabling Indian scientists to simultaneously study various aspects of the universe (such as stars, galaxies and other cosmic phenomena) across different wavelengths, greatly enhancing India's capability for independent space-based astronomical research and cementing ISRO's reputation as a globally respected space research organisation."
+              "q": "How has space research benefited everyday life?",
+              "a": "Space research has led to satellite technology used for TV broadcasts, GPS navigation, weather forecasting, disaster management and scientific discoveries."
             }
           ]
         }

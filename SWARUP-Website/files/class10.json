@@ -58,29 +58,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "State Newton's law of gravitation and write its mathematical formula, explaining each term.",
-              "a": "Newton's law of gravitation states that every object in the universe attracts every other object with a force directly proportional to the product of their masses and inversely proportional to the square of the distance between them, acting along the line joining the two objects.<br>F = G·m₁m₂/r²<br>where F is the gravitational force, m₁ and m₂ are the masses of the two objects, r is the distance between their centres, and G is the universal gravitational constant (G = 6.67×10⁻¹¹ N m²/kg²)."
+              "q": "State Kepler's three laws of planetary motion.",
+              "a": "First: Planets move in elliptical orbits with Sun at one focus. Second: Equal areas swept in equal time. Third: Square of time period ∝ cube of mean distance."
             },
             {
-              "marks": 3,
-              "q": "Calculate the gravitational force of attraction between two objects of mass 75 kg and 80 kg kept at a distance of 2 m from each other. (G = 6.67×10⁻¹¹ N m²/kg²)",
-              "a": "F = G·m₁m₂/r²<br>= (6.67×10⁻¹¹ × 75 × 80) / (2)²<br>= (6.67×10⁻¹¹ × 6000) / 4<br>= 4.002×10⁻⁷ / 4<br>= 1.0005×10⁻⁷ N<br>Hence, the gravitational force is approximately 1×10⁻⁷ N."
+              "q": "What is the difference between mass and weight?",
+              "a": "Mass is the amount of matter in an object and does not change with location. Weight is the gravitational force on an object and changes with location."
             },
             {
-              "marks": 3,
-              "q": "A ball falls off a table and reaches the ground in 1 s. Taking g = 10 m/s², calculate its speed on reaching the ground and the height of the table.",
-              "a": "Using v = u + gt, with u = 0:<br>v = 0 + 10×1 = 10 m/s<br>Using s = ut + ½gt²:<br>s = 0 + ½×10×(1)²<br>s = 5 m<br>Hence, the speed on reaching the ground is 10 m/s and the height of the table is 5 m."
+              "q": "Why does the Moon not fall towards the Earth despite gravitational attraction?",
+              "a": "The Moon's orbital velocity provides centripetal force that keeps it in orbit around the Earth."
             },
             {
-              "marks": 5,
-              "q": "State Kepler's three laws of planetary motion. Using Kepler's third law, show that if a planet's distance from the star doubles, its period of revolution becomes 2√2 times the original.",
-              "a": "Kepler's three laws are:<br>1. Law of Orbits: Every planet revolves around the Sun in an elliptical orbit with the Sun at one focus.<br>2. Law of Areas: The line joining the planet and the Sun sweeps equal areas in equal intervals of time.<br>3. Law of Periods: The square of the period of revolution of a planet is directly proportional to the cube of the semi-major axis of its orbit, i.e., T² ∝ R³.<br>Proof: Let the period at distance R be T, so T² = kR³.<br>At distance 2R, let the period be T'.<br>T'² = k(2R)³ = 8kR³ = 8T²<br>T' = √8 × T = 2√2 T<br>Hence, the period of revolution becomes 2√2 times the original period."
+              "q": "How does altitude affect the value of g?",
+              "a": "g decreases as altitude increases because gravitational force decreases with distance from Earth's centre."
             },
             {
-              "marks": 5,
-              "q": "Derive the escape velocity of an object from the surface of a planet and use it to calculate the escape velocity from the moon. (Mass of moon = 7.34×10²² kg, radius of moon = 1.74×10⁶ m, G = 6.67×10⁻¹¹ N m²/kg²)",
-              "a": "Derivation: For an object of mass m to escape a planet's gravity, its kinetic energy must equal the magnitude of gravitational potential energy at the surface.<br>½mv²esc = GMm/R<br>v²esc = 2GM/R<br>vesc = √(2GM/R)<br>Calculation for the moon:<br>vesc = √(2 × 6.67×10⁻¹¹ × 7.34×10²² / 1.74×10⁶)<br>= √(9.795×10¹² / 1.74×10⁶)<br>= √(5.629×10⁶)<br>= 2372 m/s ≈ 2.37 km/s<br>Hence, the escape velocity on the surface of the moon is approximately 2.37 km/s."
+              "q": "Name three uses of artificial satellites.",
+              "a": "Communication, weather forecasting and GPS navigation."
             }
           ]
         },
@@ -136,29 +131,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "State Mendeleev's Periodic Law and mention two achievements of Mendeleev's periodic table.",
-              "a": "Mendeleev's Periodic Law states that the physical and chemical properties of elements are a periodic function of their atomic masses.<br>Achievements: (i) Mendeleev left gaps for undiscovered elements and successfully predicted their properties (e.g., eka-silicon, later discovered as germanium).<br>(ii) It helped correct the atomic masses of some elements based on their expected position in the table."
+              "q": "What are the limitations of Mendeleev's periodic table?",
+              "a": "Hydrogen could not be placed properly. Isotopes of the same element had to be placed in different positions. Some elements with similar properties were placed in different groups."
             },
             {
-              "marks": 3,
-              "q": "State the modern periodic law and explain how it removed the anomalies of Mendeleev's periodic table.",
-              "a": "The Modern Periodic Law states that the physical and chemical properties of elements are a periodic function of their atomic numbers.<br>This removed anomalies such as the placement of pairs like argon-potassium and cobalt-nickel, where Mendeleev's table (based on atomic mass) placed the heavier element before the lighter one; arranging elements by atomic number instead resolved these inconsistencies."
+              "q": "How does metallic character change across a period and down a group?",
+              "a": "Metallic character decreases across a period and increases down a group."
             },
             {
-              "marks": 3,
-              "q": "Explain the trend in atomic radius on moving (i) across a period and (ii) down a group in the modern periodic table.",
-              "a": "(i) Across a period (left to right): Atomic radius decreases because the nuclear charge increases while the number of shells remains the same, pulling electrons closer to the nucleus.<br>(ii) Down a group (top to bottom): Atomic radius increases because a new shell of electrons is added at each step, increasing the distance between the nucleus and the outermost electrons."
+              "q": "Who prepared the first successful periodic table and how did he arrange elements?",
+              "a": "Dmitri Mendeleev prepared the first successful periodic table by arranging elements in order of increasing atomic masses."
             },
             {
-              "marks": 5,
-              "q": "Describe the arrangement of elements in the Modern Periodic Table in terms of periods and groups, and explain the periodicity of valency with an example.",
-              "a": "The Modern Periodic Table has 7 horizontal rows called periods and 18 vertical columns called groups.<br>Period number indicates the number of shells in an atom, while elements in the same group have the same number of valence electrons and hence similar chemical properties.<br>Valency shows periodicity: e.g., in period 3, sodium (Na, group 1) has valency 1, magnesium (Mg, group 2) has valency 2, aluminium (Al, group 13) has valency 3, silicon (Si, group 14) has valency 4, and the valency pattern first rises then falls as we move toward groups 17 and 18.<br>This repeating pattern of valency across periods is called periodicity."
+              "q": "What is the difference between a period and a group in the periodic table?",
+              "a": "A period is a horizontal row where atomic number increases across it. A group is a vertical column where elements have the same number of valence electrons."
             },
             {
-              "marks": 5,
-              "q": "Explain the trends in metallic and non-metallic character across a period and down a group with reasons.",
-              "a": "Across a period (left to right): Metallic character decreases and non-metallic character increases, because atomic size decreases and the tendency to lose electrons decreases while the tendency to gain electrons increases.<br>Down a group (top to bottom): Metallic character increases and non-metallic character decreases, because atomic size increases and the outer electrons are held less strongly, favouring easier loss of electrons.<br>Hence elements on the left side and bottom of the periodic table tend to be metals, while those on the top right tend to be non-metals."
+              "q": "Why do elements in the same group show similar properties?",
+              "a": "Because they have the same number of valence electrons and similar electronic configurations."
             }
           ]
         },
@@ -215,29 +205,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Balance the following chemical equation and identify its type: Fe + H2O → Fe3O4 + H2",
-              "a": "Balancing:<br>3Fe + 4H2O → Fe3O4 + 4H2<br>Check: Fe: 3=3; H: 8=8; O: 4=4. Balanced.<br>This is a combination as well as a redox reaction (iron is oxidised, hydrogen from water is reduced)."
+              "q": "Give one example each of combination and decomposition reactions.",
+              "a": "Combination: 2Mg + O₂ → 2MgO. Decomposition: CaCO₃ → CaO + CO₂ (thermal)."
             },
             {
-              "marks": 3,
-              "q": "What is a redox reaction? Identify the oxidation and reduction parts in the reaction: CuO + H2 → Cu + H2O",
-              "a": "A redox reaction is a reaction in which oxidation and reduction occur simultaneously; one reactant loses electrons (is oxidised) and another gains electrons (is reduced).<br>In CuO + H2 → Cu + H2O:<br>H2 is oxidised to H2O (gains oxygen).<br>CuO is reduced to Cu (loses oxygen)."
+              "q": "What is the difference between displacement and double displacement reactions?",
+              "a": "In displacement, one element replaces another in a compound. In double displacement, ions of two compounds exchange places."
             },
             {
-              "marks": 3,
-              "q": "Distinguish between exothermic and endothermic reactions with one example each.",
-              "a": "Exothermic reaction: A reaction in which heat is released to the surroundings; e.g., burning of natural gas (CH4 + 2O2 → CO2 + 2H2O + heat).<br>Endothermic reaction: A reaction in which heat is absorbed from the surroundings; e.g., decomposition of calcium carbonate on heating (CaCO3 + heat → CaO + CO2)."
+              "q": "How does galvanisation prevent rusting?",
+              "a": "Galvanisation coats iron with zinc. Zinc is more reactive and reacts preferentially with air and moisture, protecting the iron underneath."
             },
             {
-              "marks": 5,
-              "q": "Explain with examples the four types of chemical reactions: combination, decomposition, displacement, and double displacement.",
-              "a": "(i) Combination reaction: Two or more substances combine to form a single product.<br>Example: CaO + H2O → Ca(OH)2<br>(ii) Decomposition reaction: A single compound breaks down into two or more simpler substances, often on heating, by electricity, or by light.<br>Example: 2H2O →(electrolysis)→ 2H2 + O2<br>(iii) Displacement reaction: A more reactive element displaces a less reactive element from its compound.<br>Example: Fe + CuSO4 → FeSO4 + Cu<br>(iv) Double displacement reaction: Two compounds exchange ions to form two new compounds, often producing a precipitate.<br>Example: Na2SO4 + BaCl2 → BaSO4↓ + 2NaCl"
+              "q": "Define corrosion and give one example.",
+              "a": "Corrosion is the slow destruction of metals due to reaction with the environment. Example: rusting of iron."
             },
             {
-              "marks": 5,
-              "q": "What is corrosion? Explain the process of rusting of iron and state two methods to prevent it.",
-              "a": "Corrosion is the gradual deterioration of a metal due to reaction with substances in its surroundings, such as moisture, air, and acids.<br>Rusting of iron: Iron reacts with oxygen in the presence of moisture to form hydrated iron(III) oxide, commonly called rust.<br>4Fe + 3O2 + xH2O → 2Fe2O3.xH2O (rust)<br>Prevention methods: (i) Painting or applying oil/grease on the iron surface to prevent contact with moisture and air.<br>(ii) Galvanising, i.e., coating iron with a layer of zinc, which corrodes preferentially and protects the iron underneath."
+              "q": "State the Law of Conservation of Mass.",
+              "a": "Mass can neither be created nor destroyed during a chemical reaction. Total mass of reactants equals total mass of products."
             }
           ]
         },
@@ -296,29 +281,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Heat energy is produced in a resistor at the rate of 100 W when a current of 3 A flows through it. Find the value of the resistance.",
-              "a": "Power, P = I²R<br>100 = (3)² × R<br>100 = 9R<br>R = 100/9<br>R ≈ 11.1 Ω<br>Hence, the resistance is approximately 11 Ω."
+              "q": "What is the difference between series and parallel connections of resistors?",
+              "a": "In series: same current flows, R_total = R₁+R₂+R₃. In parallel: same voltage, 1/R = 1/R₁+1/R₂+1/R₃."
             },
             {
-              "marks": 3,
-              "q": "Two tungsten bulbs of wattage 100 W and 60 W are connected in parallel across a 220 V supply. Find the current flowing in the main conductor.",
-              "a": "Current through 100 W bulb: I1 = P/V = 100/220 = 0.4545 A<br>Current through 60 W bulb: I2 = P/V = 60/220 = 0.2727 A<br>Since the bulbs are in parallel, total current = I1 + I2<br>I = 0.4545 + 0.2727<br>I ≈ 0.72 A<br>Hence, the current in the main conductor is about 0.72 A."
+              "q": "What is a short circuit and what danger does it pose?",
+              "a": "A short circuit occurs when live and neutral wires touch directly, causing a sudden large current that may damage appliances or cause a fire."
             },
             {
-              "marks": 3,
-              "q": "State Ohm's law and write the mathematical relationship among electric current, potential difference and resistance.",
-              "a": "Ohm's law states that the current flowing through a conductor is directly proportional to the potential difference across its ends, provided the temperature and other physical conditions remain constant.<br>V = IR<br>where V is the potential difference, I is the current, and R is the resistance of the conductor."
+              "q": "How does an electric generator work?",
+              "a": "An electric generator converts mechanical energy into electrical energy using the principle of electromagnetic induction."
             },
             {
-              "marks": 5,
-              "q": "Explain the heating effect of electric current and derive the expression for electrical energy consumed in terms of power and time. Also calculate the electricity bill for an electric iron of 1100 W operated for 2 hours daily for the month of April (30 days), if the cost per unit is ₹5.",
-              "a": "Heating effect: When current flows through a conductor having resistance, part of the electrical energy is converted into heat energy due to collisions between the flowing electrons and the atoms of the conductor; this is called the heating effect of current.<br>The heat produced is given by Joule's law: H = I²Rt<br>Electrical energy consumed, W = Power × time = P × t<br>Calculation:<br>Energy used per day = 1100 W × 2 h = 2200 Wh = 2.2 kWh<br>Energy used in April (30 days) = 2.2 × 30 = 66 kWh<br>Cost = 66 × ₹5 = ₹330<br>Hence, the electricity bill for the iron in April will be ₹330."
+              "q": "What is overloading? How can it be prevented?",
+              "a": "Overloading occurs when too many appliances draw current from the same circuit. Prevented by using MCBs and not connecting too many devices to one socket."
             },
             {
-              "marks": 5,
-              "q": "What is a solenoid? Describe the nature of the magnetic field produced by a current-carrying solenoid and compare it with that of a bar magnet.",
-              "a": "A solenoid is a coil of many circular turns of insulated copper wire wound closely in the form of a cylinder.<br>When current flows through a solenoid, it produces a magnetic field similar to that of a bar magnet, with one end behaving as the north pole and the other as the south pole.<br>Inside the solenoid, the magnetic field lines are parallel to its axis and are nearly uniform, showing that the field is fairly strong and uniform inside, similar to the field between the poles of a bar magnet.<br>Outside the solenoid, the field lines emerge from one end (like the north pole of a bar magnet) and curve around to enter the other end (like the south pole), matching the pattern of field lines around a bar magnet."
+              "q": "Calculate heat produced when a current of 2A flows through a 5Ω resistor for 10 seconds.",
+              "a": "H = I²Rt = 2² × 5 × 10 = 200 J."
             }
           ]
         },
@@ -374,29 +354,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Define latent heat. Equal amounts of heat are given to two objects A and B of mass 1 g each; the temperature of A rises by 3°C and that of B rises by 5°C. Which object has greater specific heat capacity, and by what factor?",
-              "a": "Latent heat is the heat energy absorbed or released by a substance during a change of state at constant temperature, without any change in temperature.<br>Since equal heat Q is given to equal masses:<br>Q = m·cA·ΔTA = m·cB·ΔTB<br>cA × 3 = cB × 5<br>cA/cB = 5/3<br>Since cA > cB, object A has greater specific heat capacity, and it is 5/3 times that of B."
+              "q": "What is the difference between conduction and convection?",
+              "a": "Conduction transfers heat without particle movement (mainly solids). Convection transfers heat through actual particle movement (liquids and gases)."
             },
             {
-              "marks": 3,
-              "q": "How many grams of ammonia (latent heat of vaporisation = 341 cal/g) must evaporate to convert 2 kg of water at 20°C into ice at 0°C? (Specific heat of water = 1 cal/g°C, latent heat of fusion of ice = 80 cal/g)",
-              "a": "Step 1 - Cooling water from 20°C to 0°C:<br>Q1 = mcΔT = 2000 × 1 × 20 = 40000 cal<br>Step 2 - Freezing water into ice at 0°C:<br>Q2 = mL = 2000 × 80 = 160000 cal<br>Total heat to be removed, Q = Q1 + Q2 = 40000 + 160000 = 200000 cal<br>Let mass of ammonia evaporated = m grams<br>m × 341 = 200000<br>m = 200000/341<br>m ≈ 586.5 g<br>Hence, approximately 586.4 g of ammonia must evaporate."
+              "q": "Why does ice float on water?",
+              "a": "Ice is less dense than liquid water because of its open crystal structure. Since density of ice < water, it floats."
             },
             {
-              "marks": 3,
-              "q": "State the principle used to measure the specific heat capacity of a substance using a calorimeter, and write its mathematical form.",
-              "a": "The method uses the principle of Calorimetry, which states that heat lost by the hot object is equal to the heat gained by the cold object, provided no heat is lost to the surroundings.<br>Heat lost by hot object = Heat gained by cold object<br>m1c1(T1 − T) = m2c2(T − T2)<br>where m1, c1, T1 are the mass, specific heat and initial temperature of the hot object, m2, c2, T2 are those of the cold object, and T is the common final temperature."
+              "q": "How does a thermos flask minimise heat transfer?",
+              "a": "Its double-walled structure with vacuum between walls stops convection and conduction. Silver coating on walls reduces radiation."
             },
             {
-              "marks": 5,
-              "q": "A thermally insulated pot has 150 g of ice at 0°C. How much steam at 100°C must be mixed with it so that the resulting mixture is water at 50°C? (Latent heat of fusion of ice = 80 cal/g, latent heat of vaporisation of water = 540 cal/g, specific heat of water = 1 cal/g°C)",
-              "a": "Let mass of steam required = m grams.<br>Heat gained by ice to become water at 50°C:<br>Step 1 - Melting ice at 0°C: Q1 = 150 × 80 = 12000 cal<br>Step 2 - Heating melted ice from 0°C to 50°C: Q2 = 150 × 1 × 50 = 7500 cal<br>Total heat gained = 12000 + 7500 = 19500 cal<br>Heat lost by steam in cooling to water at 50°C:<br>Step 1 - Condensing steam at 100°C: Q3 = m × 540<br>Step 2 - Cooling condensed water from 100°C to 50°C: Q4 = m × 1 × 50 = 50m<br>Total heat lost = 540m + 50m = 590m<br>By the principle of calorimetry:<br>590m = 19500<br>m = 19500/590<br>m ≈ 33.05 g<br>Hence, approximately 33 g of steam is required."
+              "q": "Why is water used as a coolant in car engines?",
+              "a": "Water has a very high specific heat capacity, so it absorbs large amounts of heat without a significant rise in temperature."
             },
             {
-              "marks": 5,
-              "q": "Explain the anomalous behaviour of water and its significance for aquatic life in cold regions. Also explain the phenomenon of regelation.",
-              "a": "Anomalous behaviour of water: Unlike most substances that contract continuously on cooling, water contracts on cooling only until 4°C; below 4°C, it expands until it freezes at 0°C. Thus water has its maximum density at 4°C, not at its freezing point.<br>Significance for aquatic life: In cold regions, as surface water cools below 4°C, it becomes lighter and stays on top, eventually freezing into a layer of ice on the surface, while the water below (at about 4°C, its densest state) remains liquid. This ice layer insulates the water below, allowing aquatic organisms to survive under the ice even in extreme cold.<br>Regelation: Regelation is the phenomenon in which ice melts under high pressure and refreezes once the pressure is removed, because the melting point of ice decreases with increase in pressure; e.g., a wire with weights placed over a block of ice slowly cuts through it as the ice below the wire melts under pressure and refreezes above the wire once the pressure is released."
+              "q": "Explain sea breeze and land breeze using the concept of convection.",
+              "a": "Sea breeze: Land heats faster during day; hot air rises over land, cool sea air moves in. Land breeze: Sea cools slower at night; hot air rises over sea, cool land air moves towards sea."
             }
           ]
         },
@@ -452,29 +427,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Light travels with a velocity of 1.5×10⁸ m/s in a medium. On entering a second medium, its velocity becomes 0.75×10⁸ m/s. Find the refractive index of the second medium with respect to the first.",
-              "a": "Refractive index of medium 2 with respect to medium 1:<br>₁n₂ = V1/V2<br>= 1.5×10⁸ / 0.75×10⁸<br>= 2<br>Hence, the refractive index of the second medium with respect to the first is 2."
+              "q": "State Snell's two laws of refraction.",
+              "a": "First: Incident ray, refracted ray and normal are in the same plane. Second: sin i / sin r = constant (refractive index)."
             },
             {
-              "marks": 3,
-              "q": "The absolute refractive index of water is 1.36. Find the velocity of light in water. (Velocity of light in vacuum = 3×10⁸ m/s)",
-              "a": "n = V1/V2, where V1 is velocity in vacuum and V2 is velocity in water<br>1.36 = 3×10⁸ / V2<br>V2 = 3×10⁸ / 1.36<br>V2 ≈ 2.21×10⁸ m/s<br>Hence, the velocity of light in water is approximately 2.21×10⁸ m/s."
+              "q": "Why does the Sun appear above the horizon even before it actually rises?",
+              "a": "Due to atmospheric refraction. Light from the Sun bends as it passes through air layers of increasing density, making the Sun visible before it crosses the horizon."
             },
             {
-              "marks": 3,
-              "q": "State Snell's law of refraction. Prove that if the angle of incidence and angle of emergence of a ray of light passing through a glass slab are i and e, then i = e.",
-              "a": "Snell's law states that for a given pair of media, the ratio of the sine of the angle of incidence to the sine of the angle of refraction is constant, called the refractive index of the second medium with respect to the first.<br>Proof: Let a ray of light travelling in air enter a glass slab at angle of incidence i, refracting at angle r at the first surface.<br>At the first surface (air to glass): n = sin i / sin r ...(i)<br>Since the two surfaces of the slab are parallel, the ray strikes the second surface at the same angle r, and emerges at angle e.<br>At the second surface (glass to air): n = sin e / sin r ...(ii)<br>From (i) and (ii): sin i / sin r = sin e / sin r<br>∴ sin i = sin e<br>∴ i = e<br>Hence, the emergent ray is parallel to the incident ray, and the angle of emergence equals the angle of incidence."
+              "q": "What is the principle of optical fibres?",
+              "a": "Optical fibres work on total internal reflection. Light entering at the correct angle undergoes repeated total internal reflections and travels along the fibre without escaping."
             },
             {
-              "marks": 5,
-              "q": "Explain the phenomenon of the twinkling of stars and the advanced sunrise/delayed sunset due to atmospheric refraction.",
-              "a": "Twinkling of stars: The refractive index of the Earth's atmosphere keeps changing continuously because of variations in its density and temperature at different altitudes. Light from a star undergoes refraction repeatedly while passing through these varying layers before reaching our eyes, causing its apparent position and brightness to fluctuate rapidly. This apparent flickering is called the twinkling of stars.<br>Advanced sunrise and delayed sunset: The atmosphere is denser near the Earth's surface and rarer at higher altitudes, so light from the Sun bends (refracts) along a curved path, making the apparent position of the Sun higher than its actual position when near the horizon.<br>Because of this refraction, we can see the Sun about 2 minutes before it actually rises above the horizon, and continue to see it for about 2 minutes after it has actually set; hence sunrise appears advanced and sunset delayed."
+              "q": "How is the apparent depth of a pond different from its actual depth?",
+              "a": "Due to refraction, light from objects at the bottom bends away from normal as it exits the water, making the pond appear shallower than it actually is."
             },
             {
-              "marks": 5,
-              "q": "Explain how a rainbow is formed, describing the roles of refraction, dispersion, and total internal reflection of light.",
-              "a": "A rainbow is formed when sunlight falls on tiny water droplets suspended in the atmosphere after rain, and is observed opposite to the direction of the Sun.<br>Refraction: As sunlight enters a water droplet, it gets refracted, and being white light (a mixture of seven colours), it splits into its component colours because each colour has a slightly different refractive index in water.<br>Dispersion: This splitting of white light into its constituent colours (violet, indigo, blue, green, yellow, orange, red) due to differing amounts of bending is called dispersion.<br>Total internal reflection: The dispersed rays undergo total internal reflection at the back surface of the water droplet.<br>The internally reflected rays then refract again as they exit the droplet, spreading the colours out further.<br>Because of this combined effect occurring in millions of droplets, we see a bow of seven colours in the sky, called a rainbow."
+              "q": "Name three optical instruments that use refraction.",
+              "a": "Camera, microscope and telescope."
             }
           ]
         },
@@ -533,29 +503,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Define focal length and principal focus of a convex lens. Explain why a convex lens is called a converging lens.",
-              "a": "Principal focus (F) of a convex lens: When light rays parallel to the principal axis are incident on a convex lens, they converge at a point on the principal axis after refraction; this point is called the principal focus of the lens.<br>Focal length (f): The distance between the optical centre of the lens and its principal focus is called the focal length.<br>Since parallel rays falling on a convex lens converge (come together) at a point after refraction, this type of lens is called a converging lens."
+              "q": "What type of image does a concave lens always form?",
+              "a": "A concave lens always forms a virtual, erect and diminished image on the same side as the object."
             },
             {
-              "marks": 3,
-              "q": "A doctor prescribes a lens of power +1.5 D. Find the focal length of the lens. What type of lens is it and what defect of vision does it correct?",
-              "a": "Power, P = 1/f (f in metres)<br>1.5 = 1/f<br>f = 1/1.5<br>f = 0.67 m<br>Since the power is positive, the lens is a convex (converging) lens, used to correct farsightedness (hypermetropia)."
+              "q": "What is the difference between a convex and concave lens?",
+              "a": "A convex lens is thicker at the centre, converges light and can form real images. A concave lens is thinner at the centre, diverges light and always forms virtual images."
             },
             {
-              "marks": 3,
-              "q": "Three thin lenses of powers 2 D, 2.5 D and 1.7 D are kept in contact touching each other. Find the total power of the combination.",
-              "a": "For lenses in contact, total power = sum of individual powers<br>P = P1 + P2 + P3<br>P = 2 + 2.5 + 1.7<br>P = 6.2 D<br>Hence, the power of the combination is 6.2 D."
+              "q": "What is the power of a lens? How is it related to focal length?",
+              "a": "Power is the ability of a lens to converge or diverge light. P = 1/f (in metres). Unit: dioptre (D)."
             },
             {
-              "marks": 5,
-              "q": "A 5 cm high object is placed at a distance of 25 cm from a converging lens of focal length 10 cm. Determine the position, size, and nature of the image formed.",
-              "a": "Given: Object height, h1 = 5 cm; object distance, u = −25 cm; focal length, f = +10 cm (convex lens)<br>Using the lens formula: 1/v − 1/u = 1/f<br>1/v = 1/f + 1/u<br>1/v = 1/10 + 1/(−25)<br>1/v = 1/10 − 1/25<br>1/v = (5 − 2)/50<br>1/v = 3/50<br>v = 50/3<br>v ≈ 16.7 cm<br>Since v is positive, the image is formed on the opposite side of the lens from the object, i.e., it is a real image.<br>Magnification: m = v/u = 16.7/(−25) = −0.67<br>Also m = h2/h1<br>h2 = m × h1 = −0.67 × 5 = −3.3 cm<br>Since the height is negative, the image is inverted and real, with size 3.3 cm, formed at 16.7 cm from the lens."
+              "q": "A person cannot see distant objects clearly. Which defect does he have and how is it corrected?",
+              "a": "He has myopia (short-sightedness). It is corrected using a concave lens of suitable focal length."
             },
             {
-              "marks": 5,
-              "q": "An object kept 60 cm from a lens gives a virtual image 20 cm in front of the lens. Find the focal length of the lens, and state whether it is a converging or diverging lens.",
-              "a": "Given: Object distance, u = −60 cm<br>Since the image is virtual and formed in front of the lens (same side as object), v = −20 cm<br>Using the lens formula: 1/v − 1/u = 1/f<br>1/f = 1/(−20) − 1/(−60)<br>1/f = −1/20 + 1/60<br>1/f = (−3 + 1)/60<br>1/f = −2/60<br>1/f = −1/30<br>f = −30 cm<br>Since the focal length is negative, the lens is a diverging (concave) lens."
+              "q": "Name four optical instruments that use lenses.",
+              "a": "Camera, microscope, telescope and projector."
             }
           ]
         },
@@ -614,29 +579,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is an ore? Distinguish between an ore and a mineral.",
-              "a": "An ore is a naturally occurring mineral deposit from which a metal can be extracted profitably and conveniently.<br>Distinction: A mineral is any naturally occurring substance having a definite chemical composition, found in the earth's crust; not all minerals contain enough metal content to be extracted economically. An ore is specifically that mineral form from which the metal can be extracted profitably using existing technology."
+              "q": "Give the composition of stainless steel, brass and bronze.",
+              "a": "Stainless steel: iron, chromium, nickel. Brass: copper and zinc. Bronze: copper and tin."
             },
             {
-              "marks": 3,
-              "q": "Write the general steps involved in the extraction of a metal from its ore.",
-              "a": "The general steps in extraction of a metal from its ore are:<br>1. Crushing and grinding of the ore.<br>2. Concentration (enrichment) of the ore, to remove unwanted impurities called gangue.<br>3. Conversion of the concentrated ore into the metal oxide (roasting for sulphide ores, calcination for carbonate ores).<br>4. Reduction of the metal oxide to obtain the free metal.<br>5. Refining (purification) of the extracted metal."
+              "q": "Why are highly reactive metals extracted by electrolysis?",
+              "a": "Their compounds are too stable to be reduced by carbon or CO. Electrolysis provides the energy needed to break them down."
             },
             {
-              "marks": 3,
-              "q": "Explain the terms 'roasting' and 'calcination' with one example each.",
-              "a": "Roasting: The process of heating a sulphide ore strongly in the presence of excess air (oxygen) to convert it into the corresponding metal oxide.<br>Example: 2ZnS + 3O2 → 2ZnO + 2SO2<br>Calcination: The process of heating a carbonate or hydrated ore strongly in the absence (or limited supply) of air, so that the ore decomposes to release the metal oxide along with carbon dioxide or water vapour.<br>Example: ZnCO3 → ZnO + CO2"
+              "q": "What is the difference between roasting and calcination?",
+              "a": "Roasting heats sulphide ores in excess air. Calcination heats carbonate ores in limited or no air."
             },
             {
-              "marks": 5,
-              "q": "Explain the reactivity series of metals and describe how it helps in predicting displacement reactions.",
-              "a": "The reactivity series is an arrangement of common metals in decreasing order of their chemical reactivity, from the most reactive (like potassium and sodium) to the least reactive (like gold and platinum).<br>Metals higher in the series lose electrons more easily, react more vigorously with water, acids, and oxygen, and are extracted using methods like electrolysis.<br>Metals lower in the series are less reactive and are often found in their free (native) state in nature.<br>Use in predicting displacement: A metal higher in the reactivity series can displace a metal lower in the series from its salt solution or compound, since it has a greater tendency to lose electrons.<br>Example: Since iron is more reactive than copper, Fe + CuSO4 → FeSO4 + Cu occurs, but the reverse reaction does not."
+              "q": "Why is recycling of metals important?",
+              "a": "It conserves limited natural resources, saves energy required for extraction and reduces environmental pollution."
             },
             {
-              "marks": 5,
-              "q": "Explain the process of electrolytic refining of impure copper with a description of the electrodes, electrolyte, and the reactions occurring at each electrode.",
-              "a": "Electrolytic refining is used to obtain highly pure metal from an impure sample.<br>Setup: An impure copper rod is made the anode, a strip of pure copper is made the cathode, and an acidified solution of copper sulphate is used as the electrolyte.<br>Reaction at anode (impure copper): The impure copper dissolves into the electrolyte as copper ions.<br>Cu → Cu²⁺ + 2e⁻<br>Reaction at cathode (pure copper): Copper ions from the solution get deposited as pure copper.<br>Cu²⁺ + 2e⁻ → Cu<br>As current is passed, the impure anode gradually dissolves, and an equivalent amount of pure copper gets deposited on the cathode, while heavier impurities settle down as 'anode mud'.<br>This process yields copper of very high purity, suitable for use in electrical wiring."
+              "q": "What is electrolytic refining? What is deposited at the cathode?",
+              "a": "A process to purify metals using electrolysis. Pure metal is deposited at the cathode while impurities collect as anode mud."
             }
           ]
         },
@@ -694,29 +654,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is catenation? Explain why carbon shows the property of catenation to a very large extent.",
-              "a": "Catenation is the property of an element to form bonds with atoms of its own kind (self-linking), forming long chains, branched chains, or rings.<br>Carbon shows catenation to an exceptionally large extent because of the small size of the carbon atom and the strong C–C covalent bond formed, which makes chains of carbon atoms highly stable; this allows carbon to form millions of compounds, more than any other element."
+              "q": "What is the difference between saturated and unsaturated hydrocarbons?",
+              "a": "Saturated hydrocarbons (alkanes) contain only single bonds and are less reactive. Unsaturated hydrocarbons (alkenes/alkynes) contain double or triple bonds and are more reactive."
             },
             {
-              "marks": 3,
-              "q": "Write the general formula and one example each of alkanes, alkenes, and alkynes.",
-              "a": "Alkanes: General formula CnH2n+2; saturated hydrocarbons with only single bonds between carbon atoms.<br>Example: Methane, CH4<br>Alkenes: General formula CnH2n; unsaturated hydrocarbons containing at least one carbon-carbon double bond.<br>Example: Ethene, C2H4<br>Alkynes: General formula CnH2n−2; unsaturated hydrocarbons containing at least one carbon-carbon triple bond.<br>Example: Ethyne, C2H2"
+              "q": "What is a homologous series? Give an example.",
+              "a": "A group of compounds with the same functional group where successive members differ by –CH₂. Example: methane (CH₄), ethane (C₂H₆), propane (C₃H₈) — the alkane series."
             },
             {
-              "marks": 3,
-              "q": "Distinguish between saturated and unsaturated hydrocarbons, and state a chemical test to distinguish between them.",
-              "a": "Saturated hydrocarbons contain only single covalent bonds between carbon atoms (e.g., alkanes), while unsaturated hydrocarbons contain at least one double or triple bond between carbon atoms (e.g., alkenes and alkynes).<br>Chemical test: When bromine water (orange-coloured) is added to an unsaturated hydrocarbon, it gets decolourised quickly because the unsaturated hydrocarbon readily undergoes an addition reaction with bromine; a saturated hydrocarbon does not decolourise bromine water under normal conditions."
+              "q": "Write the reaction for esterification of ethanol and acetic acid.",
+              "a": "CH₃COOH + C₂H₅OH → CH₃COOC₂H₅ + H₂O (in presence of concentrated H₂SO₄)"
             },
             {
-              "marks": 5,
-              "q": "What are isomers? Explain the concept with the example of butane, and describe its two isomeric forms.",
-              "a": "Isomers are compounds having the same molecular formula but different structural arrangements of atoms, and hence different physical or chemical properties.<br>Example: Butane, C4H10, has two isomers.<br>(i) n-Butane (normal butane): a straight chain, CH3–CH2–CH2–CH3<br>(ii) Isobutane (2-methylpropane): a branched chain, with a central carbon atom attached to three CH3 groups and one H atom.<br>Both isomers have the same molecular formula, C4H10, but differ in the arrangement of carbon atoms, giving them different boiling points and other physical properties."
+              "q": "Name two uses of esters.",
+              "a": "Used as fragrances in perfumes and as flavouring agents in food industries."
             },
             {
-              "marks": 5,
-              "q": "Explain the nomenclature (IUPAC naming) of carbon compounds with the help of examples of a chain having a double bond and one having a functional group (alcohol).",
-              "a": "In IUPAC nomenclature, the name of a carbon compound is based on the number of carbon atoms in the longest chain and the type of bonding/functional group present.<br>Naming a compound with a double bond (alkene): The suffix '-ene' is used in place of '-ane'. For example, a chain of two carbon atoms with a double bond is named eth-ane → eth-ene, i.e., ethene (CH2=CH2).<br>Naming a compound with a functional group (alcohol, –OH group): The suffix '-ol' is added to the name of the corresponding hydrocarbon chain. For example, a chain of two carbon atoms with an –OH group is named ethane → ethanol, i.e., CH3–CH2–OH.<br>Thus, the number of carbons decides the root name (meth-, eth-, prop-, etc.), and the nature of bonding or functional group present decides the suffix used (-ane, -ene, -yne, -ol, etc.)."
+              "q": "What are the products of combustion of carbon compounds?",
+              "a": "Carbon dioxide, water and a large amount of heat energy."
             }
           ]
         },
@@ -774,29 +729,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is a satellite? Distinguish between a natural satellite and an artificial satellite.",
-              "a": "A satellite is any object that revolves around a larger celestial object (planet) due to the gravitational attraction of the larger object.<br>A natural satellite revolves around a planet naturally, without human intervention; e.g., the Moon is the natural satellite of the Earth.<br>An artificial satellite is a man-made object launched into space by humans to revolve around the Earth or another planet for specific purposes like communication, weather forecasting, or navigation."
+              "q": "Name the three Chandrayaan missions and their key achievements.",
+              "a": "Chandrayaan-1: discovered water on Moon. Chandrayaan-2: orbiter studying Moon. Chandrayaan-3: first soft landing near Moon's south pole."
             },
             {
-              "marks": 3,
-              "q": "What are the objectives of India's Chandrayaan missions to the Moon?",
-              "a": "The objectives of India's Chandrayaan missions include:<br>1. To study the topography, mineralogy, and chemical composition of the lunar surface.<br>2. To search for the presence of water molecules/ice on the Moon's surface, especially near the poles.<br>3. To gather scientific data to understand the origin and evolutionary history of the Moon.<br>4. To demonstrate India's technological capability in soft-landing a lander and rover on the lunar surface (in later missions)."
+              "q": "Name two types of satellites and their uses.",
+              "a": "Geostationary satellites: TV and communication. Polar satellites: weather forecasting and remote sensing."
             },
             {
-              "marks": 3,
-              "q": "What is meant by a geostationary satellite? State one use of such satellites.",
-              "a": "A geostationary satellite is an artificial satellite that revolves around the Earth in the same direction as the Earth's rotation, with a period of revolution equal to the Earth's period of rotation (24 hours); as a result, it appears stationary when viewed from a fixed point on the Earth.<br>Use: Geostationary satellites are used for communication purposes, such as television broadcasting and telecommunication, since a ground antenna can remain fixed in one direction, always pointing at the satellite."
+              "q": "Why is Mangalyaan considered a milestone for India?",
+              "a": "India's Mangalyaan reached Mars in its first attempt, making India the first Asian nation to achieve a successful Mars mission."
             },
             {
-              "marks": 5,
-              "q": "Describe India's Mangalyaan (Mars Orbiter Mission) and explain its scientific and technological significance.",
-              "a": "Mangalyaan, officially called the Mars Orbiter Mission (MOM), was launched by ISRO in November 2013 and successfully entered Mars' orbit in September 2014.<br>Scientific significance: The mission was designed to study the Martian surface, its mineral composition, and search for the presence of methane gas in the Martian atmosphere, which could indicate the possibility of past or present biological activity.<br>Technological significance: India became the first country to successfully reach Mars' orbit in its very first attempt, and did so at a significantly lower cost compared to similar missions by other countries, demonstrating India's cost-effective and reliable space technology capabilities.<br>This mission established India, through ISRO, as a major and capable player in interplanetary space exploration."
+              "q": "Name three uses of remote sensing satellites.",
+              "a": "Agriculture monitoring, disaster management and environmental studies."
             },
             {
-              "marks": 5,
-              "q": "Explain the role and importance of the Indian Space Research Organisation (ISRO) in India's space programme, mentioning some of the launch vehicles it has developed.",
-              "a": "ISRO (Indian Space Research Organisation) is India's national space agency, responsible for developing space technology and its applications for the country's benefit.<br>Role and importance: ISRO designs, develops, and launches satellites for communication, remote sensing, weather forecasting, navigation, and scientific research; it has enabled India to become largely self-reliant in space technology and to provide low-cost launch services to other countries as well.<br>Launch vehicles: ISRO has developed launch vehicles such as the Polar Satellite Launch Vehicle (PSLV), used for launching satellites into polar orbits, and the Geosynchronous Satellite Launch Vehicle (GSLV), used for launching heavier satellites into geostationary orbits.<br>Through missions like Chandrayaan, Mangalyaan, and the development of indigenous launch vehicles, ISRO has significantly contributed to India's scientific advancement and international standing in space research."
+              "q": "Why are space missions important for daily life?",
+              "a": "They improve communication, enable weather forecasting, support GPS navigation and help in disaster management."
             }
           ]
         },
@@ -856,29 +806,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Define heredity. Explain briefly the mechanism of hereditary changes.",
-              "a": "Heredity is the transmission of physical and mental characteristics (traits) from parents to their offspring through genes.<br>Mechanism: Genes located on chromosomes in the nucleus of a cell carry hereditary information in the form of DNA. During reproduction, half the chromosomes (and hence genes) come from each parent and combine in the offspring; this combination of genes from both parents determines the traits expressed in the offspring, leading to hereditary changes and variations between generations."
+              "q": "State Mendel's Law of Segregation.",
+              "a": "Allele pairs separate during gamete formation so each gamete receives only one allele for each gene."
             },
             {
-              "marks": 3,
-              "q": "What is a vestigial organ? Give two examples of vestigial organs in the human body and explain their significance as evidence for evolution.",
-              "a": "A vestigial organ is a body part that has lost its original function during the course of evolution but is still present in a reduced or non-functional form.<br>Examples: The vermiform appendix and the coccyx (tail bone) in humans.<br>Significance: These organs are functional in other related animals (e.g., the appendix helps in cellulose digestion in herbivorous animals), suggesting that humans share a common ancestry with these animals, providing anatomical evidence in support of the theory of evolution."
+              "q": "What is a monohybrid cross? What ratio does it give in F₂?",
+              "a": "A monohybrid cross involves one pair of contrasting characters. F₂ gives a 3:1 ratio of dominant to recessive traits."
             },
             {
-              "marks": 3,
-              "q": "Explain Darwin's theory of natural selection in brief.",
-              "a": "Darwin's theory of natural selection states that individuals within a species show variations, and those individuals whose variations make them better suited (adapted) to their environment survive and reproduce more successfully than others.<br>Over successive generations, these favourable traits get passed on to offspring and accumulate, while unfavourable traits are eliminated, gradually leading to the evolution of new species better suited to their environment; this process is popularly described as 'survival of the fittest.'"
+              "q": "What is the difference between homologous and analogous organs?",
+              "a": "Homologous organs have similar structure but different functions, indicating common ancestry. Analogous organs have different structures but similar functions."
             },
             {
-              "marks": 5,
-              "q": "Explain the process of protein synthesis through transcription and translation, mentioning the role of DNA, mRNA, and ribosomes.",
-              "a": "Protein synthesis occurs through two main processes: transcription and translation.<br>Transcription: The genetic information present in a segment of DNA (a gene) is copied onto a molecule of messenger RNA (mRNA) in the nucleus. This transfer of information from DNA to mRNA is called transcription.<br>The mRNA formed then moves out of the nucleus into the cytoplasm.<br>Translation: In the cytoplasm, the mRNA attaches to a ribosome. The ribosome reads the sequence of the mRNA in sets of three bases (codons), and transfer RNA (tRNA) molecules bring the specific amino acids corresponding to each codon.<br>These amino acids are joined together in the correct sequence to form a polypeptide chain (protein). This process is called translation.<br>Thus, DNA acts as the original information carrier, mRNA carries a copy to the ribosome, and the ribosome, with the help of tRNA, assembles the corresponding protein."
+              "q": "Explain how sex is determined in humans.",
+              "a": "Females are XX and males are XY. The mother always contributes X. If the father contributes X, the child is female (XX). If Y, the child is male (XY)."
             },
             {
-              "marks": 5,
-              "q": "Explain the theory of evolution and describe the different types of evidence that support it.",
-              "a": "The theory of evolution states that all species of living organisms have descended over successive generations from common ancestors through a gradual process of change, driven mainly by variations and natural selection.<br>Evidence supporting evolution:<br>1. Anatomical evidence: Similarities in the basic structure of organs (homologous organs) among different species, e.g., the forelimbs of a frog, lizard, bird, and human have the same basic bone structure though they serve different functions, indicating a common origin.<br>2. Evidence from fossils: Fossils are the preserved remains or impressions of organisms that lived in the past; they show a gradual change in the structure of organisms over long periods of geological time.<br>3. Embryological evidence: Embryos of different vertebrate species show striking similarities in their early developmental stages, suggesting a shared evolutionary origin.<br>4. Evidence from vestigial organs: The presence of non-functional or reduced organs that are functional in related species indicates common ancestry.<br>Together, these different lines of evidence strongly support the theory of evolution."
+              "q": "What evidence do fossils provide for evolution?",
+              "a": "Fossils show the preserved remains of organisms from different geological periods, demonstrating gradual changes in life forms over millions of years."
             }
           ]
         },
@@ -937,29 +882,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is respiration? Distinguish between aerobic and anaerobic respiration.",
-              "a": "Respiration is the biological process by which living organisms break down food (glucose) to release energy required for various life activities.<br>Aerobic respiration occurs in the presence of oxygen, completely breaks down glucose into carbon dioxide and water, and releases a large amount of energy.<br>Anaerobic respiration occurs in the absence of oxygen, incompletely breaks down glucose into substances like alcohol or lactic acid, and releases comparatively less energy."
+              "q": "Write the equation for photosynthesis.",
+              "a": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (in presence of sunlight and chlorophyll)"
             },
             {
-              "marks": 3,
-              "q": "Explain the role of digestive juices in the process of digestion of food.",
-              "a": "Digestive juices contain specific enzymes that break down complex food molecules into simpler, absorbable forms.<br>Saliva (from salivary glands) contains the enzyme amylase, which begins the breakdown of starch into sugars in the mouth.<br>Gastric juice (from the stomach) contains hydrochloric acid and the enzyme pepsin, which breaks down proteins.<br>Bile (from the liver) helps emulsify fats into smaller droplets, making them easier for enzymes to act upon.<br>Pancreatic juice (from the pancreas) contains enzymes that digest carbohydrates, proteins, and fats.<br>Intestinal juice (from the small intestine) completes the digestion of all types of food, converting them into simple absorbable molecules."
+              "q": "What is the role of hydrochloric acid in the stomach?",
+              "a": "HCl creates an acidic medium for digestive enzymes to work and also kills harmful microorganisms in food."
             },
             {
-              "marks": 3,
-              "q": "Explain the role of the circulatory system in the transport of materials required for energy production in the body.",
-              "a": "The circulatory system, consisting of the heart, blood vessels, and blood, transports digested food (nutrients) absorbed from the small intestine and oxygen absorbed by the lungs to all the cells of the body.<br>At the cellular level, these nutrients and oxygen are used by the mitochondria to release energy through respiration.<br>The circulatory system also transports the waste products of this energy-releasing process, such as carbon dioxide, to the lungs and other waste products to the excretory organs for removal from the body."
+              "q": "Name the four components of blood and their functions.",
+              "a": "Plasma (liquid medium), RBCs (carry oxygen), WBCs (immunity) and platelets (blood clotting)."
             },
             {
-              "marks": 5,
-              "q": "Describe the process of nutrition in human beings by explaining the roles of the main organs of the digestive system.",
-              "a": "Nutrition is the process by which an organism obtains and utilises food for growth, energy, and repair.<br>Mouth: Food is chewed by teeth and mixed with saliva containing amylase, which begins starch digestion.<br>Oesophagus: Carries the chewed food (bolus) from the mouth to the stomach through rhythmic muscular contractions called peristalsis.<br>Stomach: Gastric glands secrete gastric juice containing hydrochloric acid (which kills germs and provides an acidic medium) and the enzyme pepsin, which digests proteins.<br>Small intestine: Receives bile from the liver (which emulsifies fats) and pancreatic juice from the pancreas (which digests carbohydrates, fats and proteins); digestion is completed here by intestinal juices, and the digested nutrients are absorbed into the blood through the walls of the small intestine.<br>Large intestine: Absorbs water from the undigested food residue, and the remaining solid waste (faeces) is stored and eventually eliminated from the body through the anus.<br>Thus, the coordinated functioning of these organs ensures complete digestion, absorption, and utilisation of food."
+              "q": "What is the role of the kidneys?",
+              "a": "Kidneys filter blood, remove nitrogenous wastes and excess salts and water, and produce urine to maintain the body's internal balance."
             },
             {
-              "marks": 5,
-              "q": "Explain cell division as a life process and describe briefly the significance of mitosis and meiosis.",
-              "a": "Cell division is the biological process by which a single (parent) cell divides to form two or more (daughter) cells; it is essential for growth, repair, and reproduction in living organisms.<br>Mitosis: A type of cell division in which one cell divides to produce two daughter cells, each genetically identical to the parent cell and to each other, with the same number of chromosomes as the parent.<br>Significance of mitosis: It is responsible for growth of the body, replacement of damaged or worn-out cells, and repair of tissues.<br>Meiosis: A type of cell division that occurs during the formation of gametes (sex cells), in which the number of chromosomes is reduced to half of that in the parent cell.<br>Significance of meiosis: It ensures that when two gametes (sperm and egg) fuse during fertilisation, the resulting offspring has the normal (full) number of chromosomes, and it also introduces genetic variation among offspring."
+              "q": "Differentiate between arteries and veins.",
+              "a": "Arteries carry blood away from the heart at high pressure. Veins return blood to the heart and contain valves to prevent backflow."
             }
           ]
         },
@@ -1017,29 +957,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is meant by 'environmental management'? Why has it become necessary in the present times?",
-              "a": "Environmental management refers to the planned and systematic use, conservation, and protection of natural resources and the environment, in order to maintain ecological balance while meeting human needs.<br>It has become necessary because rapid industrialisation, urbanisation, population growth, and overexploitation of natural resources have led to problems such as pollution, deforestation, loss of biodiversity, and climate change, all of which threaten the sustainability of life on Earth; hence a scientific and planned approach to managing the environment is essential."
+              "q": "Name four major types of pollution and one cause of each.",
+              "a": "Air: vehicle emissions. Water: sewage. Soil: pesticides. Noise: heavy traffic."
             },
             {
-              "marks": 3,
-              "q": "What are the 3 R's of waste management? Explain each with an example.",
-              "a": "The 3 R's of waste management are Reduce, Reuse, and Recycle.<br>Reduce: Minimising the use of resources and the generation of waste; e.g., using cloth bags instead of plastic bags.<br>Reuse: Using an item again for the same or a different purpose instead of discarding it; e.g., reusing glass bottles or jars for storage.<br>Recycle: Processing used materials to make new products, thereby reducing the need for fresh raw materials; e.g., recycling waste paper to make new paper."
+              "q": "How does deforestation contribute to climate change?",
+              "a": "Trees absorb CO₂. Removing them increases CO₂ levels in the atmosphere, intensifying the greenhouse effect and causing global warming."
             },
             {
-              "marks": 3,
-              "q": "What is e-waste? State any two hazards caused by improper disposal of e-waste.",
-              "a": "E-waste refers to discarded electrical or electronic devices such as old computers, mobile phones, televisions, and other electronic appliances that are no longer usable or wanted.<br>Hazards: (i) E-waste often contains toxic substances like lead, mercury, and cadmium, which can contaminate soil and groundwater if disposed of improperly, harming human health and the environment.<br>(ii) Burning of e-waste releases toxic fumes and greenhouse gases into the atmosphere, contributing to air pollution and health problems such as respiratory diseases."
+              "q": "What is the role of national parks and wildlife sanctuaries?",
+              "a": "They provide protected habitats for endangered animals and plants, helping prevent extinction and preserving biodiversity."
             },
             {
-              "marks": 5,
-              "q": "Explain in detail the various methods of solid waste management practised in urban areas.",
-              "a": "Solid waste management involves the systematic collection, transportation, processing, and disposal of solid waste generated by households, industries, and commercial establishments.<br>Methods include:<br>1. Segregation at source: Separating waste into biodegradable (wet) and non-biodegradable (dry) categories at the point of generation.<br>2. Composting: Biodegradable waste is allowed to decompose naturally with the help of microorganisms to form compost, usable as manure.<br>3. Landfilling: Non-biodegradable waste that cannot be recycled is disposed of in specially prepared, sealed landfill sites, away from residential areas.<br>4. Incineration: Burning certain types of waste at high temperatures under controlled conditions to reduce its volume.<br>5. Recycling: Waste materials like paper, plastic, glass, and metals are processed to manufacture new products, reducing pressure on natural resources.<br>A combination of these methods, along with public awareness, is essential for effective and sustainable solid waste management."
+              "q": "Why is watershed management important?",
+              "a": "It conserves soil and water, reduces erosion, supports agriculture and helps maintain local water availability."
             },
             {
-              "marks": 5,
-              "q": "Discuss the importance of biodiversity conservation and explain the role of protected areas such as national parks and wildlife sanctuaries.",
-              "a": "Biodiversity refers to the variety of living organisms (plants, animals, and microorganisms) found in a particular region or on Earth as a whole.<br>Importance of conservation: Biodiversity maintains ecological balance, provides essential resources like food, medicine and raw materials, supports pollination and soil fertility, and increases the resilience of ecosystems to environmental changes; loss of biodiversity can disrupt these essential ecological services.<br>Role of protected areas: National parks and wildlife sanctuaries are legally protected areas set aside by the government to conserve wild flora and fauna along with their natural habitat.<br>These areas prevent hunting, poaching, and destruction of habitat due to human activities, provide a safe and undisturbed environment for endangered species to breed and thrive, and help maintain the natural ecological balance of the region, thereby playing a crucial role in the overall conservation of biodiversity."
+              "q": "Suggest three ways an individual can help protect the environment.",
+              "a": "Plant trees, use reusable bags instead of plastic and conserve water and electricity at home."
             }
           ]
         },
@@ -1097,29 +1032,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "Distinguish between conventional and non-conventional (renewable) sources of energy, with two examples of each.",
-              "a": "Conventional sources of energy are those that have been traditionally used for a long time, are generally non-renewable (limited in supply), and take a very long time to replenish; examples include coal and petroleum.<br>Non-conventional (renewable) sources of energy are naturally replenished sources that do not get depleted with use and are generally more environment-friendly; examples include solar energy and wind energy."
+              "q": "What is the difference between conventional and non-conventional energy sources?",
+              "a": "Conventional sources (coal, petroleum) are non-renewable and polluting. Non-conventional sources (solar, wind) are renewable and eco-friendly."
             },
             {
-              "marks": 3,
-              "q": "What is meant by 'green energy'? Explain why energy obtained from fossil fuels is not considered green energy.",
-              "a": "Green energy refers to energy obtained from renewable sources in a manner that causes minimal or no harm to the environment, without producing significant pollution or greenhouse gases.<br>Energy from fossil fuels (coal, petroleum, natural gas) is not green energy because burning fossil fuels releases large amounts of carbon dioxide and other pollutants into the atmosphere, contributing to air pollution, global warming and climate change; moreover, fossil fuels are non-renewable and will eventually get exhausted."
+              "q": "How does a photovoltaic cell work?",
+              "a": "A photovoltaic cell converts sunlight directly into electrical energy through the photovoltaic effect in semiconductor materials."
             },
             {
-              "marks": 3,
-              "q": "One solar panel produces a potential difference of 18 V and a current of 3 A. How should you arrange solar panels using this type to obtain an output of 72 V and 9 A?",
-              "a": "To increase potential difference (voltage), panels are connected in series; to increase current, sets of panels are connected in parallel.<br>Number of panels needed in series to get 72 V:<br>72 V ÷ 18 V (per panel) = 4 panels in series<br>Number of such series-sets needed in parallel to get 9 A:<br>9 A ÷ 3 A (per set) = 3 sets in parallel<br>Hence, we need 4 panels connected in series to form one set (giving 72 V, 3 A), and 3 such sets connected in parallel (giving 72 V, 9 A); a total of 4 × 3 = 12 solar panels are required."
+              "q": "What is biogas? How is it produced?",
+              "a": "Biogas is mainly methane, produced by the decomposition of organic waste (plant and animal matter) by bacteria in biogas plants under anaerobic conditions."
             },
             {
-              "marks": 5,
-              "q": "Explain with a labelled description the working of a solar thermal power plant, describing the energy conversions taking place at each stage.",
-              "a": "A solar thermal power plant converts solar energy into electrical energy through the following stages:<br>1. Solar collectors (usually large curved mirrors) collect and concentrate sunlight onto a receiver containing a fluid such as water.<br>2. The concentrated heat energy converts the water into high-pressure, high-temperature steam (solar energy → heat energy).<br>3. This high-pressure steam is directed onto the blades of a turbine, causing it to rotate (heat energy → mechanical energy).<br>4. The rotating turbine is connected to a generator, which converts this mechanical energy into electrical energy (mechanical energy → electrical energy).<br>5. The steam, after passing through the turbine, is condensed back into water and recycled to the receiver.<br>Thus, the overall energy conversion sequence in a solar thermal power plant is: Solar energy → Heat energy → Mechanical energy → Electrical energy."
+              "q": "Why should India shift towards renewable energy?",
+              "a": "India's fossil fuel reserves are limited. Renewable sources reduce pollution, lower carbon emissions and provide sustainable long-term energy security."
             },
             {
-              "marks": 5,
-              "q": "What are the advantages and limitations of solar energy as a source of green energy?",
-              "a": "Advantages of solar energy: (i) It is a renewable and virtually inexhaustible source of energy, available as long as the Sun exists.<br>(ii) It does not produce any pollution or greenhouse gases during electricity generation, making it environment-friendly.<br>(iii) Solar photovoltaic cells can generate power ranging from milliwatts to megawatts, making solar energy suitable for uses ranging from small calculators to large power plants.<br>(iv) It reduces dependence on fossil fuels and helps in decentralised power generation, especially useful in remote areas.<br>Limitations of solar energy: (i) Solar energy is available only during daytime and is affected by weather conditions such as clouds and rain, making its availability inconsistent.<br>(ii) The initial cost of installing solar panels and related equipment is relatively high.<br>(iii) Large-scale solar power generation requires a large area of land for installing solar panels.<br>(iv) Efficient storage of solar energy (using batteries) for use during the night or cloudy days is still relatively expensive."
+              "q": "Name two ways to conserve energy at home.",
+              "a": "Switch off lights and appliances when not in use, and use energy-efficient (star-rated) appliances."
             }
           ]
         },
@@ -1178,29 +1108,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is the basis of classification of animals into Phylum Chordata and non-chordates? State two features of chordates.",
-              "a": "Animals are classified into Chordata and non-chordates mainly on the basis of the presence or absence of a notochord (a flexible, rod-like supporting structure) at some stage of their life.<br>Features of chordates: (i) Presence of a notochord at some stage of life (which may be replaced by a vertebral column/backbone in higher chordates).<br>(ii) Presence of a dorsal, hollow nerve cord and paired gill slits at some stage of development."
+              "q": "Arrange the following in correct classification: Arthropoda, Annelida, Porifera, Chordata, Mollusca — from simplest to most complex.",
+              "a": "Porifera → Annelida → Mollusca → Arthropoda → Chordata."
             },
             {
-              "marks": 3,
-              "q": "State the main characteristics used to classify vertebrates into different classes, and name any three classes of vertebrates.",
-              "a": "Vertebrates are classified based on characteristics such as body covering (skin type), mode of respiration, type of heart, body temperature regulation (cold-blooded or warm-blooded), and mode of reproduction.<br>Three classes of vertebrates are: Pisces (fish), Amphibia (amphibians such as frogs), and Mammalia (mammals)."
+              "q": "What are the key differences between amphibians and reptiles?",
+              "a": "Amphibians live on land and in water, have moist skin and eggs without shells. Reptiles live on land, have dry scaly skin and eggs with protective shells."
             },
             {
-              "marks": 3,
-              "q": "Distinguish between cold-blooded (poikilothermic) and warm-blooded (homoiothermic) animals, giving one example of each.",
-              "a": "Cold-blooded (poikilothermic) animals cannot regulate their own body temperature; their body temperature changes according to the temperature of their surroundings. Example: Frog (Amphibia).<br>Warm-blooded (homoiothermic) animals can maintain a nearly constant body temperature regardless of the surrounding temperature, using internal physiological mechanisms. Example: Human being (Mammalia)."
+              "q": "Name the five classes of vertebrates.",
+              "a": "Pisces, Amphibia, Reptilia, Aves and Mammalia."
             },
             {
-              "marks": 5,
-              "q": "Explain the classification of the animal kingdom into major phyla, with one distinguishing feature and one example of each of five phyla.",
-              "a": "The animal kingdom is broadly classified into several phyla based on features such as body symmetry, body cavity, and level of organisation. Five major phyla are:<br>1. Porifera: Body has numerous pores (ostia) for water circulation; e.g., Sponge (Sycon).<br>2. Coelenterata (Cnidaria): Body shows radial symmetry with a single body cavity (coelenteron) opening through a single mouth; e.g., Hydra.<br>3. Platyhelminthes: Body is dorsoventrally flattened (flatworms), often parasitic; e.g., Tapeworm.<br>4. Annelida: Body is divided into similar segments (metameric segmentation); e.g., Earthworm.<br>5. Arthropoda: Body has jointed appendages and a hard external skeleton (exoskeleton made of chitin); e.g., Cockroach.<br>This classification, based on increasing complexity of body organisation, helps in the systematic study of the enormous diversity of animals."
+              "q": "What are the characteristics of Arthropoda?",
+              "a": "Jointed appendages, hard external skeleton (exoskeleton) and segmented body. Largest phylum — includes insects, spiders, crabs."
             },
             {
-              "marks": 5,
-              "q": "Explain the classification of Phylum Chordata into its main classes, with distinguishing features of each.",
-              "a": "Phylum Chordata is classified mainly into the following classes:<br>1. Pisces (Fish): Cold-blooded aquatic vertebrates with fins for locomotion and gills for respiration; body usually covered with scales.<br>2. Amphibia: Cold-blooded vertebrates that can live both on land and in water; respire through gills in the larval stage and through lungs/skin in the adult stage; e.g., frog.<br>3. Reptilia: Cold-blooded vertebrates with dry, scaly skin, adapted for life on land; respire through lungs; e.g., lizard, snake.<br>4. Aves (Birds): Warm-blooded vertebrates with a body covered with feathers, forelimbs modified into wings for flight, and reproduce by laying hard-shelled eggs.<br>5. Mammalia: Warm-blooded vertebrates with a body usually covered with hair, having mammary glands to nourish the young with milk; most give birth to live young.<br>This classification into classes, based on features like body covering, temperature regulation, and mode of reproduction, reflects the evolutionary progression and adaptation of chordates to different habitats."
+              "q": "Why is animal classification important?",
+              "a": "It helps study evolutionary relationships, identify species and organise the enormous diversity of animal life systematically."
             }
           ]
         },
@@ -1258,29 +1183,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is microbiology? Name the main groups of microorganisms studied in this branch of science.",
-              "a": "Microbiology is the branch of biology that deals with the study of microorganisms, i.e., living organisms that are too small to be seen with the naked eye and can be observed only with the help of a microscope.<br>The main groups of microorganisms are: Bacteria, Viruses, Fungi, Protozoa, and Algae."
+              "q": "Give two examples each of useful and harmful bacteria.",
+              "a": "Useful: Lactobacillus (curd), Rhizobium (nitrogen fixation). Harmful: Vibrio cholerae (cholera), Mycobacterium tuberculosis (TB)."
             },
             {
-              "marks": 3,
-              "q": "Explain the beneficial role of microorganisms in the preparation of food and dairy products, with examples.",
-              "a": "Microorganisms play an important role in the preparation of various food and dairy products through the process of fermentation.<br>Examples: (i) Lactobacillus bacteria are used to convert milk into curd through fermentation.<br>(ii) Yeast (a fungus) is used in the fermentation of dough to make bread, and in the fermentation of sugars to produce alcohol."
+              "q": "What is the difference between bacteria and viruses?",
+              "a": "Bacteria are unicellular living organisms that can reproduce independently. Viruses are non-cellular particles that reproduce only inside living host cells."
             },
             {
-              "marks": 3,
-              "q": "What is meant by a 'pathogen'? Give two examples of diseases caused by pathogenic microorganisms in humans, along with the causative organism.",
-              "a": "A pathogen is a microorganism capable of causing disease in a host organism.<br>Examples: (i) Typhoid is caused by the bacterium Salmonella typhi.<br>(ii) Common cold and influenza are caused by viruses."
+              "q": "What is the role of yeast?",
+              "a": "Yeast is used in baking (causes bread to rise by producing CO₂ during fermentation) and in fermentation to make alcoholic beverages."
             },
             {
-              "marks": 5,
-              "q": "Describe the beneficial uses of microorganisms in agriculture and industry.",
-              "a": "Microorganisms have several beneficial applications in agriculture and industry:<br>Agriculture: (i) Nitrogen-fixing bacteria such as Rhizobium, present in the root nodules of leguminous plants, convert atmospheric nitrogen into a usable form, increasing soil fertility naturally.<br>(ii) Certain bacteria and fungi act as biofertilizers and biopesticides, reducing the need for harmful chemical fertilizers and pesticides.<br>Industry: (i) Yeast is widely used in the fermentation industry to produce alcohol and in the baking industry to make bread rise.<br>(ii) Bacteria and fungi are used in the production of antibiotics (such as penicillin from the fungus Penicillium) and various enzymes used in industrial processes.<br>(iii) Certain bacteria are also used in sewage treatment plants to break down organic waste, helping in effective waste management.<br>Thus, microorganisms play many essential beneficial roles in agriculture, industry, and environmental management."
+              "q": "How do biofertilizers improve soil fertility?",
+              "a": "Biofertilizers contain nitrogen-fixing and other beneficial bacteria that add nutrients to the soil naturally, reducing the need for chemical fertilizers."
             },
             {
-              "marks": 5,
-              "q": "Explain the harmful effects of microorganisms and describe the general methods used to control their growth.",
-              "a": "Harmful effects of microorganisms: Many microorganisms act as pathogens, causing various diseases in humans, animals and plants (e.g., typhoid, tuberculosis, various plant diseases); some microorganisms also spoil food by causing it to decay or ferment undesirably, and some produce toxins harmful to health.<br>Methods to control growth of microorganisms:<br>1. Sterilisation: Using heat, steam under pressure (autoclaving), or chemicals to completely destroy microorganisms on instruments and surfaces.<br>2. Pasteurisation: Heating milk or other liquids to a specific temperature for a specific time and then rapidly cooling it, to kill most harmful microorganisms while preserving nutritional quality.<br>3. Use of preservatives: Adding substances like salt, sugar, or specific chemical preservatives to food to prevent growth of spoilage-causing microorganisms.<br>4. Refrigeration: Storing food at low temperatures slows down the growth and multiplication of microorganisms.<br>5. Use of disinfectants and antiseptics: Chemical substances used to kill or inhibit the growth of microorganisms on surfaces (disinfectants) or on living tissue (antiseptics)."
+              "q": "How do vaccines provide immunity?",
+              "a": "Vaccines contain weakened or dead pathogens that stimulate the immune system to produce antibodies, preparing it to fight the actual infection."
             }
           ]
         },
@@ -1341,29 +1261,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is a cell? State the difference between a prokaryotic cell and a eukaryotic cell.",
-              "a": "A cell is the basic structural and functional unit of all living organisms.<br>A prokaryotic cell lacks a well-defined nucleus (no nuclear membrane) and lacks most membrane-bound cell organelles; e.g., bacterial cells.<br>A eukaryotic cell has a well-defined nucleus enclosed by a nuclear membrane and possesses membrane-bound cell organelles such as mitochondria, endoplasmic reticulum, and Golgi apparatus; e.g., plant and animal cells."
+              "q": "What is the difference between prokaryotic and eukaryotic cells?",
+              "a": "Prokaryotic cells have no membrane-bound nucleus (e.g. bacteria). Eukaryotic cells have a true nucleus and complex organelles (e.g. plant, animal cells)."
             },
             {
-              "marks": 3,
-              "q": "What is biotechnology? State any two applications of biotechnology in the field of medicine.",
-              "a": "Biotechnology is the branch of science that uses living organisms, cells, or their components/products to develop useful products and processes for human benefit.<br>Applications in medicine: (i) Production of human insulin using genetically modified bacteria, for treating diabetes.<br>(ii) Development of vaccines and diagnostic kits using biotechnological techniques to detect and prevent diseases."
+              "q": "What is the difference between mitosis and meiosis?",
+              "a": "Mitosis: produces 2 identical cells, for growth and repair. Meiosis: produces 4 genetically different cells with half the chromosome number, for gamete formation."
             },
             {
-              "marks": 3,
-              "q": "What are stem cells? Briefly explain their importance in medical treatment.",
-              "a": "Stem cells are undifferentiated cells that have the ability to develop (differentiate) into various specialised types of cells in the body, and can also divide to produce more stem cells.<br>Importance: Because of their ability to develop into different cell types, stem cells hold great potential in treating diseases by regenerating damaged tissues or organs, such as in the treatment of certain blood disorders, spinal cord injuries, and other degenerative diseases."
+              "q": "What is the role of the Golgi apparatus?",
+              "a": "The Golgi apparatus modifies, packages and secretes cellular products and also forms lysosomes."
             },
             {
-              "marks": 5,
-              "q": "Describe the structure of a plant cell with reference to the cell wall, cell membrane, nucleus, and important cell organelles, and mention their functions.",
-              "a": "A plant cell consists of the following main parts:<br>Cell wall: A rigid, non-living outer covering made mainly of cellulose, which provides shape, support, and protection to the plant cell.<br>Cell membrane (plasma membrane): A thin, selectively permeable living membrane just inside the cell wall that controls the movement of substances into and out of the cell.<br>Nucleus: The control centre of the cell, enclosed by a nuclear membrane, containing chromosomes (DNA) that carry hereditary information and regulate all cellular activities.<br>Mitochondria: Known as the 'powerhouse of the cell', they carry out cellular respiration to release energy in the form of ATP.<br>Chloroplasts: Contain the green pigment chlorophyll and are the site of photosynthesis, by which the plant prepares its own food.<br>Vacuole: A large, fluid-filled sac in mature plant cells that stores water, nutrients, and waste products, and helps maintain the turgidity (rigidity) of the cell.<br>These organelles work together in a coordinated manner to carry out all the life processes of the plant cell."
+              "q": "What is genetic engineering? Give one application.",
+              "a": "The modification of an organism's DNA to obtain desired traits. Application: producing human insulin using bacteria for diabetic patients."
             },
             {
-              "marks": 5,
-              "q": "Explain the technique of genetic engineering and describe one important application of this technology.",
-              "a": "Genetic engineering is a technique of biotechnology in which the genetic material (DNA) of an organism is deliberately altered by inserting a desired gene from one organism into the genome of another organism, to give it a new, desired characteristic.<br>The general process involves: (i) identifying and isolating the desired gene from the source organism, (ii) inserting this gene into a suitable carrier (vector), such as a plasmid, (iii) introducing this modified vector into the host organism's cells, and (iv) allowing the host to express the new gene and produce the desired product or trait.<br>Application: An important application is the production of genetically modified (Bt) cotton, in which a gene from the bacterium Bacillus thuringiensis is inserted into the cotton plant, enabling it to produce a natural toxin that protects it against certain insect pests, thereby reducing the need for chemical pesticides and increasing crop yield."
+              "q": "What are the advantages of tissue culture?",
+              "a": "Produces many identical, disease-free plants rapidly from a single parent plant under sterile lab conditions."
             }
           ]
         },
@@ -1424,29 +1339,24 @@
           ],
           "practice": [
             {
-              "marks": 3,
-              "q": "What is meant by 'social health'? How is it different from an individual's personal health?",
-              "a": "Social health refers to the overall physical, mental, and social well-being of society as a whole, including factors like public sanitation, availability of clean drinking water, control of communicable diseases, and general standard of living of the community.<br>It differs from an individual's personal health in that personal health concerns the well-being of a single person, whereas social health concerns the collective health status and well-being of the entire community or population, which in turn also affects the health of each individual within it."
+              "q": "Name three ways to manage stress effectively.",
+              "a": "Exercise regularly, practise meditation and manage time effectively to avoid pressure."
             },
             {
-              "marks": 3,
-              "q": "What is meant by addiction? Explain the harmful effects of addiction to tobacco on human health.",
-              "a": "Addiction is a condition in which a person develops an uncontrollable habitual dependence on a particular substance or activity, to the extent that stopping it causes physical or psychological distress.<br>Harmful effects of tobacco addiction: Tobacco contains nicotine and other harmful chemicals that damage the respiratory system, leading to diseases such as chronic bronchitis and lung cancer; it also increases the risk of heart disease, mouth cancer, and negatively affects the health of people exposed to secondhand smoke."
+              "q": "How can peer pressure affect young people? How can it be resisted?",
+              "a": "Peer pressure can lead teens to make unhealthy choices. It can be resisted by developing self-confidence, thinking critically and seeking guidance from trusted adults."
             },
             {
-              "marks": 3,
-              "q": "What immunisation programmes are important for maintaining the health of children? Name any two vaccine-preventable diseases.",
-              "a": "Immunisation is the process of making an individual immune or resistant to a specific infectious disease, usually by administration of a vaccine.<br>Immunisation programmes ensure children are vaccinated against various infectious diseases at appropriate ages, helping to prevent outbreaks and reduce child mortality.<br>Examples of vaccine-preventable diseases: Poliomyelitis (polio) and measles."
+              "q": "What is the difference between communicable and non-communicable diseases?",
+              "a": "Communicable diseases spread from person to person (e.g. influenza). Non-communicable diseases are not infectious but result from lifestyle (e.g. diabetes, heart disease)."
             },
             {
-              "marks": 5,
-              "q": "Discuss the various factors responsible for the deteriorating social health in urban areas, and suggest measures to improve it.",
-              "a": "Factors responsible for deteriorating social health in urban areas:<br>1. Overcrowding and poor sanitation due to rapid, unplanned urbanisation, leading to the spread of communicable diseases.<br>2. Air and water pollution caused by industries, vehicles, and improper waste disposal, leading to respiratory and water-borne diseases.<br>3. Inadequate access to clean drinking water and proper healthcare facilities in slum areas.<br>4. Increasing stress, unhealthy lifestyle habits, and rising incidence of addiction to tobacco, alcohol, and other substances among the urban population.<br>Measures to improve social health:<br>1. Ensuring proper sanitation facilities, clean drinking water supply, and efficient solid waste management systems in urban areas.<br>2. Strengthening public healthcare infrastructure and ensuring regular immunisation programmes for children.<br>3. Creating public awareness through health education programmes about the harmful effects of addiction and the importance of a healthy lifestyle.<br>4. Enforcing strict regulations to control industrial and vehicular pollution.<br>A combined effort from the government, healthcare institutions, and the general public is needed to bring about sustainable improvement in social health."
+              "q": "How can social media use affect social health?",
+              "a": "Overuse or misuse of social media can lead to cyberbullying, isolation and anxiety. Responsible use helps maintain healthy digital relationships."
             },
             {
-              "marks": 5,
-              "q": "Explain the concept of 'health for all' and describe the role of government health schemes in achieving this goal.",
-              "a": "'Health for all' is a global concept and goal aiming to ensure that every individual in society, regardless of economic or social status, has access to basic healthcare facilities and can lead a physically, mentally, and socially healthy life.<br>Role of government health schemes: Government health schemes work towards this goal by providing affordable or free healthcare services, essential medicines, and health insurance coverage to economically weaker sections of society; they also run public health programmes for immunisation, maternal and child healthcare, control of communicable diseases, and awareness campaigns on nutrition, sanitation, and hygiene.<br>By ensuring accessible, affordable, and equitable healthcare and health awareness for all sections of the population, these schemes play a vital role in improving the overall social health and standard of living of the community, moving society closer to the goal of 'health for all'."
+              "q": "Why is adolescence an important period of life?",
+              "a": "It involves rapid physical, emotional and social changes. Making healthy choices during this period lays the foundation for long-term physical and mental well-being."
             }
           ]
         }

@@ -44,6 +44,26 @@ function initLab() {
                 <h3 class="gradient-text">Biological Theory</h3>
                 <p>${part.theory}</p>
             </div>
+
+            <!-- VIDEO SECTION START -->
+            ${part.videoUrl ? `
+                <div class="video-wrapper" style="margin-top:30px; border-top: 1px dashed #ccc; padding-top:20px;">
+                    <h3 class="gradient-text">Visual Explanation</h3>
+                    <div class="video-container">
+                        <iframe 
+                            src="${part.videoUrl}" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-credits" style="text-align:right; font-size:0.8rem; color:#666; margin-top:10px;">
+                        ${part.videoCredits} | <a href="${part.videoUrl.replace('embed/', 'watch?v=')}" target="_blank">Watch on YouTube</a>
+                    </div>
+                </div>
+            ` : ''}
+            <!-- VIDEO SECTION END -->
         </div>
 
         <div id="procedure" class="tab-content card-glass">

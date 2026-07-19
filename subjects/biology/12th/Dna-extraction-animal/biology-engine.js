@@ -15,76 +15,82 @@ const AudioEngine = (() => {
     };
 
     const playTone = (freq, type, duration, volume = 0.1) => {
-        init();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        try {
+            init();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
 
-        osc.type = type; // 'sine', 'square', 'sawtooth', 'triangle'
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.type = type; // 'sine', 'square', 'sawtooth', 'triangle'
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-        gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
 
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
 
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+            console.log("Audio not supported yet - requires user interaction");
+        }
     };
 
     return {
-        tab: () => playTone(600, 'sine', 0.1, 0.2),      // Soft "Blip"
-        click: () => playTone(800, 'triangle', 0.05, 0.1), // Tiny "Tick"
+        tab: () => playTone(600, 'sine', 0.1, 0.2),      
+        click: () => playTone(800, 'triangle', 0.05, 0.1), 
         launch: () => {                                 
-            // Changed from 'sawtooth' to 'sine' for a cleaner "ding-ding" sound
             playTone(400, 'sine', 0.4, 0.1); 
             setTimeout(() => playTone(600, 'sine', 0.4, 0.1), 150);
         },
-        success: () => {                                // Happy Chime
+        success: () => {                                
             playTone(523.25, 'sine', 0.2); // C5
             setTimeout(() => playTone(659.25, 'sine', 0.2), 100); // E5
             setTimeout(() => playTone(783.99, 'sine', 0.4), 200); // G5
         },
-        wrong: () => {                                  // Low Buzz
+        wrong: () => {                                  
             playTone(150, 'square', 0.3, 0.1);
         }
     };
 })();
 
-// Helper to update global part variable
+// Helper to access the data from the specific experiment's data.js file
 const part = experimentData; 
 const container = document.getElementById("experiment-container");
 
 /**
- * Handles Tab Switching
+ * Handles Tab Switching logic
  */
 function handleTabSwitch(tabId, btn) {
-    // 1. Trigger Sound Immediately
     AudioEngine.tab();
 
-    // 2. Hide all contents
+    // Hide all tab contents
     document.querySelectorAll('.tab-content').forEach(t => {
         t.style.display = 'none';
         t.classList.remove('active-tab');
     });
 
-    // 3. Deactivate all buttons
+    // Remove active class from all buttons
     document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-sub'));
 
-    // 4. Show target content
+    // Show selected tab content
     const target = document.getElementById(tabId);
     if (target) {
         target.style.display = 'block';
-        // Small timeout to trigger CSS animation
+        // Delay slightly for CSS animations
         setTimeout(() => target.classList.add('active-tab'), 10);
     }
+    
+    // Set button as active
     btn.classList.add('active-sub');
 }
 
 /**
- * UI Initialization
+ * Main UI Generator
  */
 function initLab() {
+    if (!container) return;
+
     container.innerHTML = `
     <section class="hero">
         <div class="hero-content">
@@ -115,11 +121,11 @@ function initLab() {
 
         <div id="procedure" class="tab-content card-glass" style="display:none;">
             <div class="info-segment">
-                <h3 class="gradient-text">Materials</h3>
+                <h3 class="gradient-text">Materials Required</h3>
                 <ul class="styled-list">${part.materials.map(m => `<li>${m}</li>`).join('')}</ul>
             </div>
-            <div class="info-segment" style="margin-top:20px;">
-                <h3 class="gradient-text">Steps</h3>
+            <div class="info-segment" style="margin-top:30px;">
+                <h3 class="gradient-text">Methodology</h3>
                 <ol class="styled-list">${part.steps.map(s => `<li>${s}</li>`).join('')}</ol>
             </div>
         </div>
@@ -129,6 +135,7 @@ function initLab() {
                 <div class="launcher-content">
                     <div style="font-size: 5rem;">🔬</div>
                     <h2 class="gradient-text">Virtual Workbench</h2>
+                    <p>Click below to begin the interactive laboratory session.</p>
                     <button class="start-sim-btn" onclick="startSimulation()">Start Virtual Experiment</button>
                 </div>
             </div>
@@ -136,45 +143,62 @@ function initLab() {
                 <div class="simulation-container">
                     <iframe id="sim-frame" data-src="${part.simulationFile}"></iframe>
                 </div>
+                <div style="margin-top:15px; text-align:right;">
+                    <button class="btn-ui" onclick="location.reload()" style="background:#eee; color:#333; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">↺ Reset Experiment</button>
+                </div>
             </div>
         </div>
 
         <div id="quiz" class="tab-content card-glass" style="display:none;">
-            <h2 class="gradient-text">Evaluation</h2>
+            <h2 class="gradient-text">Self-Assessment Quiz</h2>
             <div id="quiz-container"></div>
             <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
-            <div id="result-display" style="display:none; margin-top:30px;"></div>
+            <div id="result-display" style="display:none; margin-top:30px; padding:20px; border-radius:15px; text-align:center;"></div>
         </div>
     </div>
     `;
     renderQuiz();
 }
 
+/**
+ * Simulation Starter
+ */
 function startSimulation() {
     AudioEngine.launch();
     document.getElementById('sim-launcher').style.display = 'none';
     document.getElementById('sim-active-area').style.display = 'block';
     const frame = document.getElementById('sim-frame');
+    // Set the src from data-src only when started (improves performance)
     frame.src = frame.getAttribute('data-src');
 }
 
+/**
+ * Quiz Renderer
+ */
 function renderQuiz() {
     const quizContainer = document.getElementById('quiz-container');
+    if (!quizContainer) return;
+
     part.questions.forEach((q, i) => {
         let qHtml = `
-        <div class="quiz-card">
-            <h4>Q${i+1}. ${q.question}</h4>
-            ${q.options.map((opt, j) => `
-                <label class="option-label">
-                    <input type="radio" name="q${i}" value="${j}" onclick="AudioEngine.click()">
-                    ${opt}
-                </label>
-            `).join('')}
+        <div class="quiz-card" style="margin-bottom:20px;">
+            <h4 style="margin-bottom:15px;">Q${i+1}. ${q.question}</h4>
+            <div class="options-list">
+                ${q.options.map((opt, j) => `
+                    <label class="option-label" style="display:block; margin-bottom:8px;">
+                        <input type="radio" name="q${i}" value="${j}" onclick="AudioEngine.click()">
+                        ${opt}
+                    </label>
+                `).join('')}
+            </div>
         </div>`;
         quizContainer.innerHTML += qHtml;
     });
 }
 
+/**
+ * Quiz Result Checker
+ */
 function checkQuiz() {
     let score = 0;
     part.questions.forEach((q, i) => {
@@ -184,11 +208,25 @@ function checkQuiz() {
 
     const res = document.getElementById('result-display');
     res.style.display = "block";
-    res.innerHTML = `<h3>Score: ${score} / ${part.questions.length}</h3>`;
     
-    if(score >= 7) AudioEngine.success();
+    let percentage = (score / part.questions.length) * 100;
+    let feedback = percentage >= 70 ? "Excellent Work!" : "Keep Practicing!";
+    let bgColor = percentage >= 70 ? "#e8f5e9" : "#fff3e0";
+    let textColor = percentage >= 70 ? "#2e7d32" : "#e65100";
+
+    res.style.backgroundColor = bgColor;
+    res.style.color = textColor;
+    res.innerHTML = `
+        <h2 style="margin:0;">Your Score: ${score} / ${part.questions.length}</h2>
+        <p style="margin:10px 0 0 0; font-weight:bold;">${feedback}</p>
+    `;
+    
+    if(percentage >= 70) AudioEngine.success();
     else AudioEngine.wrong();
+
+    // Scroll to results
+    res.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Start Lab
+// Kick off the UI
 initLab();

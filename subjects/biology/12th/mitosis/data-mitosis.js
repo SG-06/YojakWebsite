@@ -31,11 +31,23 @@ const experimentData = {
             </ul>
 
             <h4 style="color:var(--primary); font-size:1.4rem;">Video Explanation: Mitosis Cell Division</h4>
-            <div class="video-box" style="background: #000; padding: 15px; border-radius: 15px; margin: 20px 0; text-align: center;">
-                <iframe width="100%" height="450" src="https://www.youtube.com/embed/5bq1To_RKEo?si=jydtvQMbd8bs-Xis" title="YouTube video player" title="Mitosis Lab Explanation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px;"></iframe>
-            </div>
+            <div class="video-box">
+    <iframe
+        src="https://www.youtube.com/embed/2cG7DN_1avs?si=qAwrjzCGvrsjJnN2&amp;start=1"
+        title="MITOSIS"
+        allowfullscreen>
+    </iframe>
 
-        </div>
+    <p class="video-credit">
+        🎥 Video Credit:
+        <a href="https://www.youtube.com/embed/2cG7DN_1avs?si=qAwrjzCGvrsjJnN2&amp;start=1" 
+           target="_blank"
+           rel="noopener noreferrer">
+            CTE Skills.com
+        </a>
+    </p>
+</div>
+      </div>
     `,
     
     materials: [

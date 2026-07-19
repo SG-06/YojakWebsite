@@ -21,9 +21,22 @@ const experimentData = {
             <p>Because DNA is highly polar due to its phosphate groups, it dissolves easily in water but remains completely insoluble in alcohols. When ice-cold ethanol is carefully layered on top of the filtered lysate, the hydration shell surrounding the DNA molecules is stripped away. The neutralized DNA precipitates out of the aqueous phase, appearing as an insoluble, white, web-like macromolecular mass at the interface that can be wrapped around a glass rod (spooled).</p>
 
             <h4 style="color:var(--primary); font-size:1.4rem;">Video Explanation: Extraction of DNA</h4>
-            <div class="video-box" style="background: #000; padding: 15px; border-radius: 15px; margin: 20px 0; text-align: center;">
-                <iframe width="100%" height="450" src="https://www.youtube.com/embed/vPGKv53zSRM" title="DNA Extraction Lab" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px;"></iframe>
-            </div>
+            <div class="video-box">
+    <iframe
+        src="https://www.youtube.com/embed/7_BWWE4eb74"
+        title="DNA Extraction Lab"
+        allowfullscreen>
+    </iframe>
+
+    <p class="video-credit">
+        🎥 Video Credit:
+        <a href="https://youtu.be/7_BWWE4eb74"
+           target="_blank"
+           rel="noopener noreferrer">
+            AAU Streaming
+        </a>
+    </p>
+</div>
         </div>
     `,
     

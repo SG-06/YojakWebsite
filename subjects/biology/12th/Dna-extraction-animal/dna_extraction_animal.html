@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetics Lab: Animal DNA Extraction</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #2980b9; /* Blue for Animal Lab */
+            --success: #27ae60;
+            --table-top: #ecf0f1;
+            --wood-trim: #2c3e50;
+            --dna-color: #ffffff;
+            --ethanol-color: rgba(236, 240, 241, 0.6);
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #1a252f; overflow: hidden; color: #333; }
+        .app-container { display: flex; height: 100vh; }
+
+        /* Sidebar */
+        .sidebar, .notebook { 
+            width: 280px; background: white; padding: 20px; 
+            border: 1px solid #dfe6e9; z-index: 10; display: flex; flex-direction: column; 
+        }
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-bottom: 20px; }
+        .dna-icon { background: var(--secondary); color: white; padding: 5px 12px; border-radius: 50%; }
+
+        .step-item { padding: 12px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #ccc; font-size: 0.85rem; }
+        .step-item.active { border-left-color: var(--secondary); background: #ebf5fb; font-weight: 600; }
+        .step-item.completed { border-left-color: var(--success); opacity: 0.7; }
+
+        #log { flex: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; background: #1e1e1e; color: #00ff00; padding: 10px; border-radius: 5px; }
+
+        /* Lab Bench */
+        .workspace { flex: 1; position: relative; background-color: var(--table-top); border-left: 10px solid var(--wood-trim); }
+        .lab-header { padding: 20px; background: rgba(255,255,255,0.9); border-bottom: 2px solid #ccc; }
+
+        .lab-station {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            width: 500px; height: 350px; display: flex; align-items: center; justify-content: center;
+        }
+
+        #work-target { width: 200px; height: 250px; position: relative; }
+        .equipment { position: absolute; bottom: 0; width: 100%; height: 100%; display: none; }
+        .equipment.active { display: block; }
+
+        /* Tools Tray */
+        .tool-tray { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; background: #fff; padding: 15px 30px; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .tool { text-align: center; cursor: grab; transition: 0.3s; width: 75px; }
+        .tool:hover { transform: scale(1.1); }
+        .tool svg { width: 45px; height: 45px; }
+        .tool span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; }
+        .tool.disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
+
+        /* Molecular Viewer */
+        #molecular-viewer { position: fixed; inset: 0; background: #0c141d; z-index: 2000; display: none; }
+        .viewer-layout { height: 100%; display: flex; flex-direction: column; }
+        #molecular-stage { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+        
+        .animal-cell { position: absolute; width: 400px; height: 400px; border: 4px solid #34495e; border-radius: 50%; background: rgba(52, 152, 219, 0.1); }
+        .histone { width: 20px; height: 20px; background: #e67e22; border-radius: 50%; position: absolute; }
+        .dna-strand { stroke: #ecf0f1; stroke-width: 3; fill: none; }
+
+        .phase-footer { background: #000; padding: 30px; color: white; text-align: center; border-top: 3px solid var(--secondary); }
+        .btn-ui { padding: 10px 25px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-primary { background: var(--secondary); color: white; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <div class="logo"><span class="dna-icon">🧬</span> Animal Lab</div>
+        <div id="step-list"></div>
+    </aside>
+
+    <main class="workspace">
+        <header class="lab-header">
+            <h2 id="task-title">Animal DNA Extraction</h2>
+            <p id="task-desc">Ready to begin...</p>
+        </header>
+
+        <button id="btn-analyze" class="btn-ui btn-primary" style="position:absolute; top:120px; right:40px; display:none;" onclick="lab.startMolecularAnalysis()">View Molecular Process</button>
+
+        <div class="lab-station" id="station-dropzone">
+            <div id="work-target">
+                <div id="eq-tube" class="equipment active">
+                    <svg viewBox="0 0 200 250">
+                        <rect x="85" y="50" width="30" height="160" rx="15" fill="rgba(255,255,255,0.4)" stroke="#bdc3c7" stroke-width="2" />
+                        <rect id="liquid-level" x="87" y="180" width="26" height="30" rx="10" fill="#3498db" opacity="0.3" />
+                        <rect id="dna-precipitate" x="87" y="120" width="26" height="0" fill="rgba(255,255,255,0.8)" />
+                        <path id="dna-spool" d="M 90 125 Q 100 115 110 125" stroke="white" fill="none" opacity="0" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-tray">
+            <div class="tool" draggable="true" id="tool-swab">
+                <svg viewBox="0 0 100 100"><rect x="48" y="10" width="4" height="80" fill="#ddd"/><circle cx="50" cy="15" r="8" fill="#fff"/></svg>
+                <span>Sample Swab</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-lysis">
+                <svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="60" fill="#3498db"/></svg>
+                <span>Lysis Buffer</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-protease">
+                <svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="60" fill="#e67e22"/></svg>
+                <span>Protease</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-ethanol">
+                <svg viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="60" fill="#95a5a6" opacity="0.5"/></svg>
+                <span>Cold Ethanol</span>
+            </div>
+            <div class="tool disabled" draggable="true" id="tool-rod">
+                <svg viewBox="0 0 100 100"><rect x="48" y="10" width="4" height="80" fill="#bdc3c7"/></svg>
+                <span>Glass Rod</span>
+            </div>
+        </div>
+    </main>
+
+    <aside class="notebook">
+        <h3>Journal</h3>
+        <div id="log"></div>
+    </aside>
+</div>
+
+<!-- Molecular Viewer -->
+<div id="molecular-viewer">
+    <div class="viewer-layout">
+        <div id="molecular-stage">
+            <div class="animal-cell" id="v-cell">
+                <svg id="v-dna-svg" width="100%" height="100%" viewBox="0 0 400 400">
+                    <!-- DNA strands will be generated here -->
+                </svg>
+            </div>
+        </div>
+        <div class="phase-footer">
+            <h2 id="v-title">CELL VIEW</h2>
+            <p id="v-desc">DNA is wrapped around histones.</p>
+            <button class="btn-ui btn-primary" onclick="lab.nextPhase()">NEXT PHASE</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const STEPS = [
+    { tool: 'tool-swab', title: "Collect Sample", desc: "Drag Swab to tube to add cheek cells.", log: "Cheek cells added to saline solution." },
+    { tool: 'tool-lysis', title: "Cell Lysis", desc: "Add Lysis Buffer to break membranes.", log: "Detergent dissolving lipid bilayers." },
+    { tool: 'tool-protease', title: "Proteolysis", desc: "Add Protease to digest proteins.", log: "Protease breaking down histone proteins." },
+    { tool: 'tool-ethanol', title: "Precipitation", desc: "Add Cold Ethanol carefully.", log: "DNA precipitating at the alcohol interface." },
+    { tool: 'tool-rod', title: "Spooling", desc: "Use the rod to collect DNA.", log: "DNA spooled successfully!" }
+];
+
+class AnimalDnaLab {
+    constructor() {
+        this.stepIdx = 0;
+        this.phaseIdx = 0;
+        this.synth = window.speechSynthesis;
+        this.init();
+    }
+
+    init() {
+        const list = document.getElementById('step-list');
+        list.innerHTML = STEPS.map((s, i) => `<div class="step-item" id="s-${i}">${s.title}</div>`).join('');
+        this.updateUI();
+        this.setupDrag();
+    }
+
+    updateUI() {
+        const step = STEPS[this.stepIdx];
+        document.getElementById('task-title').textContent = step.title;
+        document.getElementById('task-desc').textContent = step.desc;
+        document.querySelectorAll('.step-item').forEach((el, i) => el.className = `step-item ${i===this.stepIdx?'active':i<this.stepIdx?'completed':''}`);
+        document.querySelectorAll('.tool').forEach(t => t.classList.add('disabled'));
+        document.getElementById(step.tool).classList.remove('disabled');
+        this.speak(step.desc);
+    }
+
+    setupDrag() {
+        document.querySelectorAll('.tool').forEach(t => {
+            t.ondragstart = (e) => e.dataTransfer.setData('id', t.id);
+        });
+        const target = document.getElementById('station-dropzone');
+        target.ondragover = (e) => e.preventDefault();
+        target.ondrop = (e) => {
+            const id = e.dataTransfer.getData('id');
+            if(id === STEPS[this.stepIdx].tool) this.handleAction(id);
+        };
+    }
+
+    handleAction(id) {
+        this.log(STEPS[this.stepIdx].log);
+        const level = document.getElementById('liquid-level');
+        
+        if(id === 'tool-swab') level.setAttribute('height', '40');
+        if(id === 'tool-lysis') level.setAttribute('fill', '#2ecc71');
+        if(id === 'tool-protease') level.setAttribute('fill', '#f39c12');
+        if(id === 'tool-ethanol') {
+            document.getElementById('dna-precipitate').setAttribute('height', '40');
+            setTimeout(() => document.getElementById('dna-spool').style.opacity = '1', 1000);
+        }
+        if(id === 'tool-rod') {
+            document.getElementById('btn-analyze').style.display = 'block';
+            this.speak("Experiment complete. Now let's look at the molecular level.");
+        }
+
+        if(this.stepIdx < 4) {
+            this.stepIdx++;
+            this.updateUI();
+        }
+    }
+
+    log(m) {
+        const l = document.getElementById('log');
+        l.innerHTML += `<div>> ${m}</div>`;
+        l.scrollTop = l.scrollHeight;
+    }
+
+    speak(t) {
+        this.synth.cancel();
+        this.synth.speak(new SpeechSynthesisUtterance(t));
+    }
+
+    startMolecularAnalysis() {
+        document.getElementById('molecular-viewer').style.display = 'block';
+        this.nextPhase();
+    }
+
+    nextPhase() {
+        const t = document.getElementById('v-title');
+        const d = document.getElementById('v-desc');
+        const cell = document.getElementById('v-cell');
+
+        if(this.phaseIdx === 0) {
+            t.textContent = "HISTONE PACKAGING";
+            d.textContent = "Animal DNA is tightly wrapped around histone proteins (orange dots).";
+            this.generateMolecularDna(true);
+        } else if(this.phaseIdx === 1) {
+            t.textContent = "LYSIS & PROTEOLYSIS";
+            d.textContent = "Lysis buffer breaks the membrane, and Protease digests the histones, freeing the DNA.";
+            cell.style.borderColor = "transparent";
+            this.generateMolecularDna(false);
+        } else if(this.phaseIdx === 2) {
+            t.textContent = "PRECIPITATION";
+            d.textContent = "Cold ethanol makes the DNA insoluble, causing strands to clump into visible fibers.";
+            document.getElementById('v-dna-svg').style.transform = "scale(0.5)";
+        } else {
+            location.reload();
+        }
+        this.phaseIdx++;
+    }
+
+    generateMolecularDna(withHistones) {
+        const svg = document.getElementById('v-dna-svg');
+        svg.innerHTML = '';
+        for(let i=0; i<5; i++) {
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", `M ${50+i*60} 100 Q ${100+i*60} ${150+i*20} ${50+i*60} 300`);
+            path.setAttribute("class", "dna-strand");
+            svg.appendChild(path);
+            if(withHistones) {
+                for(let j=0; j<3; j++) {
+                    const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    c.setAttribute("cx", 50+i*60 + (j*10));
+                    c.setAttribute("cy", 150+j*50);
+                    c.setAttribute("r", "8");
+                    c.setAttribute("fill", "#e67e22");
+                    svg.appendChild(c);
+                }
+            }
+        }
+    }
+}
+
+const lab = new AnimalDnaLab();
+</script>
+</body>
+</html>

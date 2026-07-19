@@ -215,3 +215,34 @@ body {
     background: #1b4332;
     box-shadow: 0 15px 30px rgba(0, 121, 107, 0.3);
 }
+
+.video-credit{
+    margin-top:10px;
+    font-size:14px;
+    color:#ccc;
+}
+
+.video-credit a{
+    color:#4FC3F7;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.video-credit a:hover{
+    text-decoration:underline;
+}
+.video-box{
+    width: 95%;
+    max-width: 1400px;   /* Increase from 900px or 1000px */
+    margin: 20px auto;
+    padding: 15px;
+    background: #000;
+    border-radius: 15px;
+}
+
+.video-box iframe{
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 10px;
+}

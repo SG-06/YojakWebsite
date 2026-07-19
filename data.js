@@ -250,8 +250,8 @@ const experimentsData = {
         "11th": [],
         "12th": [
             {
-                title: "DNA Extraction (Animal Tissue)",
-                desc: "Isolate and observe the precipitation of DNA from animal tissue samples.",
+                title: "DNA Extraction (Plant Tissue)",
+                desc: "Isolate and observe the precipitation of DNA from plant tissue samples.",
                 link: "./subjects/biology/12th/dna-extraction-plant/dna-extraction-plant-home.html"
             },
             {
@@ -275,9 +275,9 @@ const experimentsData = {
                 link: "./subjects/biology/12th/seed-germination/seedgermination-lab.html"
             },
             {
-                title: "DNA Extraction (Plant Source)",
+                title: "DNA Extraction (Animal)",
                 desc: "Extract genomic DNA from plant sources like spinach or peas using chemical reagents.",
-                link: "./subjects/biology/12th/dna-extraction-plant/dna-extraction-plant-home.html"
+                link: "./subjects/biology/12th/dna-extraction-animal/dna-extraction-animal-home.html"
             },
             {
                 title: "Blood Group Determination",

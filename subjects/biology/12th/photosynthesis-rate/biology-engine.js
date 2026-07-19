@@ -1,24 +1,90 @@
-// Sound Controller
-const sounds = {
-    click: new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'),
-    tab: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
-    success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
-    wrong: new Audio('https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3'),
-    launch: new Audio('https://assets.mixkit.co/active_storage/sfx/2630/2630-preview.mp3') // Soft whoosh for launch
-};
+/** 
+ * BIO-SYNTH AUDIO ENGINE 
+ * Generates sounds mathematically to bypass browser blocking and loading issues.
+ */
+const AudioEngine = (() => {
+    let audioCtx = null;
 
-Object.values(sounds).forEach(s => s.volume = 0.2);
+    const init = () => {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    };
 
-function playSound(type) {
-    sounds[type].currentTime = 0;
-    sounds[type].play().catch(e => console.log("Sound enabled after user interaction"));
+    const playTone = (freq, type, duration, volume = 0.1) => {
+        init();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = type; // 'sine', 'square', 'sawtooth', 'triangle'
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    };
+
+    return {
+        tab: () => playTone(600, 'sine', 0.1, 0.2),      // Soft "Blip"
+        click: () => playTone(800, 'triangle', 0.05, 0.1), // Tiny "Tick"
+        launch: () => {                                 
+            playTone(400, 'sine', 0.4, 0.1); 
+            setTimeout(() => playTone(600, 'sine', 0.4, 0.1), 150);
+        },
+        success: () => {                                // Happy Chime
+            playTone(523.25, 'sine', 0.2); // C5
+            setTimeout(() => playTone(659.25, 'sine', 0.2), 100); // E5
+            setTimeout(() => playTone(783.99, 'sine', 0.4), 200); // G5
+        },
+        wrong: () => {                                  // Low Buzz
+            playTone(150, 'square', 0.3, 0.1);
+        }
+    };
+})();
+
+// Link to the photosynthesis-data.js variable
+const part = experimentData; 
+const container = document.getElementById("experiment-container");
+
+/**
+ * Handles Tab Switching
+ */
+function handleTabSwitch(tabId, btn) {
+    // 1. Trigger Sound Immediately
+    AudioEngine.tab();
+
+    // 2. Hide all contents
+    document.querySelectorAll('.tab-content').forEach(t => {
+        t.style.display = 'none';
+        t.classList.remove('active-tab');
+    });
+
+    // 3. Deactivate all buttons
+    document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-sub'));
+
+    // 4. Show target content
+    const target = document.getElementById(tabId);
+    if (target) {
+        target.style.display = 'block';
+        // Small timeout to trigger CSS animation
+        setTimeout(() => target.classList.add('active-tab'), 10);
+    }
+    btn.classList.add('active-sub');
 }
 
-const container = document.getElementById("experiment-container");
-const part = experimentData;
-
+/**
+ * UI Initialization
+ */
 function initLab() {
-    let html = `
+    container.innerHTML = `
     <section class="hero">
         <div class="hero-content">
             <span class="lab-tag">Virtual Biology Lab</span>
@@ -29,7 +95,7 @@ function initLab() {
 
     <div class="container wider-container">
         <div class="sub-tabs">
-            <button class="sub-btn active-sub" onclick="handleTabSwitch('theory', this)">Theory</button>
+            <button class="sub-btn active-sub" onclick="handleTabSwitch('theory', this)">Theory & Concepts</button>
             <button class="sub-btn" onclick="handleTabSwitch('procedure', this)">Procedure</button>
             <button class="sub-btn" onclick="handleTabSwitch('simulation', this)">Simulation</button>
             <button class="sub-btn" onclick="handleTabSwitch('quiz', this)">Evaluation</button>
@@ -37,107 +103,59 @@ function initLab() {
 
         <div id="theory" class="tab-content active-tab card-glass">
             <div class="info-segment">
-                <h3 class="gradient-text">Aim of Experiment</h3>
+                <h2 class="gradient-text">Aim of Experiment</h2>
                 <p>${part.aim}</p>
             </div>
-            <div class="info-segment" style="margin-top:20px">
-                <h3 class="gradient-text">Biological Theory</h3>
-                <p>${part.theory}</p>
+            <div class="info-segment" style="margin-top:30px">
+                <h2 class="gradient-text">Theory</h2>
+                <div class="theory-body">${part.theory}</div>
             </div>
         </div>
 
-        <div id="procedure" class="tab-content card-glass">
+        <div id="procedure" class="tab-content card-glass" style="display:none;">
             <div class="info-segment">
-                <h3 class="gradient-text">Materials Required</h3>
-                <ul class="styled-list">
-                    ${part.materials.map(m => `<li>${m}</li>`).join('')}
-                </ul>
+                <h3 class="gradient-text">Materials</h3>
+                <ul class="styled-list">${part.materials.map(m => `<li>${m}</li>`).join('')}</ul>
             </div>
-            <div class="info-segment" style="margin-top:20px">
-                <h3 class="gradient-text">Methodology</h3>
-                <ol class="styled-list">
-                    ${part.steps.map(s => `<li>${s}</li>`).join('')}
-                </ol>
+            <div class="info-segment" style="margin-top:20px;">
+                <h3 class="gradient-text">Steps</h3>
+                <ol class="styled-list">${part.steps.map(s => `<li>${s}</li>`).join('')}</ol>
             </div>
         </div>
 
-        <div id="simulation" class="tab-content card-glass">
+        <div id="simulation" class="tab-content card-glass" style="display:none;">
             <div id="sim-launcher" class="sim-launcher">
                 <div class="launcher-content">
-                    <div class="icon-circle">🔬</div>
-                    <h3>Ready to start the experiment?</h3>
-                    <p>Click the button below to initialize the virtual workbench.</p>
+                    <div style="font-size: 5rem;">🔬</div>
+                    <h2 class="gradient-text">Photosynthesis Workbench</h2>
+                    <p>Observe the cellular energy conversion in real-time.</p>
                     <button class="start-sim-btn" onclick="startSimulation()">Start Virtual Experiment</button>
                 </div>
             </div>
-            
             <div id="sim-active-area" style="display:none;">
-                <div class="simulation-header">
-                    <div>
-                        <strong style="color:var(--primary)">Interactive Workbench</strong>
-                        <p style="font-size:0.8rem; color:#666;">Use Full Screen for the best experience.</p>
-                    </div>
-                    <div class="sim-controls">
-                        <button class="control-btn" onclick="refreshSim()">↺ Reset</button>
-                        <button class="control-btn primary-btn" onclick="toggleFullScreen()">⛶ Full Screen</button>
-                    </div>
-                </div>
-                <div class="simulation-container" id="sim-wrapper">
-                    <iframe id="sim-frame" data-src="${part.simulationFile}" allowfullscreen></iframe>
+                <div class="simulation-container">
+                    <iframe id="sim-frame" data-src="${part.simulationFile}"></iframe>
                 </div>
             </div>
         </div>
 
-        <div id="quiz" class="tab-content card-glass">
-            <h3 class="gradient-text">Self Assessment</h3>
+        <div id="quiz" class="tab-content card-glass" style="display:none;">
+            <h2 class="gradient-text">Assessment</h2>
             <div id="quiz-container"></div>
             <button class="submit-btn" onclick="checkQuiz()">Submit Answers</button>
-            <div id="result-display" class="result-box" style="display:none; margin-top:20px;"></div>
+            <div id="result-display" style="display:none; margin-top:30px;"></div>
         </div>
     </div>
     `;
-
-    container.innerHTML = html;
     renderQuiz();
 }
 
-function handleTabSwitch(tabId, btn) {
-    playSound('tab'); // TRIGGERS ON SECTION TOGGLE
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-    document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active-sub'));
-    document.getElementById(tabId).classList.add('active-tab');
-    btn.classList.add('active-sub');
-}
-
 function startSimulation() {
-    playSound('launch');
-    const launcher = document.getElementById('sim-launcher');
-    const activeArea = document.getElementById('sim-active-area');
+    AudioEngine.launch();
+    document.getElementById('sim-launcher').style.display = 'none';
+    document.getElementById('sim-active-area').style.display = 'block';
     const frame = document.getElementById('sim-frame');
-    
-    launcher.style.display = 'none';
-    activeArea.style.display = 'block';
-    
-    // Only set the src now to prevent auto-loading
     frame.src = frame.getAttribute('data-src');
-}
-
-function refreshSim() {
-    const frame = document.getElementById('sim-frame');
-    frame.src = frame.src;
-    playSound('click');
-}
-
-function toggleFullScreen() {
-    const elem = document.getElementById("sim-wrapper");
-    if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch(err => {
-            alert(`Error: ${err.message}`);
-        });
-    } else {
-        document.exitFullscreen();
-    }
-    playSound('click');
 }
 
 function renderQuiz() {
@@ -145,15 +163,13 @@ function renderQuiz() {
     part.questions.forEach((q, i) => {
         let qHtml = `
         <div class="quiz-card">
-            <h4>${i+1}. ${q.question}</h4>
-            <div class="options-grid">
-                ${q.options.map((opt, j) => `
-                    <label class="option-label" onclick="playSound('click')">
-                        <input type="radio" name="q${i}" value="${j}">
-                        ${opt}
-                    </label>
-                `).join('')}
-            </div>
+            <h4>Q${i+1}. ${q.question}</h4>
+            ${q.options.map((opt, j) => `
+                <label class="option-label">
+                    <input type="radio" name="q${i}" value="${j}" onclick="AudioEngine.click()">
+                    ${opt}
+                </label>
+            `).join('')}
         </div>`;
         quizContainer.innerHTML += qHtml;
     });
@@ -162,16 +178,17 @@ function renderQuiz() {
 function checkQuiz() {
     let score = 0;
     part.questions.forEach((q, i) => {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && parseInt(selected.value) === q.answer) score++;
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if (sel && parseInt(sel.value) === q.answer) score++;
     });
 
-    const resultDiv = document.getElementById('result-display');
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = `<div class="card" style="background:#e8f5e9; border-left:5px solid #2e7d32; padding:20px;"><h3>Your Score: ${score} / ${part.questions.length}</h3></div>`;
+    const res = document.getElementById('result-display');
+    res.style.display = "block";
+    res.innerHTML = `<div class="result-box"><h3>Final Score: ${score} / ${part.questions.length}</h3></div>`;
     
-    if(score === part.questions.length) playSound('success');
-    else playSound('wrong');
+    if(score >= 7) AudioEngine.success();
+    else AudioEngine.wrong();
 }
 
+// Start Lab
 initLab();

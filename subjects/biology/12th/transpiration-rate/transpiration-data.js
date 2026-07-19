@@ -1,124 +1,121 @@
-// transpiration-data.js
+// START OF FILE transpiration-data.js
 const experimentData = {
-    title: "Rate of Transpiration",
-    subtitle: "Class 12 Biology – Plant Physiology",
-    aim: "To study the process of transpiration in plants and to measure the rate of transpiration using a potometer, observing the effect of wind and heat on the rate.",
+    title: "Rate of Transpiration Lab",
+    subtitle: "Class 12 Biology - Plant Physiology",
+    
+    aim: "To measure and compare the rate of transpiration in a leafy shoot under different environmental conditions using Ganong's Potometer.",
+    
+    theory: `
+        <div class="theory-section">
+            <h3>Biological Concept</h3>
+            <p><strong>Transpiration</strong> is the process of water movement through a plant and its evaporation from aerial parts, such as leaves, stems, and flowers. While plants absorb massive amounts of water through roots, over 97% is lost via transpiration through microscopic pores called <strong>stomata</strong>.</p>
 
-    theory: "Transpiration is the process of water loss from the aerial parts of a plant, primarily through stomata on the leaf surface, in the form of water vapour. It is not simply wasteful water loss — transpiration drives the ascent of water and dissolved minerals from the roots to the leaves through the xylem (the transpiration pull or cohesion-tension mechanism), keeps the leaf temperature regulated through evaporative cooling, and maintains the concentration gradient that drives mineral uptake. About 90% of transpiration occurs through stomata (stomatal transpiration), with small amounts through the cuticle (cuticular transpiration) and lenticels (lenticular transpiration). The rate of transpiration is affected by several environmental factors: light (opens stomata, increasing transpiration), temperature (increases evaporation rate and the vapour pressure deficit), wind (removes humid air from around the leaf, steepening the concentration gradient), and humidity (high humidity reduces transpiration by decreasing the gradient). A potometer is an instrument used to indirectly measure the rate of transpiration by measuring the rate of water uptake by a cut shoot. Since nearly all water absorbed by the shoot is lost through transpiration, the two rates are approximately equal. The movement of an air bubble along a calibrated capillary tube indicates the volume of water taken up per unit time.",
+            <h3>The Potometer Principle</h3>
+            <p>A potometer (from Greek 'poto' - drink) is an apparatus used to measure the rate of water uptake. It works on the principle that <em>water absorbed is almost equal to the water lost through transpiration</em>. By measuring the movement of an air bubble in a graduated capillary tube, we can calculate the volume of water transpired per unit of time.</p>
 
+            <h3>Environmental Factors Affecting Rate</h3>
+            <ul>
+                <li><strong>Light Intensity:</strong> Stomata usually open in light and close in darkness. Increased light increases transpiration.</li>
+                <li><strong>Temperature:</strong> Higher temperatures increase the kinetic energy of water molecules, leading to faster evaporation.</li>
+                <li><strong>Wind Speed:</strong> Moving air removes the boundary layer of water vapor around the leaf, maintaining a steep concentration gradient and increasing the rate.</li>
+                <li><strong>Humidity:</strong> High external humidity reduces the concentration gradient between the leaf interior and the atmosphere, slowing down transpiration.</li>
+            </ul>
+
+            <h3>Experimental Precautions</h3>
+            <p>The potometer must be perfectly <strong>air-tight</strong>. This is why petroleum jelly (vaseline) is applied to all joints. Any air leak (other than the intended bubble) will cause incorrect readings. Furthermore, the shoot must be cut under water to prevent air bubbles from blocking the xylem vessels (embolism).</p>
+
+            <h4 style="color:var(--primary); font-size:1.4rem;">Video Lesson: Transpiration Mechanism</h4>
+            <div class="video-box">
+                <iframe
+                    src="https://www.youtube.com/embed/FWxh28CTEcM?si=fNncDYtnvMI86WJW"
+                    title="Transpiration Video"
+                    allowfullscreen>
+                </iframe>
+                <p class="video-credit">
+                    🎥 Video Credit:
+                    <a href="https://www.youtube.com/embed/FWxh28CTEcM?si=fNncDYtnvMI86WJW" 
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Oxford Mastering Biology 牛津基礎生物學
+                    </a>
+                </p>
+            </div>
+        </div>
+    `,
+    
     materials: [
-        "Freshly cut leafy shoot (e.g., Balsam or Hibiscus)",
-        "Potometer (simple or Ganong's potometer)",
-        "Petroleum jelly (Vaseline)",
-        "Water",
-        "Fan or hair dryer (to simulate wind)",
-        "Lamp or heat source",
-        "Stopwatch or timer",
-        "Ruler",
-        "Scissors",
-        "Large beaker or bucket of water"
+        "Ganong's Potometer",
+        "A leafy plant shoot (e.g., Balsam or Nerium)",
+        "Beaker of Water",
+        "Stopwatch",
+        "Petroleum Jelly (Vaseline)",
+        "Table Fan (for Wind simulation)",
+        "High-wattage Lamp (for Heat/Light simulation)",
+        "Sharp Blade/Knife"
     ],
-
+    
     steps: [
-        "Cut a healthy leafy shoot under water (to prevent air from entering the xylem) using scissors. The cut should be diagonal to increase the surface area for water absorption.",
-        "Set up the potometer and fill it completely with water, ensuring no air bubbles are present in the apparatus.",
-        "Insert the cut end of the shoot into the potometer opening while both the shoot and the opening are submerged in water.",
-        "Seal the junction between the shoot stem and the potometer with petroleum jelly to make it airtight, preventing any water loss except through the leaves.",
-        "Introduce a small air bubble into the capillary tube of the potometer by briefly lifting the tube out of water.",
-        "Under normal conditions (no wind, normal temperature), record the distance the air bubble travels in the capillary tube in 5 minutes. This is the baseline transpiration rate.",
-        "Switch on a fan directed at the leaves. After 2 minutes, record the bubble movement over 5 minutes. Compare with the baseline.",
-        "Switch off the fan and allow the system to equilibrate. Then switch on a heat lamp directed at the leaves. Record bubble movement over 5 minutes.",
-        "Reset the bubble after each condition by submerging the capillary end in water.",
-        "Tabulate results showing bubble distance per 5 minutes under each condition — normal, windy, and hot. Observe that both wind and heat significantly increase the rate of transpiration."
+        "Cut a healthy leafy shoot under water to prevent air entering the xylem.",
+        "Fill the potometer with water and insert the shoot through the rubber cork.",
+        "Apply petroleum jelly to all joints to ensure the apparatus is completely airtight.",
+        "Introduce a small air bubble into the capillary tube by lifting the end out of the water for a moment.",
+        "Record the initial position of the bubble and start the stopwatch.",
+        "Measure the distance moved by the bubble in a fixed time interval (e.g., 5 minutes).",
+        "Repeat the measurements under different conditions: still air, moving air (fan), and high temperature (lamp)."
     ],
 
-    simulationFile: "transpiration_rate.html",
-
+    simulationFile: "transpiration_rate.html", 
+    
     questions: [
         {
-            question: "Transpiration is defined as:",
-            options: [
-                "Absorption of water by roots",
-                "Loss of water vapour from the aerial parts of a plant, mainly through stomata",
-                "Transport of water from stem to leaves",
-                "Uptake of CO₂ through leaves"
-            ],
-            answer: 1
+            "question": "Which instrument is specifically designed to measure the rate of water uptake in plants?",
+            "options": ["Auxanometer", "Potometer", "Respirometer", "Clinostat"],
+            "answer": 1
         },
         {
-            question: "What percentage of transpiration occurs through stomata?",
-            options: ["50%", "70%", "90%", "100%"],
-            answer: 2
+            "question": "Why is the plant shoot cut under water before placing it in the potometer?",
+            "options": ["To keep the leaves clean", "To prevent air bubbles from entering the xylem", "To increase the rate of photosynthesis", "To soften the stem"],
+            "answer": 1
         },
         {
-            question: "A potometer measures:",
-            options: [
-                "The rate of photosynthesis",
-                "The rate of water uptake by a cut shoot, used as an indirect measure of transpiration",
-                "The rate of osmosis in root cells",
-                "The rate of respiration"
-            ],
-            answer: 1
+            "question": "What is the primary function of applying petroleum jelly to the potometer joints?",
+            "options": ["To lubricate the glass", "To keep the plant cool", "To ensure the system is airtight", "To prevent water from evaporating from the flask"],
+            "answer": 2
         },
         {
-            question: "Why is the cut end of the shoot inserted into the potometer under water?",
-            options: [
-                "To keep the shoot cool",
-                "To prevent air from entering and blocking the xylem",
-                "To dissolve minerals in the water",
-                "To activate the stomata"
-            ],
-            answer: 1
+            "question": "How does high atmospheric humidity affect the rate of transpiration?",
+            "options": ["It increases the rate", "It decreases the rate", "It has no effect", "It stops transpiration completely"],
+            "answer": 1
         },
         {
-            question: "Why is petroleum jelly applied around the stem-potometer junction?",
-            options: [
-                "To provide nutrients to the plant",
-                "To create an airtight seal so water only leaves via transpiration",
-                "To stimulate root growth",
-                "To block the stomata"
-            ],
-            answer: 1
+            "question": "Under which condition will the air bubble in the potometer move the fastest?",
+            "options": ["In a dark, humid room", "In still, cool air", "In bright light with moving air", "In a closed cupboard"],
+            "answer": 2
         },
         {
-            question: "How does wind increase the rate of transpiration?",
-            options: [
-                "Wind opens the stomata",
-                "Wind increases the CO₂ supply",
-                "Wind removes humid air from around the leaves, increasing the water vapour concentration gradient",
-                "Wind cools the leaf, increasing water uptake"
-            ],
-            answer: 2
+            "question": "Transpiration through which part of the leaf accounts for the majority of water loss?",
+            "options": ["Cuticle", "Lenticels", "Stomata", "Hydathodes"],
+            "answer": 2
         },
         {
-            question: "The cohesion-tension mechanism explains how water rises in the xylem. What provides the driving force?",
-            options: [
-                "Root pressure alone",
-                "Transpiration pull — water evaporating from leaves creates tension that pulls water up from the roots",
-                "Active transport in xylem cells",
-                "Capillary action alone"
-            ],
-            answer: 1
+            "question": "What biological principle allows a potometer to estimate the transpiration rate?",
+            "options": ["Water uptake is roughly equal to water loss", "Plants create water during respiration", "Air bubbles push water out of leaves", "Root pressure is the only force involved"],
+            "answer": 0
         },
         {
-            question: "Which environmental condition would DECREASE the rate of transpiration?",
-            options: ["High temperature", "High wind speed", "High humidity", "High light intensity"],
-            answer: 2
+            "question": "Which of the following is an internal factor affecting transpiration?",
+            "options": ["Wind speed", "Temperature", "Leaf surface area", "Light intensity"],
+            "answer": 2
         },
         {
-            question: "Cuticular transpiration refers to water loss through:",
-            options: ["Stomata", "Lenticels", "The waxy cuticle on the leaf surface", "Root tips"],
-            answer: 2
+            "question": "The loss of water in the form of liquid droplets from the margins of leaves is called:",
+            "options": ["Transpiration", "Evaporation", "Guttation", "Condensation"],
+            "answer": 2
         },
         {
-            question: "In the potometer experiment, the air bubble moves because:",
-            options: [
-                "Air is being pushed in by the roots",
-                "The shoot absorbs water, creating a pressure difference that pulls the bubble along the capillary",
-                "Temperature changes expand the water",
-                "The petroleum jelly pushes the bubble"
-            ],
-            answer: 1
+            "question": "During the day, what causes stomata to open?",
+            "options": ["Loss of turgor in guard cells", "Accumulation of CO2", "Guard cells becoming turgid", "Plasmolysis of epidermal cells"],
+            "answer": 2
         }
-    ]
+    ]          
 };

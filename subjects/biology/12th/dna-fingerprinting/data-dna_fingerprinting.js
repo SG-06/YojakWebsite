@@ -23,10 +23,24 @@ const experimentData = {
             <p>Because DNA is clear and invisible to the naked eye, a fluorescent binding dye is embedded in the gel matrix. When exposed to an ultraviolet (UV) transilluminator, these bands fluoresce to reveal a highly individualistic banding pattern. By comparing the position of these bands, investigators can establish an absolute match if all fragments align identically.</p>
 
             <h4 style="color:var(--primary); font-size:1.4rem;">Video Explanation: DNA Profiling</h4>
-            <div class="video-box" style="background: #000; padding: 15px; border-radius: 15px; margin: 20px 0; text-align: center;">
-                <iframe width="100%" height="450" src="https://www.youtube.com/embed/ZDZUAleWX78?si=u5jmfnj7rl_MLOHZ" title="Food Test Lab" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border-radius:10px;"></iframe>
-            </div>
-        </div>
+            <div class="video-box">
+    <iframe
+        src="https://www.youtube.com/embed/7onjVBsQwQ8?si=QwRtEt2kxPk2JNEy"
+        title="DNA Fingerprinitng Lab"
+        allowfullscreen>
+    </iframe>
+
+    <p class="video-credit">
+        🎥 Video Credit:
+        <a href="https://www.youtube.com/embed/7onjVBsQwQ8?si=QwRtEt2kxPk2JNEy"
+           target="_blank"
+           rel="noopener noreferrer">
+            FuseSchool - Global Education
+
+        </a>
+    </p>
+</div>
+      </div>
     `,
     
     materials: [

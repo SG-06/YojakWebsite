@@ -1,10 +1,9 @@
-<!-- START OF FILE photosynthesis-lab.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chloroscan | Rate of Photosynthesis Virtual Lab</title>
+    <title>Genetics Lab | Animal DNA Extraction</title>
     <link rel="stylesheet" href="biology-style.css">
     <style>
         /* Interactive Background Styling */
@@ -15,7 +14,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #f1f8e9 0%, #c8e6c9 100%);
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); /* Blue tint for Animal Lab */
         }
     </style>
 </head>
@@ -29,13 +28,13 @@
     <!-- Main Container where biology-engine.js will inject content -->
     <div id="experiment-container"></div>
 
-    <!-- Data file for the Photosynthesis Experiment -->
-    <script src="photosynthesis-data.js"></script> 
+    <!-- Data file for the Animal DNA Experiment -->
+    <script src="data-dna_extraction_animal.js"></script> 
     
     <!-- Shared Engine logic -->
     <script src="biology-engine.js"></script>
 
-    <!-- 3D Particle System Script -->
+    <!-- 3D Particle System Script (Consistent with Plant Lab) -->
     <script>
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -60,7 +59,7 @@
                 this.baseX = this.x;
                 this.baseY = this.y;
                 this.density = (Math.random() * 35) + 5;
-                this.color = '#2e7d32'; 
+                this.color = '#0277bd'; /* Darker blue particles */
             }
 
             draw() {
@@ -114,7 +113,7 @@
                     let distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < 150) {
-                        ctx.strokeStyle = `rgba(46, 125, 50, ${1 - distance/150})`;
+                        ctx.strokeStyle = `rgba(2, 119, 189, ${1 - distance/150})`;
                         ctx.lineWidth = 0.8;
                         ctx.beginPath();
                         ctx.moveTo(particles[a].x, particles[a].y);
