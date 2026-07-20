@@ -6,7 +6,7 @@
 
 > **Sustainable development through action, knowledge, and high-tech digital experimentation.**
 
-YOJAK is a comprehensive digital education platform designed to bridge the gap between theoretical learning and practical application. Tailored for Maharashtra State Board (HSC) students and general science enthusiasts, the platform provides an interactive ecosystem comprising structured study materials and immersive virtual laboratory simulations.
+YOJAK Digital Learning Portal is a comprehensive digital education platform designed to bridge the gap between theoretical learning and practical application. Tailored for Maharashtra State Board (HSC) students and general science enthusiasts, the platform provides an interactive ecosystem comprising structured study materials and immersive virtual laboratory simulations.
 
 ---
 
