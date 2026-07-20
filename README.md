@@ -23,7 +23,7 @@ The user interface is designed to be lightweight, distraction-free, and accessib
 
 ## ✨ Key Features
 
-### 📚 1. eResources (Theory & Revision)
+### 📚 1. E Resources (Theory & Revision)
 Curated theoretical modules focused on **Std 8, 9, and 10** (Maths and Science - HSC Board).
 *   **Revision Notes:** Crisp, syllabus-aligned chapter summaries.
 *   **Flashcards:** Interactive UI for active recall and memorization.
@@ -44,46 +44,12 @@ Every virtual lab module includes:
 
 ## 💻 Ideal Tech Stack
 
-*(Adjust these based on your actual repository implementation)*
 
-*   **Frontend:** [React.js](https://reactjs.org/) (or HTML/CSS/Vanilla JS) for building the interactive interfaces.
-*   **Animations/Simulations:** HTML5 Canvas, [Framer Motion](https://www.framer.com/motion/), or Physics engines (like Matter.js) for the Virtual Labs.
-*   **Styling:** Tailwind CSS / Custom CSS3 for responsive, mobile-first design.
-*   **Backend / Content Delivery:** Node.js / Express (if dynamic user data is stored) or purely static JSON data layers for notes and Q&A.
-*   **Hosting:** Netlify (CI/CD pipeline integrated).
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-*   Node.js (v16.x or higher)
-*   npm or yarn
-
-### Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/yourusername/yojak-website.git](https://github.com/yourusername/yojak-website.git)
-    cd yojak-website
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
-
-3.  **Run the development server:**
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    ```
-
-4.  **Open your browser:**
-    Navigate to `http://localhost:3000` to view the application.
+*   **Frontend:** HTML, CSS and JS for building the interactive interfaces.
+*   **Animations/Simulations:** HTML5 Canvas, [Framer Motion](https://www.framer.com/motion/), or Physics engines for the Virtual Labs.
+*   **Styling:** Tailwind CSS for responsive, mobile-first design.
+*   **Backend / Content Delivery:** Static JSON data layers for notes and Q&A.
+*   **Hosting:** Netlify.
 
 ---
 
@@ -107,3 +73,38 @@ Every virtual lab module includes:
  ┃ ┗ 📜 index.css
  ┣ 📜 package.json
  ┗ 📜 README.md
+```
+
+---
+
+## 👥 Contributors
+
+Developed by the YOJAK Center for Research and Strategic Planning team:
+
+Prem Sonawane
+
+Swarup Gade
+
+Atharva Mor
+
+Chehak Bansal
+
+Pradip Nimbale
+
+Siddhant Motghare
+
+Abhay Tarnalle
+
+Nishit Kapashi
+
+Sushant Nagare
+
+Parth Mane
+
+Chahek Bansal
+
+Vasistha Gupta
+
+Arpita Allibadi
+
+Ojasvi Bhavsar
