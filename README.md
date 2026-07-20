@@ -56,23 +56,62 @@ Every virtual lab module includes:
 ## 📂 Project Structure
 
 ```text
-📦 yojak-website
- ┣ 📂 public
- ┃ ┣ 📂 assets (images, icons)
- ┃ ┗ 📜 index.html
- ┣ 📂 src
- ┃ ┣ 📂 components
- ┃ ┃ ┣ 📂 eResources (Flashcards, NotesUI)
- ┃ ┃ ┗ 📂 vLabs (SimulationCanvas, Sidebar)
- ┃ ┣ 📂 data (JSON files for Q&A and Theory content)
- ┃ ┣ 📂 pages
- ┃ ┃ ┣ 📜 Home.jsx
- ┃ ┃ ┣ 📜 TheoryHub.jsx
- ┃ ┃ ┗ 📜 VirtualLab.jsx
- ┃ ┣ 📜 App.jsx
- ┃ ┗ 📜 index.css
- ┣ 📜 package.json
- ┗ 📜 README.md
+YojakWebsite/
+│
+├── index.html                  # Main landing/entry page
+├── homeindex.html              # Home page
+├── data.js                     # Global site data
+├── script.js                   # Main JS logic
+├── style.css                   # Global styles
+├── login.png
+│
+├── login/                      # Login module
+│   ├── loginindex.html
+│   ├── login.css
+│   ├── login.js
+│   ├── logindata.js
+│   └── login.png
+│
+├── assets/                     # Shared images/assets
+│   ├── login.png
+│   └── refraction.png.png
+│
+├── E-Resources-Website/        # E-resources module
+│   └── files/
+│       ├── index.html
+│       ├── logo.png
+│       ├── class8.json
+│       ├── class9.json
+│       └── class10.json
+│
+└── subjects/                   # Subject-wise interactive simulations
+    ├── css/experiment.css      # Shared experiment styles
+    ├── js/experiment.js        # Shared experiment logic
+    │
+    ├── physics/
+    │   ├── 10th/                 # e.g. FocalLength-ConvexLens, Refraction-glassprism,
+    │   │                         #      Regelation, specific-heat, dispersion-prism, etc.
+    │   │   └── older/            # Legacy/earlier versions of experiments
+    │   └── 12th/                 # e.g. AC-Frequency, Zener-Diode, Photoelectric-Effect,
+    │                             #      Tangent-Galvanometer, Multimeter-Usage, etc.
+    │
+    ├── chemistry/
+    │   ├── 10th/                 # e.g. carbon-lab, hallide-identification, periodic-final
+    │   └── 12th/                 # e.g. titration-chem-final, salt-analysis-lab,
+    │                             #      functional-groups, food-test-lab
+    │
+    ├── biology/
+    │   ├── 10th/                 # e.g. Human-Digestive-System, microscope, skeleton,
+    │   │                         #      plantsanimal-cell, monohybrid-cross (3D .glb models)
+    │   └── 12th/                 # e.g. mitosis, meiosis, dna-fingerprinting,
+    │                             #      osmosis-plasmolysis, transpiration-rate
+    │
+    └── english/
+        ├── index.html
+        ├── data.js
+        ├── script.js
+        ├── style.css
+        └── english1.jpeg
 ```
 
 ---
