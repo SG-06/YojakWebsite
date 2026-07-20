@@ -87,8 +87,6 @@ Swarup Gade
 
 Atharva Mor
 
-Chehak Bansal
-
 Pradip Nimbale
 
 Siddhant Motghare
