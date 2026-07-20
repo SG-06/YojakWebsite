@@ -1385,13 +1385,43 @@
           "id": "1",
           "title": "Rational Numbers",
           "notes": [
-            "A rational number is a number that can be expressed in the form p/q, where q ≠ 0.",
-            "Rational numbers are closed under addition, subtraction, and multiplication."
+            "Natural Numbers (N): Counting numbers starting from 1. Examples: 1, 2, 3, 4, 5...",
+            "Whole Numbers (W): All natural numbers along with 0. Examples: 0, 1, 2, 3, 4, 5...",
+            "Integers (Z): Positive numbers, negative numbers, and zero. Examples: ..., -3, -2, -1, 0, 1, 2, 3...",
+            "Rational Numbers (Q): A rational number is a number that can be expressed in the form m/n, where m and n are integers and n ≠ 0. Examples: 3/5, -7/4, 8 (= 8/1), 0 (= 0/1).",
+            "Important Points: The denominator can never be zero. Every integer is a rational number. Zero is also a rational number. There are infinitely many rational numbers between any two rational numbers.",
+            "Representation on a Number Line: Every rational number can be represented on a number line by dividing each unit according to the denominator, then counting the required number of equal parts — moving right for positive numbers and left for negative numbers.",
+            "Comparing Rational Numbers: Rational numbers can be compared using equal denominators (convert both fractions to the same denominator and compare numerators) or cross multiplication — for a/b and c/d, if a × d > b × c then a/b > c/d, if a × d < b × c then a/b < c/d, and if a × d = b × c then a/b = c/d.",
+            "Comparing Negative Rational Numbers: Among negative numbers, the number closer to zero is greater. Example: -3/4 > -5/4.",
+            "Decimal Representation: A rational number can be written as a decimal by dividing its numerator by its denominator. A terminating decimal ends after a finite number of digits (e.g. 1/2 = 0.5, 3/4 = 0.75). A non-terminating recurring decimal never ends but repeats a pattern (e.g. 1/3 = 0.333..., 5/6 = 0.8333...).",
+            "Irrational Numbers: Numbers that cannot be written in the form m/n are called irrational numbers. Their decimal form is non-terminating and non-recurring. Examples: √2, √3, √5, π.",
+            "Rational numbers are closed under addition, subtraction, and multiplication.",
+            "Real Numbers: All numbers that can be represented on a number line are called real numbers, and they include natural numbers, whole numbers, integers, rational numbers, and irrational numbers. Real Numbers = Rational Numbers + Irrational Numbers."
           ],
           "flashcards": [
             {
               "q": "Is 0 a rational number?",
               "a": "Yes, 0 can be written as 0/1."
+            },
+            {
+              "q": "What is a rational number?",
+              "a": "A rational number is a number that can be written in the form m/n, where m and n are integers and n ≠ 0."
+            },
+            {
+              "q": "What is an irrational number?",
+              "a": "An irrational number is a number that cannot be written in the form m/n. Its decimal form is non-terminating and non-recurring."
+            },
+            {
+              "q": "What are the two types of decimal representation of rational numbers?",
+              "a": "Terminating decimal and non-terminating recurring decimal."
+            },
+            {
+              "q": "Which methods are used to compare rational numbers?",
+              "a": "Equal denominators and cross multiplication."
+            },
+            {
+              "q": "What are real numbers?",
+              "a": "Real numbers are all numbers that can be represented on a number line. They include both rational and irrational numbers."
             }
           ],
           "practice": [
